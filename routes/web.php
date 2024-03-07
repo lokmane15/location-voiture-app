@@ -17,5 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/about', function () {
-    return "about pages";
+    return "<p class='bg-stone-300'>about pages</p>";
 });

@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('conducteur', function (Blueprint $table) {
             $table->id();
-            $table->string('num_cin');
+            $table->string('num_cin')->unique();
             $table->string('nom');
             $table->string('prenom');
             $table->string('num_tel');
-            $table->string('adresse');
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('numero_permis_conduire');
+            $table->string('adress');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        //
     }
 };

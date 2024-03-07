@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('marque', function (Blueprint $table) {
+
             $table->id();
-            $table->string('num_cin');
-            $table->string('nom');
-            $table->string('prenom');
-            $table->string('num_tel');
-            $table->string('adresse');
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('nom_marque');
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('marque');
     }
 };

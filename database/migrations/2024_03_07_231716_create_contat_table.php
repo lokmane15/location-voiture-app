@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservations', function (Blueprint $table) {
-            // Reservations Migration
+        Schema::create('contrat', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('date_debut')->default(now());
-            $table->timestamp('date_fin')->default(now());
-            $table->decimal('prix_total', 8, 2);
-            $table->string('marque');
+            $table->timestamp('date_signateur')->default(now());
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('car_id');
             $table->timestamps();
@@ -32,13 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('reservations', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropForeign(['car_id']);
-        });
-
-        Schema::dropIfExists('reservations');
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('contrat');
     }
 };

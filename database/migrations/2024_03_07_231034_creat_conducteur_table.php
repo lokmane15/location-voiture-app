@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('marque', function (Blueprint $table) {
-
+        Schema::create('conducteur', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_marque');
+            $table->string('num_cin')->unique();
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('num_tel');
+            $table->string('email')->unique();
+            $table->string('numero_permis_conduire');
+            $table->string('adress');
             $table->timestamps();
         });
     }
@@ -24,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('marque');
+        Schema::dropIfExists('conducteur');
     }
 };

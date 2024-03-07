@@ -11,16 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cars', function (Blueprint $table) {
+        Schema::create('marque', function (Blueprint $table) {
             $table->id();
-            $table->string('num_matricule');
-            $table->float('kilomitrage');
-            $table->integer('annee');
-            $table->string('couleur');
-            $table->float('prix');
-            $table->string('etat');
-            $table->string('image');
-            $table->string('marque');
+            $table->string('nom_marque');
             $table->timestamps();
         });
     }
@@ -30,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('marque');
     }
 };

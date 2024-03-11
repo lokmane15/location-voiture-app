@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('marque');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('car_id');
-            $table->unsignedBigInteger('conducteur_id');
+            $table->unsignedBigInteger('conducteur_id')->nullable();
             $table->timestamps();
 
             $table->foreign('conducteur_id')->references('id')->on('conducteur')->onDelete('cascade');

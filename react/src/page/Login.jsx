@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -40,8 +41,8 @@ function LoginForm() {
   };
 
   return (
-    <div className="bg-gray-200 flex items-center justify-center h-screen">
-      <div className="bg-white p-8 rounded shadow-md w-full sm:w-96">
+    <div className="bg-gray-300 flex items-center justify-center h-screen ">
+      <div className="bg-white p-8 rounded shadow-md w-full sm:w-96 ">
         <h2 className="text-2xl font-semibold mb-4">Login</h2>
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <form onSubmit={handleSubmit}>
@@ -84,9 +85,7 @@ function LoginForm() {
             >
               Login
             </button>
-            <a href="" className="text-blue-500 hover:underline">
-              Forgot password?
-            </a>
+            <Link to="/signup" className="text-blue-500 hover:underline">créer un compte</Link>
           </div>
         </form>
       </div>

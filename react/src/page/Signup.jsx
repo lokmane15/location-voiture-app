@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import useSignup from "../hooks/useSignup";
 
 function RegistrationForm() {
-  const [cin, setCIN] = useState("");
+  const [num_cin , setNum_cin] = useState("");
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
-  const [telephone, setTelephone] = useState("");
+  const [num_tel, setNum_tel] = useState("");
   const [adresse, setAdresse] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
-
+  const {signup,error,isLoading} = useSignup()
   const handleCINChange = (e) => {
-    setCIN(e.target.value);
+    setNum_cin(e.target.value);
   };
 
   const handleNomChange = (e) => {
@@ -23,7 +23,7 @@ function RegistrationForm() {
   };
 
   const handleTelephoneChange = (e) => {
-    setTelephone(e.target.value);
+    setNum_tel(e.target.value);
   };
 
   const handleAdresseChange = (e) => {
@@ -38,52 +38,9 @@ function RegistrationForm() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const errors = {};
-
-    if (!cin.trim()) {
-      errors.cin = "Veuillez saisir votre CIN.";
-    }
-
-    if (!nom.trim()) {
-      errors.nom = "Veuillez saisir votre nom.";
-    }
-
-    if (!prenom.trim()) {
-      errors.prenom = "Veuillez saisir votre prénom.";
-    }
-
-    if (!telephone.trim()) {
-      errors.telephone = "Veuillez saisir votre numéro de téléphone.";
-    }
-
-    if (!adresse.trim()) {
-      errors.adresse = "Veuillez saisir votre adresse.";
-    }
-
-    if (!email.trim()) {
-      errors.email = "Veuillez saisir votre email.";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errors.email = "Veuillez saisir un email valide.";
-    }
-
-    if (!password.trim()) {
-      errors.password = "Veuillez saisir votre mot de passe.";
-    } else if (password.length < 6) {
-      errors.password = "Le mot de passe doit contenir au moins 6 caractères.";
-    }
-
-    if (Object.keys(errors).length === 0) {
-      // Si le formulaire est valide, vous pouvez soumettre les données ou effectuer d'autres actions
-      console.log("Formulaire valide, prêt à être soumis !");
-      // Ajoutez ici la logique d'inscription
-    } else {
-      // Si des erreurs sont présentes, affichez-les et empêchez l'envoi du formulaire
-      console.log("Erreurs de validation :", errors);
-      setErrors(errors);
-    }
+    await signup(num_cin,nom,prenom,num_tel,adresse,email,password)
   };
 
   return (
@@ -103,7 +60,7 @@ function RegistrationForm() {
                 type="text"
                 id="cin"
                 name="cin"
-                value={cin}
+                value={num_cin}
                 onChange={handleCINChange}
                 className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 ${errors.cin ? 'border-red-500' : ''}`}
               />
@@ -154,7 +111,7 @@ function RegistrationForm() {
                 type="tel"
                 id="telephone"
                 name="telephone"
-                value={telephone}
+                value={num_tel}
                 onChange={handleTelephoneChange}
                 className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 ${errors.telephone ? 'border-red-500' : ''}`}
               />
@@ -214,11 +171,13 @@ function RegistrationForm() {
           </div>
           <div className="flex items-center justify-between">
             <button
+              disabled={isLoadign}
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
             >
-              S'inscrire
+              {isLoadign? "LOADING...":"S'inscrire"}
             </button>
+            {error && <div className="error">{error}</div>}
           </div>
         </form>
       </div>

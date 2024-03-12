@@ -25,11 +25,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/reservecar/{id}', ReservationController::class . "@reserveCar");
 });
-<<<<<<< HEAD
-=======
-
-
->>>>>>> d5ec55ef9a3852cb26717f1538b8ece2ba95222b
 Route::post('/signup', authController::class . '@signup');
 Route::post('/login', authController::class . '@login');
 

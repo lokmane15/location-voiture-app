@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import useSignup from "../hooks/useSignup";
 
 function RegistrationForm() {
-  const [cin, setCIN] = useState("");
+  const [num_cin , setNum_cin] = useState("");
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
-  const [telephone, setTelephone] = useState("");
+  const [num_tel, setNum_tel] = useState("");
   const [adresse, setAdresse] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const {signup,error,isLoadign}=useSignup();
   const handleCINChange = (e) => {
-    setCIN(e.target.value);
+    setNum_cin(e.target.value);
   };
 
   const handleNomChange = (e) => {
@@ -22,7 +23,7 @@ function RegistrationForm() {
   };
 
   const handleTelephoneChange = (e) => {
-    setTelephone(e.target.value);
+    setNum_tel(e.target.value);
   };
 
   const handleAdresseChange = (e) => {
@@ -37,17 +38,10 @@ function RegistrationForm() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Ajoutez ici la logique d'inscription
-    console.log("CIN:", cin);
-    console.log("Nom:", nom);
-    console.log("Prénom:", prenom);
-    console.log("Téléphone:", telephone);
-    console.log("Adresse:", adresse);
-    console.log("Email:", email);
-    console.log("Password:", password);
-  };
+    await signup(num_cin,nom,prenom,num_tel,adresse,email,password)
+  }
 
   return (
     <div className="bg-gray-200 flex items-center justify-center h-screen">
@@ -66,7 +60,7 @@ function RegistrationForm() {
                 type="text"
                 id="cin"
                 name="cin"
-                value={cin}
+                value={num_cin}
                 onChange={handleCINChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
               />
@@ -114,7 +108,7 @@ function RegistrationForm() {
                 type="tel"
                 id="telephone"
                 name="telephone"
-                value={telephone}
+                value={num_tel}
                 onChange={handleTelephoneChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
               />
@@ -170,11 +164,13 @@ function RegistrationForm() {
           </div>
           <div className="flex items-center justify-between">
             <button
+              disabled={isLoadign}
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
             >
-              S'inscrire
+              {isLoadign? "LOADING...":"S'inscrire"}
             </button>
+            {error && <div className="error">{error}</div>}
           </div>
         </form>
       </div>

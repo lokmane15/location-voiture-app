@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import useLogin from "../hooks/useLogin";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
+  // const [error, setError] = useState("");
+  const {login,error,isLoading}=useLogin()
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -13,30 +14,31 @@ function LoginForm() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Expression régulière pour valider l'email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("Veuillez saisir une adresse email valide.");
-      return;
-    }
+    await login(email,password)
+    // // Expression régulière pour valider l'email
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //   setError("Veuillez saisir une adresse email valide.");
+    //   return;
+    // }
 
-    // Expression régulière pour valider le mot de passe (au moins 8 caractères, au moins une lettre majuscule, une lettre minuscule et un chiffre)
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      setError(
-        "Veuillez saisir un mot de passe d'au moins 8 caractères avec au moins une lettre majuscule, une lettre minuscule et un chiffre."
-      );
-      return;
-    }
+    // // Expression régulière pour valider le mot de passe (au moins 8 caractères, au moins une lettre majuscule, une lettre minuscule et un chiffre)
+    // const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{8,}$/;
+    // if (!passwordRegex.test(password)) {
+    //   setError(
+    //     "Veuillez saisir un mot de passe d'au moins 8 caractères avec au moins une lettre majuscule, une lettre minuscule et un chiffre."
+    //   );
+    //   return;
+    // }
 
-    // Si les champs sont valides, vous pouvez envoyer les données ou effectuer d'autres actions
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Réinitialisation de l'erreur
-    setError("");
+    // // Si les champs sont valides, vous pouvez envoyer les données ou effectuer d'autres actions
+    // console.log("Email:", email);
+    // console.log("Password:", password);
+    // // Réinitialisation de l'erreur
+    // setError("");
   };
 
   return (
@@ -78,7 +80,8 @@ function LoginForm() {
             />
           </div>
           <div className="flex items-center justify-between">
-            <button
+            <button 
+            disabled={isLoading}
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
             >
@@ -87,6 +90,7 @@ function LoginForm() {
             <a href="" className="text-blue-500 hover:underline">
               Forgot password?
             </a>
+            {error && <div className="error">{error}</div>}
           </div>
         </form>
       </div>

@@ -8,6 +8,7 @@ import Signup from './page/Signup'
 import Nav from './Components/Nav'
 import Footer from './Components/Footer'
 import useAuthContext from './hooks/useAuthContext'
+import CarDetails from './page/CarDetails'
 function App() {
   const {user}=useAuthContext()
   return (
@@ -29,6 +30,10 @@ function App() {
           <Route 
           path='/signup' 
           element={!user ?<Signup/> :<Navigate to="/"/>}
+          />
+          <Route 
+          path='/carDetails/:id' 
+          element={user ?<CarDetails/> :<Navigate to="/login"/>}
           />
         </Routes>
       <Footer/>

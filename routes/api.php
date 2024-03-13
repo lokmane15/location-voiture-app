@@ -24,6 +24,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/carsDispo', CarsController::class . '@getCarsDisponible');
 
     Route::post('/reservecar/{id}', ReservationController::class . "@reserveCar");
+
+    Route::get('/car/{id}', CarsController::class . '@show');
 });
 Route::post('/signup', authController::class . '@signup');
 Route::post('/login', authController::class . '@login');
@@ -31,7 +33,7 @@ Route::post('/login', authController::class . '@login');
 
 //cars
 
-Route::get('/car/{id}', CarsController::class . '@show');
+
 
 Route::post('/newcar', CarsController::class . '@store');
 

@@ -9,7 +9,7 @@ function RegistrationForm() {
   const [adresse, setAdresse] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {signup,error,isLoadign}=useSignup();
+  const {signup,error,isLoadign} = useSignup()
   const handleCINChange = (e) => {
     setNum_cin(e.target.value);
   };
@@ -41,11 +41,11 @@ function RegistrationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signup(num_cin,nom,prenom,num_tel,adresse,email,password)
-  }
+  };
 
   return (
-    <div className="bg-gray-200 flex items-center justify-center h-screen">
-      <div className="bg-white p-8 rounded shadow-md w-full sm:w-96">
+    <div className="bg-gray-200 flex items-center justify-center h-screen mt-2 ">
+      <div className="bg-white p-8 rounded shadow-md w-full sm:w-96 ">
         <h2 className="text-2xl font-semibold mb-4">Inscription</h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
@@ -62,7 +62,7 @@ function RegistrationForm() {
                 name="cin"
                 value={num_cin}
                 onChange={handleCINChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
               />
             </div>
             <div className="mb-4">
@@ -78,8 +78,9 @@ function RegistrationForm() {
                 name="nom"
                 value={nom}
                 onChange={handleNomChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
               />
+              
             </div>
             <div className="mb-4">
               <label
@@ -94,8 +95,9 @@ function RegistrationForm() {
                 name="prenom"
                 value={prenom}
                 onChange={handlePrenomChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
               />
+              
             </div>
             <div className="mb-4">
               <label
@@ -110,9 +112,8 @@ function RegistrationForm() {
                 name="telephone"
                 value={num_tel}
                 onChange={handleTelephoneChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-              />
-            </div>
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
+              />            </div>
             <div className="mb-4 col-span-2">
               <label
                 htmlFor="adresse"
@@ -126,7 +127,7 @@ function RegistrationForm() {
                 name="adresse"
                 value={adresse}
                 onChange={handleAdresseChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
               />
             </div>
             <div className="mb-4 col-span-2">
@@ -142,9 +143,8 @@ function RegistrationForm() {
                 name="email"
                 value={email}
                 onChange={handleEmailChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-              />
-            </div>
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
+              />            </div>
             <div className="mb-4 col-span-2">
               <label
                 htmlFor="password"
@@ -158,7 +158,7 @@ function RegistrationForm() {
                 name="password"
                 value={password}
                 onChange={handlePasswordChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
               />
             </div>
           </div>

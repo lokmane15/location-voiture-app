@@ -10,34 +10,58 @@ class CarsController extends Controller
     public function getCars()
     {
         $cars = Cars::all();
-        return $cars;
+        return response()->json($cars, 200);
     }
 
-    //get only the cars disponible
     public function getCarsDisponible()
     {
-        $cars = Cars::whereEtat(1)->get();
-        return $cars;
+        $cars = Cars::where('etat', 1)->with('model')->get();
+        return response()->json($cars, 200);
     }
-    //get single car
+
     public function show($id)
     {
-        return Cars::findOrFail($id);
+        $car = Cars::with('model')->findOrFail($id);
+        return response()->json($car, 200);
     }
-    //create
+
     public function store(Request $request)
     {
+        $request->validate([
+            'num_matricule' => 'required',
+            'kilomitrage' => 'required',
+            'annee' => 'required',
+            'couleur' => 'required',
+            'prix' => 'required',
+            'etat' => 'required',
+            'image' => 'required',
+            'marque' => 'required',
+            'model_id' => 'required',
+        ]);
+
         $car = Cars::create($request->all());
         return response()->json($car, 201);
     }
-    //update
+
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'num_matricule' => 'required',
+            'kilomitrage' => 'required',
+            'annee' => 'required',
+            'couleur' => 'required',
+            'prix' => 'required',
+            'etat' => 'required',
+            'image' => 'required',
+            'marque' => 'required',
+            'model_id' => 'required',
+        ]);
+
         $car = Cars::findOrFail($id);
         $car->update($request->all());
         return response()->json($car, 200);
     }
-    //delete
+
     public function destroy($id)
     {
         $car = Cars::findOrFail($id);

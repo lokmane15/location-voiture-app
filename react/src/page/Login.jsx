@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import useLogin from "../hooks/useLogin";
@@ -89,7 +89,7 @@ function LoginForm() {
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
             >
-              {isLoading ? "LOADING..." : "login"}
+              Login
             </button>
 
             <Link to="/signup" className="text-blue-500 hover:underline">créer un compte</Link>

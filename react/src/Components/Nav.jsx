@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import useAuthContext from "../hooks/useAuthContext";
-
+import { RiLogoutCircleRLine } from "react-icons/ri";
 function Navbar() {
   const {logout}=useLogout()
   const {user}=useAuthContext()
@@ -64,9 +64,8 @@ function Navbar() {
                   </Link>
                 </div>)
                 :
-                <button onClick={handleClick}>log out</button>
+                <button onClick={handleClick} className="text-white text-2xl "><RiLogoutCircleRLine /></button>
               }
-              
             </div>
           </div>
         </div>

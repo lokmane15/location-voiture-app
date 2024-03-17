@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useSignup from "../hooks/useSignup";
 
 function RegistrationForm() {
@@ -62,9 +62,8 @@ function RegistrationForm() {
                 name="cin"
                 value={num_cin}
                 onChange={handleCINChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 ${errors.cin ? 'border-red-500' : ''}`}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
               />
-              {errors.cin && <p className="text-red-500 text-sm mt-1">{errors.cin}</p>}
             </div>
             <div className="mb-4">
               <label
@@ -79,9 +78,8 @@ function RegistrationForm() {
                 name="nom"
                 value={nom}
                 onChange={handleNomChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 ${errors.nom ? 'border-red-500' : ''}`}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
               />
-              {errors.nom && <p className="text-red-500 text-sm mt-1">{errors.nom}</p>}
             </div>
             <div className="mb-4">
               <label
@@ -96,9 +94,8 @@ function RegistrationForm() {
                 name="prenom"
                 value={prenom}
                 onChange={handlePrenomChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 ${errors.prenom ? 'border-red-500' : ''}`}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
               />
-              {errors.prenom && <p className="text-red-500 text-sm mt-1">{errors.prenom}</p>}
             </div>
             <div className="mb-4">
               <label
@@ -113,10 +110,9 @@ function RegistrationForm() {
                 name="telephone"
                 value={num_tel}
                 onChange={handleTelephoneChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 ${errors.telephone ? 'border-red-500' : ''}`}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
               />
-              {errors.telephone && <p className="text-red-500 text-sm mt-1">{errors.telephone}</p>}
-            </div>
+                          </div>
             <div className="mb-4 col-span-2">
               <label
                 htmlFor="adresse"
@@ -130,9 +126,8 @@ function RegistrationForm() {
                 name="adresse"
                 value={adresse}
                 onChange={handleAdresseChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 ${errors.adresse ? 'border-red-500' : ''}`}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
               />
-              {errors.adresse && <p className="text-red-500 text-sm mt-1">{errors.adresse}</p>}
             </div>
             <div className="mb-4 col-span-2">
               <label
@@ -147,9 +142,8 @@ function RegistrationForm() {
                 name="email"
                 value={email}
                 onChange={handleEmailChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 ${errors.email ? 'border-red-500' : ''}`}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
               />
-              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
             <div className="mb-4 col-span-2">
               <label
@@ -164,9 +158,8 @@ function RegistrationForm() {
                 name="password"
                 value={password}
                 onChange={handlePasswordChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 ${errors.password ? 'border-red-500' : ''}`}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 }`}
               />
-              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
             </div>
           </div>
           <div className="flex items-center justify-between">

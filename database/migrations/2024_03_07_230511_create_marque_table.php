@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('marque', function (Blueprint $table) {
+
             $table->id();
             $table->string('nom_marque');
+            $table->string('image_path');
             $table->timestamps();
         });
     }

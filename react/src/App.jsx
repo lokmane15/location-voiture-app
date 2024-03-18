@@ -9,6 +9,10 @@ import Nav from './Components/Nav'
 import Footer from './Components/Footer'
 import useAuthContext from './hooks/useAuthContext'
 import CarDetails from './page/CarDetails'
+import Reserve from './page/Reserve'
+import Payment from './page/Payment'
+import Success from './page/Success'
+
 function App() {
   const {user}=useAuthContext()
   return (
@@ -34,6 +38,18 @@ function App() {
           <Route 
           path='/carDetails/:id' 
           element={user ?<CarDetails/> :<Navigate to="/login"/>}
+          />
+          <Route 
+          path='/reserve/:id' 
+          element={user ?<Reserve/> :<Navigate to="/login"/>}
+          />
+          <Route 
+          path='/payment/:id' 
+          element={<Payment/>}
+          />
+          <Route 
+          path='/success' 
+          element={<Success/>}
           />
         </Routes>
       <Footer/>

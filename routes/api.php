@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\authController;
 use App\Http\Controllers\CarsController;
-use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\MarqueController;
+use App\Http\Controllers\ReservController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,9 @@ Route::middleware('auth:sanctum')->group(function () {
     //only cars disponible
     Route::get('/carsDispo', CarsController::class . '@getCarsDisponible');
 
-    Route::post('/reservecar/{id}', ReservationController::class . "@reserveCar");
+    Route::post('/reservecar/{id}', ReservController::class . "@reserveCar");
+
+    Route::post('/reservation/success/{id}', ReservController::class . "@reservationSuccess");
 
     Route::get('/car/{id}', CarsController::class . '@show');
 });
@@ -35,6 +38,7 @@ Route::post('/login', authController::class . '@login');
 
 
 
+
 Route::post('/newcar', CarsController::class . '@store');
 
 Route::put('/updatecar/{id}', CarsController::class . '@update');
@@ -43,3 +47,12 @@ Route::delete('/destroycar/{id}', CarsController::class . '@destroy');
 
 
 //reservation
+
+
+
+
+//marque
+
+Route::post('/marque', MarqueController::class . '@store');
+
+Route::get('/marque', MarqueController::class . '@show');

@@ -12,7 +12,7 @@ export default function Reserve() {
     const [totalPrice, setTotalPrice] = useState(0);
     const { data,setData } = useDataContext();
     const navigate=useNavigate()
-
+    console.log(car);
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://127.0.0.1:8000/api/car/${id}`, {
@@ -68,7 +68,7 @@ export default function Reserve() {
                     <label className="block text-gray-700 text-sm font-bold mb-2">Voiture</label>
                     <input 
                         type="text" 
-                        value={user.user.prenom} 
+                        value={car.marque} 
                         className="w-full px-3 py-2 border  border-gray-300 rounded focus:outline-none focus:border-indigo-500"
                         readOnly
                     />

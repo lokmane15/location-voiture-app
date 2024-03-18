@@ -1,6 +1,6 @@
 // Payment.js
 
-import { useState } from "react";
+import { useStatecar } from "react";
 import { useDataContext } from "../Context/DataContext";
 import { useParams } from "react-router-dom";
 import useAuthContext from "../hooks/useAuthContext";
@@ -12,6 +12,26 @@ export default function Payment() {
     const baseUrl = 'http://localhost:8000/api';
     const { id } = useParams();
     const { user } = useAuthContext();
+    // const [car, setCar] = useState("");
+    // console.log(car);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const response = await fetch(`http://127.0.0.1:8000/api/car/${id}`, {
+    //             headers: { "Authorization": `Bearer ${user.token}` }
+    //         });
+
+    //         if (response.ok) {
+    //             const json = await response.json();
+    //             setCar(json);
+    //         }
+    //     };
+
+    //     if (user) {
+    //         fetchData();
+    //     }
+    // }, [user, id]);
+
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();

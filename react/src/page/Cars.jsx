@@ -86,7 +86,7 @@ export default function Cars() {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 my-2">
-                {!filteredData.length === 0 ? filteredData.map(item => (
+                {filteredData.length > 0 ? filteredData.map(item => (
                     <div key={item.id} className="bg-white p-4 rounded-md shadow-md my-1 flex flex-col justify-between">
                         <Link to={`/carDetails/${item.id}`}>
                             <div>

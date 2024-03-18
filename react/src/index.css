@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* styles.css */
+
+.car-image {
+    width: 400px; /* ou la taille désirée pour l'image */
+    height: 100%;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+.car-details {
+    font-family: Arial, sans-serif; /* Choisir votre police de caractères */
+}
+
+.car-info {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* slide */
+

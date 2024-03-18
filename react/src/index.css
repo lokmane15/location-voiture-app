@@ -1,21 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-
-.img-container{
-    width: 700px;
-}
-.img-car{
-    width: 100%;
-}
-
-.car-details{
-    height: 70vh;
-}
-.car-details h3{
-    font-size: 30px;
-    font-weight: 800;
-    margin-bottom: 20px;
-}

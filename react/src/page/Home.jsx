@@ -1,27 +1,6 @@
-import { useEffect, useState } from "react";
 import {Link} from "react-router-dom"
-import fetchMarque from "../services/FetchMarque";
-import fetchCars from "../services/FetchCars";
-import useAuthContext from '../hooks/useAuthContext';
 function Home() {
-  const baseUrl = 'http://127.0.0.1:8000/api';
-  const [marque,setMarque]=useState([]);
-  const { user } = useAuthContext();
-  const [cars,setCars]=useState([]);
-  console.log(marque);
-    useEffect(()=>{
-      const fetchDataMarque = async ()=>{
-        const jsonData=await fetchMarque(baseUrl)
-        setMarque(jsonData)
-      }
-      fetchDataMarque();
-        const getCars = async ()=>{
-        const jsonDataCar=await fetchCars(baseUrl,user.token)
-        setCars(jsonDataCar)
-      }
-      getCars();
-    },[baseUrl])
-    console.log(cars);
+
   return (
     <>
       <main className="relative bg-cover bg-center h-screen w-full" style={{ backgroundImage: "url(https://www.topgear.com/sites/default/files/cars-car/image/2023/11/1%20Mercedes%20AMG%20GT.jpg)" }}>
@@ -36,55 +15,93 @@ function Home() {
         </div>
       </main>
 
-            {/* Display first three cars in cards */}
-            <div className="container mx-auto mt-5">
-        <h1 className="text-center display-4 mb-5">Premières Voitures</h1>
-        <div className="row row-cols-1 row-cols-md-3 g-4">
-          {cars.slice(0, 3).map((car, index) => (
-                    <div key={index} className="bg-white p-4 rounded-md shadow-md my-1 flex flex-col justify-between">
-                    <Link to={`/carDetails/${car.id}`}>
-                        <div>
-                            <img src={car.image} alt="Car" className="mb-2" />
-                            <h1 className="text-xl font-bold mb-2">{car.marque} {car.model.nom_model}</h1>
-                            <p className="text-gray-700">Num Matricule: {car.num_matricule}</p>
-                            <p className="text-gray-700">Prix: {car.prix}DH/Jour</p>
-                        </div>
-                    </Link>
-                  <button className="btn btn-primary">
-                    <Link to={`/carDetails/${car.id}`} className="text-white text-decoration-none">Détails</Link>
-                  </button>
-                </div>
-          ))}
-        </div>
-      </div>
-      <div className="container mx-auto mt-5 text-center">
-        <button className="btn btn-lg btn-primary">
-          <Link to="/cars" className="text-white text-decoration-none">Explorer Plus de Voitures</Link>
-        </button>
-      </div>
-      {/* Display marque cards */}
-          <div className="container mx-auto mt-5">
-      <h1 className="text-center display-4 mb-5">Nos Marques</h1>
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        {marque.map((item, index) => (
-          <div key={index} className="col">
-            <div className="card h-100">
-              <img src={`public/${item.image_path}`} className="card-img-top img-fluid" alt={item.name} style={{ height: "190px" , objectFit: "cover" }} />
-              <div className="card-body">
-                <h5 className="card-title">{item.name}</h5>
-                <p className="card-text">{item.description}</p>
-              </div>
-              <div className="card-footer">
-                <button className="btn btn-primary">
-                  <Link to={`/cars?marque=${item.nom_marque}`} className="text-white text-decoration-none">Détails</Link>
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
 
+
+      {/* card */}
+      <h1 className="text-center text-3xl font-bold mt-5">Catégorie</h1>
+      <div className="flex flex-wrap justify-center mt-10">
+      <div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
+  <img className="w-full" src="https://image.cnbcfm.com/api/v1/image/107238183-1683642530891-All-New_Ford_Ranger_Raptor_12.jpg?v=1684584001&w=1600&h=900" alt="Car 1" />
+  <div className="px-6 py-4">
+    <div className="font-bold text-xl mb-2">Les dernières tendances automobiles</div>
+    <p className="text-gray-700 text-base">
+      Découvrez les derniers modèles de voitures et les innovations de lindustrie automobile.
+    </p>
+    <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">
+      <Link to="/car-details">Détails</Link>
+    </button>
+  </div>
+</div>
+
+<div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
+  <img className="w-full" src="https://www.kia.com/content/dam/kwcms/kme/uk/en/assets/static/nav22/Explore_range/kia-xceed_2019-gt-line-s-spirit-green_512x288_left.png" alt="Car 1" />
+  <div className="px-6 py-4">
+    <div className="font-bold text-xl mb-2">Les dernières tendances automobiles</div>
+    <p className="text-gray-700 text-base">
+      Découvrez les derniers modèles de voitures et les innovations de lindustrie automobile.
+    </p>
+    <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">
+      <Link to="/car-details">Détails</Link>
+    </button>
+  </div>
+</div>
+        
+<div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
+  <img className="w-full" src= "https://assets.volkswagen.com/is/image/volkswagenag/t-roc-3-4-Frontal-View?Zml0PWNyb3AsMSZmbXQ9d2VicC1hbHBoYSZxbHQ9Nzkmd2lkPTgwMCZiZmM9b2ZmJjU0MDQ=" alt="Car 1" />
+  <div className="px-6 py-4">
+    <div className="font-bold text-xl mb-2">Les dernières tendances automobiles</div>
+    <p className="text-gray-700 text-base">
+      Découvrez les derniers modèles de voitures et les innovations de lindustrie automobile.
+    </p>
+    <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">
+      <Link to="/car-details">Détails</Link>
+    </button>
+  </div>
+</div>
+        
+      </div>
+
+      <div className="flex flex-wrap justify-center mt-10">
+      <div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
+  <img className="w-full" src="https://maroc-diplomatique.net/wp-content/uploads/2023/03/Renault-e1679064465668.jpg" alt="Car 1" />
+  <div className="px-6 py-4">
+    <div className="font-bold text-xl mb-2">Les dernières tendances automobiles</div>
+    <p className="text-gray-700 text-base">
+      Découvrez les derniers modèles de voitures et les innovations de lindustrie automobile.
+    </p>
+    <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">
+      <Link to="/car-details">Détails</Link>
+    </button>
+  </div>
+</div>
+
+<div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
+  <img className="w-full" src="https://etimg.etb2bimg.com/photo/102922437.cms"  alt="Car 1" />
+  <div className="px-6 py-4">
+    <div className="font-bold text-xl mb-2">Les dernières tendances automobiles</div>
+    <p className="text-gray-700 text-base">
+      Découvrez les derniers modèles de voitures et les innovations de lindustrie automobile.
+    </p>
+    <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">
+      <Link to="/car-details">Détails</Link>
+    </button>
+  </div>
+</div>
+        
+<div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
+  <img className="w-full" src= "https://media.ed.edmunds-media.com/audi/rs-7/2024/oem/2024_audi_rs-7_sedan_performance_fq_oem_1_1600.jpg" alt="Car 1" />
+  <div className="px-6 py-4">
+    <div className="font-bold text-xl mb-2">Les dernières tendances automobiles</div>
+    <p className="text-gray-700 text-base">
+      Découvrez les derniers modèles de voitures et les innovations de lindustrie automobile.
+    </p>
+    <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">
+      <Link to="/car-details">Détails</Link>
+    </button>
+  </div>
+</div>
+        
+   </div>
     </>
   );
 }

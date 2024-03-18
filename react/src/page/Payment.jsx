@@ -1,6 +1,6 @@
 // Payment.js
 
-import { useStatecar } from "react";
+import { useState } from "react";
 import { useDataContext } from "../Context/DataContext";
 import { useParams } from "react-router-dom";
 import useAuthContext from "../hooks/useAuthContext";

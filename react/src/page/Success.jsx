@@ -6,7 +6,7 @@ export default function Success() {
     const [error, setError] = useState(null); // State for storing error message
     const reservation = JSON.parse(localStorage.getItem('reservation'));
     const { user } = useAuthContext();
-
+    console.log(reservation);
     useEffect(() => {
         if (reservation && user && user.token) { // Check if user and token exist
             completeReservation();
@@ -22,9 +22,9 @@ export default function Success() {
                     "Authorization": `Bearer ${user.token}`
                 },
                 body: JSON.stringify({
+                    date_debut: reservation.date_debut,
+                    date_fin: reservation.date_fin,
                     session_id: reservation.session_id,
-                    date_debut: reservation.dated,
-                    date_fin: reservation.datef,
                 }),
             });
 

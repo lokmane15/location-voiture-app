@@ -14,14 +14,7 @@ function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div>
             <Link to="/" className="text-slate-300 font-bold">
-            <img 
-  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZTij6YiSaPFso_n17hQPN1n6K27onj_dfKVihmDpslRCOwEl69zA8YnSIJ2yM-fXSWLQ&usqp=CAU" 
-  alt="Logo"
-  className="w-32 h-20 rounded-full mx-auto mb-5 " // Classes Tailwind pour ajuster la taille, centrer horizontalement et ajouter une marge en haut
-/>
-
-
-
+              <h6>Location<span className="text-cyan-400">Voiture</span></h6>
             </Link>
           </div>
           <div className="hidden md:block flex items-center justify-center space-x-8">
@@ -42,6 +35,12 @@ function Navbar() {
               className="text-slate-300 hover:text-gray-300 hover:bg-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "
             >
               À propos
+            </Link>
+            <Link
+              to="/contrat"
+              className="text-slate-300 hover:text-gray-300 hover:bg-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "
+            >
+              Contrat
             </Link>
           </div>
           <div className="hidden md:block">

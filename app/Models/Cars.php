@@ -25,4 +25,8 @@ class Cars extends Model
     {
         return $this->belongsTo(Models::class, 'model_id');
     }
+    public function contrats()
+    {
+        return $this->hasMany(Contrat::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cars;
+use App\Models\Contrat;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -35,7 +36,7 @@ class ReservController extends Controller
                 [
                     'price_data' => [
                         'currency' => 'usd',
-                        'unit_amount' => $prix_total * 100, // Convert to cents
+                        'unit_amount' => $prix_total * 10, // Convert to cents
                         'product_data' => [
                             'name' => 'Car Reservation',
                         ],
@@ -74,13 +75,14 @@ class ReservController extends Controller
 
             // Ensure payment is successful
             if ($session->payment_status === 'paid') {
-                $car = Cars::find($id); // Assuming car info is in line item description (modify as needed)
+                $car = Cars::find($id);
 
                 // Create reservation
                 $reservation = Reservation::create([
-                    'date_debut' => Carbon::parse($request->input('date_debut')), // Assuming date_debut is still available in request
-                    'date_fin' => Carbon::parse($request->input('date_fin')), // Assuming date_fin is still available in request
-                    'prix_total' => $session->amount_total / 100, // Convert from cents
+                    'date_debut' => Carbon::parse($request->input('date_debut')),
+                    'date_fin' => Carbon::parse($request->input('date_fin')),
+                    // Assuming date_fin is still available in request
+                    'prix_total' => $session->amount_total / 10, // Convert from cents
                     'marque' => $car->marque,
                     'user_id' => $request->user()->id, // Assuming user is authenticated
                     'car_id' => $car->id,
@@ -90,6 +92,12 @@ class ReservController extends Controller
                 $car->etat = 0;
                 $car->save();
 
+                // Insert into contrat table
+                Contrat::create([
+                    'date_signateur' => now(),
+                    'user_id' => $request->user()->id,
+                    'car_id' => $car->id,
+                ]);
                 // Return success message and reservation details
                 return response()->json([
                     'message' => 'Réservation effectuée avec succès !',

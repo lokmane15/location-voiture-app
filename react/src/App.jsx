@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-
 import Home from './page/Home'
 import Contactus from './page/Contactus'
 import Cars from './page/Cars'

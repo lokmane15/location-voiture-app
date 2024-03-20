@@ -38,7 +38,7 @@ function Home() {
 
             {/* Display first three cars in cards */}
             <div className="container mx-auto mt-5">
-          <Link  className="flex p-3 font-semibold text-cyan-400 justify-end" to="/cars">voir plus</Link>
+          <Link  className="flex p-3 font-normal text-cyan-400 justify-end" to="/cars">voir plus</Link>
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {cars.slice(0, 3).map((car, index) => (
                     <div key={index} className="bg-white p-4 rounded-md  my-1 flex flex-col justify-between">

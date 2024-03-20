@@ -24,8 +24,10 @@ function ContactForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-md p-8 shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
+    <div className="bg-cover bg-center bg-no-repeat  mt-5" style={{ backgroundImage: "url()" }}>
+
+    <div className="max-w-md mx-auto bg-white rounded-md p-8 shadow-md mt-20">
+      <h2 className="text-2xl font-semibold ">Contact Us</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Name</label>
@@ -69,6 +71,7 @@ function ContactForm() {
           </button>
         </div>
       </form>
+    </div>
     </div>
   );
 }

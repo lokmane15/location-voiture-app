@@ -8,3 +8,54 @@
     padding: 30px;
     
 }
+
+.user-profile {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .user-icon {
+    cursor: pointer;
+  }
+  
+  .user-details {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 100px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    z-index: 10; /* Ensure the details are above other content */
+    }
+    
+    .user-details button {
+        margin-top: 5px;
+    }
+    
+    /* Adjust the menu links size */
+    .nav-links {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .nav-links li {
+        margin-right: 20px;
+    }
+    
+    .nav-links li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+    }
+    
+    .nav-links li a:hover {
+        color: #ccc;
+    }
+    

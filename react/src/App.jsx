@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-
 import Home from './page/Home'
 import Contactus from './page/Contactus'
 import Cars from './page/Cars'
@@ -13,6 +12,7 @@ import Reserve from './page/Reserve'
 import Payment from './page/Payment'
 import Success from './page/Success'
 import Contrat from './page/Contrat'
+import Cancel from './page/Cancel'
 
 function App() {
   const {user}=useAuthContext()
@@ -51,6 +51,10 @@ function App() {
           <Route 
           path='/success' 
           element={<Success/>}
+          />
+          <Route 
+          path='/cancel' 
+          element={<Cancel/>}
           />
           <Route 
           path='/contrat' 

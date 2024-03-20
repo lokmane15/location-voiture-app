@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
-import { useLogout } from "../hooks/useLogout";
 import useAuthContext from "../hooks/useAuthContext";
-import { RiLogoutCircleRLine } from "react-icons/ri";
+
+
 import { FaCarSide } from "react-icons/fa";
+import ProfilUser from "../page/ProfilUser";
 function Navbar() {
-  const {logout}=useLogout()
   const {user}=useAuthContext()
-  const handleClick=()=>{
-    logout()
-  }
+
   return ( 
     <nav className="bg-black w-full fixed top-0 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,7 +62,7 @@ function Navbar() {
                   </Link>
                 </div>)
                 :
-                <button onClick={handleClick} className="text-white text-2xl "><RiLogoutCircleRLine /></button>
+                <ProfilUser/>
               }
             </div>
           </div>

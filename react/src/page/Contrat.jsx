@@ -6,7 +6,7 @@ const Contrat = () => {
     const baseUrl = 'http://localhost:8000/api';
     const [data, setData] = useState([]);
     const { user } = useAuthContext();
-
+    console.log(data);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -19,8 +19,6 @@ const Contrat = () => {
                 if (response.ok) {
                     const jsonData = await response.json();
                     setData(jsonData);
-                }else if(response.status === 401) {
-                    localStorage.removeItem('user')
                 }else {
                     console.error('Failed to fetch contract data');
                 }

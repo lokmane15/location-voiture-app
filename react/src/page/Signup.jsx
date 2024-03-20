@@ -44,15 +44,16 @@ function RegistrationForm() {
   };
 
   return (
-    <div className="bg-gray-200 flex items-center justify-center h-screen mt-2">
-      <div className="bg-white p-8 rounded shadow-md w-full sm:w-96">
-        <h2 className="text-2xl font-semibold mb-4">Inscription</h2>
+    <div className="bg-cover bg-center bg-no-repeat  " style={{ backgroundImage: "url(https://infodunordsainteagathe.ca/wp-content/uploads/2023/07/concessionnaire20001-1024x768.jpg)" }}>
+    <div className="  flex items-center justify-center h-screen mt-12  " >
+      <div className="border border-white p-2 rounded shadow-md w-full sm:w-96 text-black  " style={{backdropFilter: "blur(20px)"}}>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Inscription</h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
             <div className="mb-4">
               <label
                 htmlFor="cin"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-black"
               >
                 CIN
               </label>
@@ -68,7 +69,7 @@ function RegistrationForm() {
             <div className="mb-4">
               <label
                 htmlFor="nom"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-black"
               >
                 Nom
               </label>
@@ -84,7 +85,7 @@ function RegistrationForm() {
             <div className="mb-4">
               <label
                 htmlFor="prenom"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-black"
               >
                 Prénom
               </label>
@@ -100,7 +101,7 @@ function RegistrationForm() {
             <div className="mb-4">
               <label
                 htmlFor="telephone"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-black"
               >
                 Numéro de téléphone
               </label>
@@ -116,7 +117,7 @@ function RegistrationForm() {
             <div className="mb-4 col-span-2">
               <label
                 htmlFor="adresse"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-black"
               >
                 Adresse
               </label>
@@ -132,7 +133,7 @@ function RegistrationForm() {
             <div className="mb-4 col-span-2">
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-black"
               >
                 Email
               </label>
@@ -148,7 +149,7 @@ function RegistrationForm() {
             <div className="mb-4 col-span-2">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-black"
               >
                 Password
               </label>
@@ -166,7 +167,7 @@ function RegistrationForm() {
             <button
               disabled={isLoading}
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600 btn-center"
             >
               {isLoading ? "LOADING..." : "S'inscrire"}
             </button>
@@ -174,6 +175,7 @@ function RegistrationForm() {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }

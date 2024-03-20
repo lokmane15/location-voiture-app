@@ -23,6 +23,9 @@ export default function Reserve() {
                 const json = await response.json();
                 setCar(json);
             }
+            if(response.status === 401) {
+                localStorage.removeItem('user')
+            }
         };
 
         if (user) {
@@ -79,6 +82,7 @@ export default function Reserve() {
                     <label className="block text-gray-700 text-sm font-bold mb-2">Date de début</label>
                     <input 
                         type="datetime-local" 
+                        required
                         onChange={e => setDateD(e.target.value)} 
                         className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
                     />
@@ -87,6 +91,7 @@ export default function Reserve() {
                     <label className="block text-gray-700 text-sm font-bold mb-2">Date de fin</label>
                     <input 
                         type="datetime-local" 
+                        required
                         onChange={e => setDateF(e.target.value)} 
                         className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
                     />
@@ -94,7 +99,7 @@ export default function Reserve() {
 
                 <div className="flex justify-center">
                     <button 
-                        className="bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-indigo-600"
+                        className="bg-cyan-300  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-cyan-400 "
                     >
                         Réserver
                     </button>

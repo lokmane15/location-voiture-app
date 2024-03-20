@@ -20,16 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    // all the cars
-    Route::get('/cars', CarsController::class . '@getCars');
-    //only cars disponible
-    Route::get('/carsDispo', CarsController::class . '@getCarsDisponible');
-
-    Route::post('/reservecar/{id}', ReservController::class . "@reserveCar");
-
     Route::post('/reservation/success/{id}', ReservController::class . "@reservationSuccess");
-
-    Route::get('/car/{id}', CarsController::class . '@show');
 
     //Contart
     Route::post('/Contrat/{id}', ContratController::class . '@ContratMaking');
@@ -39,11 +30,13 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/signup', authController::class . '@signup');
 Route::post('/login', authController::class . '@login');
 
+Route::get('/car/{id}', CarsController::class . '@show');
 
 //cars
-
-
-
+// all the cars
+Route::get('/cars', CarsController::class . '@getCars');
+//only cars disponible
+Route::get('/carsDispo', CarsController::class . '@getCarsDisponible');
 
 Route::post('/newcar', CarsController::class . '@store');
 
@@ -62,3 +55,6 @@ Route::delete('/destroycar/{id}', CarsController::class . '@destroy');
 Route::post('/marque', MarqueController::class . '@store');
 
 Route::get('/marque', MarqueController::class . '@show');
+
+
+Route::post('/reservecar/{id}', ReservController::class . "@reserveCar");

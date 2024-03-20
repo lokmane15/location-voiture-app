@@ -75,15 +75,20 @@ class ReservController extends Controller
 
             // Ensure payment is successful
             if ($session->payment_status === 'paid') {
+                // Retrieve the car by ID
                 $car = Cars::find($id);
+
+                // Check if car exists
+                if (!$car) {
+                    return response()->json(['message' => 'Voiture non trouvée'], 404);
+                }
 
                 // Create reservation
                 $reservation = Reservation::create([
                     'date_debut' => Carbon::parse($request->input('date_debut')),
                     'date_fin' => Carbon::parse($request->input('date_fin')),
-                    // Assuming date_fin is still available in request
                     'prix_total' => $session->amount_total / 10, // Convert from cents
-                    'marque' => $car->marque,
+                    'marque' => $car->marque ?? null, // Ensure 'marque' is set or set to null
                     'user_id' => $request->user()->id, // Assuming user is authenticated
                     'car_id' => $car->id,
                 ]);
@@ -95,9 +100,10 @@ class ReservController extends Controller
                 // Insert into contrat table
                 Contrat::create([
                     'date_signateur' => now(),
-                    'user_id' => $request->user()->id,
+                    'user_id' => $request->user()->id ?? null,
                     'car_id' => $car->id,
                 ]);
+
                 // Return success message and reservation details
                 return response()->json([
                     'message' => 'Réservation effectuée avec succès !',

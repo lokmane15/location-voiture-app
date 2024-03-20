@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import useAuthContext from '../hooks/useAuthContext';
 import fetchCars from '../services/FetchCars';
 
 export default function Cars() {
-    const { user } = useAuthContext();
     const baseUrl = 'http://127.0.0.1:8000/api';
 
     const [data, setData] = useState([]);
@@ -20,8 +18,7 @@ export default function Cars() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (user) {
-                    const jsonData = await fetchCars(baseUrl, user.token);
+                    const jsonData = await fetchCars(baseUrl);
                     setData(jsonData);
                     setFilteredData(jsonData);
 
@@ -33,14 +30,13 @@ export default function Cars() {
                     setMarques(uniqueMarques);
                     setPrix(uniquePrix);
                     setCouleurs(uniqueCouleurs);
-                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
 
         fetchData();
-    }, [baseUrl, user]);
+    }, [baseUrl]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);

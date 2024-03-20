@@ -13,6 +13,8 @@ return [
     |
     */
 
+
+
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
@@ -35,12 +37,6 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -58,6 +54,13 @@ return [
     | Supported: "database", "eloquent"
     |
     */
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+    ],
+
 
     'providers' => [
         'users' => [

@@ -26,7 +26,7 @@ function App() {
           <Route path='/Contactus' element={<Contactus/>}/>
           <Route 
           path='/cars' 
-          element={user ? <Cars/>: <Navigate to="/login"/>}/>
+          element={ <Cars/>}/>
 
           <Route 
           path='/login' 
@@ -46,7 +46,7 @@ function App() {
           />
           <Route 
           path='/payment/:id' 
-          element={<Payment/>}
+          element={user?<Payment/>:<Navigate to="/login"/>}
           />
           <Route 
           path='/success' 
@@ -54,7 +54,7 @@ function App() {
           />
           <Route 
           path='/contrat' 
-          element={<Contrat/>}
+          element={user?<Contrat/>:<Navigate to="/login"/>}
           />
         </Routes>
       <Footer/>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cars;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CarsController extends Controller
 {
@@ -21,8 +22,12 @@ class CarsController extends Controller
 
     public function show($id)
     {
-        $car = Cars::with('model')->findOrFail($id);
-        return response()->json($car, 200);
+        if (Auth::guard('sanctum')->check()) {
+            $car = Cars::with('model')->findOrFail($id);
+            return response()->json($car, 200);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 
     public function store(Request $request)

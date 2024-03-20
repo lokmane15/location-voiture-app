@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import useAuthContext from "../hooks/useAuthContext";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { FaCarSide } from "react-icons/fa";
 function Navbar() {
   const {logout}=useLogout()
   const {user}=useAuthContext()
@@ -14,7 +15,7 @@ function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div>
             <Link to="/" className="text-slate-300 font-bold">
-              <h6>Location<span className="text-cyan-400">Voiture</span></h6>
+              <h6>Location<span className="text-cyan-400">Voiture</span><FaCarSide className="inline ml-1 text-lg" /></h6>
             </Link>
           </div>
           <div className="hidden md:block flex items-center justify-center space-x-8">

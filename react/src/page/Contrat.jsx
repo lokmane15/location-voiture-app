@@ -19,7 +19,9 @@ const Contrat = () => {
                 if (response.ok) {
                     const jsonData = await response.json();
                     setData(jsonData);
-                } else {
+                }else if(response.status === 401) {
+                    localStorage.removeItem('user')
+                }else {
                     console.error('Failed to fetch contract data');
                 }
             } catch (error) {

@@ -11,6 +11,7 @@ import CarDetails from './page/CarDetails'
 import Reserve from './page/Reserve'
 import Payment from './page/Payment'
 import Success from './page/Success'
+import Contrat from './page/Contrat'
 
 function App() {
   const {user}=useAuthContext()
@@ -49,6 +50,10 @@ function App() {
           <Route 
           path='/success' 
           element={<Success/>}
+          />
+          <Route 
+          path='/contrat' 
+          element={<Contrat/>}
           />
         </Routes>
       <Footer/>

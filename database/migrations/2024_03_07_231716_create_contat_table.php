@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contrat', function (Blueprint $table) {
+        Schema::create('contrats', function (Blueprint $table) {
             $table->id();
             $table->timestamp('date_signateur')->default(now());
             $table->unsignedBigInteger('user_id');

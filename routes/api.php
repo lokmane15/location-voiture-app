@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\authController;
 use App\Http\Controllers\CarsController;
+use App\Http\Controllers\ContratController;
 use App\Http\Controllers\MarqueController;
 use App\Http\Controllers\ReservController;
 use Illuminate\Http\Request;
@@ -29,6 +30,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/reservation/success/{id}', ReservController::class . "@reservationSuccess");
 
     Route::get('/car/{id}', CarsController::class . '@show');
+
+    //Contart
+    Route::post('/Contrat/{id}', ContratController::class . '@ContratMaking');
+
+    Route::get('/getContrat', ContratController::class . '@getContrat');
 });
 Route::post('/signup', authController::class . '@signup');
 Route::post('/login', authController::class . '@login');

@@ -1,28 +1,19 @@
 import { Link } from "react-router-dom";
-import { useLogout } from "../hooks/useLogout";
 import useAuthContext from "../hooks/useAuthContext";
-import { RiLogoutCircleRLine } from "react-icons/ri";
-import { FaCarSide } from "react-icons/fa6";
+
+
+import { FaCarSide } from "react-icons/fa";
+import ProfilUser from "../page/ProfilUser";
 function Navbar() {
-  const {logout}=useLogout()
   const {user}=useAuthContext()
-  const handleClick=()=>{
-    logout()
-  }
+
   return ( 
     <nav className="bg-black w-full fixed top-0 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div>
             <Link to="/" className="text-slate-300 font-bold">
-            <img 
-  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZTij6YiSaPFso_n17hQPN1n6K27onj_dfKVihmDpslRCOwEl69zA8YnSIJ2yM-fXSWLQ&usqp=CAU" 
-  alt="Logo"
-  className="w-32 h-20 rounded-full mx-auto mb-5 " // Classes Tailwind pour ajuster la taille, centrer horizontalement et ajouter une marge en haut
-/>
-
-
-
+              <h6>Location<span className="text-cyan-400">Voiture</span><FaCarSide className="inline ml-1 text-lg" /></h6>
             </Link>
           </div>
           <div className="hidden md:block flex items-center justify-center space-x-8">
@@ -71,7 +62,7 @@ function Navbar() {
                   </Link>
                 </div>)
                 :
-                <button onClick={handleClick} className="text-white text-2xl "><RiLogoutCircleRLine /></button>
+                <ProfilUser/>
               }
             </div>
           </div>

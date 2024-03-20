@@ -1,7 +1,7 @@
-const fetchCars = async (baseUrl, token) => {
+const fetchCars = async (baseUrl) => {
     try {
         const response = await fetch(`${baseUrl}/carsDispo`, {
-            headers: { "Authorization": `Bearer ${token}` }
+            method:"GET"
         });
         if (response.ok) {
             const jsonData = await response.json();

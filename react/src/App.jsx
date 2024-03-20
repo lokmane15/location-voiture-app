@@ -12,6 +12,7 @@ import Reserve from './page/Reserve'
 import Payment from './page/Payment'
 import Success from './page/Success'
 import Contrat from './page/Contrat'
+import Cancel from './page/Cancel'
 
 function App() {
   const {user}=useAuthContext()
@@ -25,7 +26,7 @@ function App() {
           <Route path='/Contactus' element={<Contactus/>}/>
           <Route 
           path='/cars' 
-          element={user ? <Cars/>: <Navigate to="/login"/>}/>
+          element={ <Cars/>}/>
 
           <Route 
           path='/login' 
@@ -45,15 +46,19 @@ function App() {
           />
           <Route 
           path='/payment/:id' 
-          element={<Payment/>}
+          element={user?<Payment/>:<Navigate to="/login"/>}
           />
           <Route 
           path='/success' 
           element={<Success/>}
           />
           <Route 
+          path='/cancel' 
+          element={<Cancel/>}
+          />
+          <Route 
           path='/contrat' 
-          element={<Contrat/>}
+          element={user?<Contrat/>:<Navigate to="/login"/>}
           />
         </Routes>
       <Footer/>

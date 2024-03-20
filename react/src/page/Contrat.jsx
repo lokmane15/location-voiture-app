@@ -6,7 +6,7 @@ const Contrat = () => {
     const baseUrl = 'http://localhost:8000/api';
     const [data, setData] = useState([]);
     const { user } = useAuthContext();
-
+    console.log(data);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -19,7 +19,7 @@ const Contrat = () => {
                 if (response.ok) {
                     const jsonData = await response.json();
                     setData(jsonData);
-                } else {
+                }else {
                     console.error('Failed to fetch contract data');
                 }
             } catch (error) {

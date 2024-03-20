@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useAuthContext from '../hooks/useAuthContext';
-
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import {Link} from 'react-router-dom'
 export default function Success() {
     const baseUrl = 'http://localhost:8000/api';
     const [error, setError] = useState(null); // State for storing error message
@@ -40,9 +41,13 @@ export default function Success() {
     };
 
     return (
-        <div>
-            <h1>Success</h1>
-            {error && <div className="text-red-500">{error}</div>} {/* Render error message if error exists */}
+        <div className='p-40'>
+            <div className="card bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 transform hover:scale-105 p-10">
+            <IoCheckmarkDoneCircle style={{color:"green",fontSize:"45px",marginBottom:"15px"}} className='' />
+                <h1 style={{color:"green"}} className="text-xl font-bold  mb-2">Payment successful</h1>
+                <p className="text-gray-600">Congratulations! Your reservation has been successfuly confirmed</p>
+                <button style={{backgroundColor:"green",width:"20%"}} className=" text-white font-bold py-2 px-4 mt-3 rounded focus:outline-none focus:shadow-outline" ><Link to='/contrat'>voir ton contrat</Link> </button>
+            </div>
         </div>
     );
 }

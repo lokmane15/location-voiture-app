@@ -23,22 +23,22 @@ Route::middleware('auth:sanctum')->group(function () {
     // all the cars
     Route::get('/cars', CarsController::class . '@getCars');
     //only cars disponible
-    Route::get('/carsDispo', CarsController::class . '@getCarsDisponible');
-
+    
     Route::post('/reservecar/{id}', ReservController::class . "@reserveCar");
-
+    
     Route::post('/reservation/success/{id}', ReservController::class . "@reservationSuccess");
-
+    
     Route::get('/car/{id}', CarsController::class . '@show');
-
+    
     //Contart
     Route::post('/Contrat/{id}', ContratController::class . '@ContratMaking');
-
+    
     Route::get('/getContrat', ContratController::class . '@getContrat');
 });
 Route::post('/signup', authController::class . '@signup');
 Route::post('/login', authController::class . '@login');
 
+Route::get('/carsDispo', CarsController::class . '@getCarsDisponible');
 
 //cars
 

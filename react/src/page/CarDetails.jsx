@@ -7,7 +7,7 @@ export default function CarDetails() {
     const { user } = useAuthContext();
     const [data, setData] = useState({});
     const baseUrl = 'http://127.0.0.1:8000/api';
-
+    console.log(user);
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`${baseUrl}/car/${id}`, {

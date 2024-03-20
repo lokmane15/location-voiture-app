@@ -3,7 +3,6 @@ import {Link} from "react-router-dom"
 import fetchMarque from "../services/FetchMarque";
 import fetchCars from "../services/FetchCars";
 import useAuthContext from '../hooks/useAuthContext';
-import { Carousel } from 'react-bootstrap';
 function Home() {
   const baseUrl = 'http://127.0.0.1:8000/api';
   const [marque,setMarque]=useState([]);
@@ -22,7 +21,10 @@ function Home() {
       }
       getCars();
     },[baseUrl])
-    console.log(cars);
+    console.log(cars)     
+    ;
+
+    
   return (
     <>
       <body className="bg-slate-100">
@@ -88,7 +90,8 @@ function Home() {
           </div>
         ))}
       </div>
-    </div>
+    </div>   
+  
       </body>
       </>
   );

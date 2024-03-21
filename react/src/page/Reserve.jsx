@@ -24,7 +24,8 @@ export default function Reserve() {
                 setCar(json);
             }
             if(response.status === 401) {
-                localStorage.removeItem('user')
+                localStorage.removeItem('user');
+                location.reload();
             }
         };
 

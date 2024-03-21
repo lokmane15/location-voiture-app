@@ -25,6 +25,7 @@ export default function CarDetails() {
             }
             if (response.status === 401) {
                 localStorage.removeItem('user')
+                location.reload()
             }
         };
 

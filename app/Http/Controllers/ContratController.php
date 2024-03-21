@@ -15,7 +15,7 @@ class ContratController extends Controller
         // Check if there is an authenticated user
         if (Auth::guard('sanctum')->check()) {
             // Retrieve the authenticated user's ID
-            $user_id = $request->user()->id;
+            $user_id = Auth::guard('sanctum')->user()->id;
 
             // Retrieve contracts for the user with related user and car data
             $contrats = Contrat::where('user_id', $user_id)

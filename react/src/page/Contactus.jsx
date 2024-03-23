@@ -26,8 +26,8 @@ function ContactForm() {
   return (
     <div className="bg-cover bg-center bg-no-repeat  mt-5" style={{minHeight:"70vh"}}>
 
-    <div className="max-w-md mx-auto bg-white rounded-md p-8 shadow-md mt-20">
-      <h2 className="text-2xl font-semibold ">Contact Us</h2>
+    <div className="max-w-md mx-auto bg-white rounded-md p-8 shadow-md mt-20 " style={{boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px;"}}>
+      <h2 className="text-2xl font-semibold  text-center">Contact Us</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Name</label>

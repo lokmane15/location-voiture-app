@@ -19,20 +19,20 @@ function Navbar() {
           <div className="hidden md:block flex items-center justify-center space-x-8">
             <Link
               to="/cars"
-              className="text-slate-300 hover:text-gray-300 hover:bg-cyan-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "
+              className="text-slate-300 hover:text-black hover:bg-cyan-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "
             >
-              Voitures
+              Cars
             </Link>
             <Link
               to="/contactus"
-              className="text-slate-300 hover:text-gray-300 hover:bg-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "
+              className="text-slate-300 hover:text-black hover:bg-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "
             >
-              Contactez-nous
+              Contact Us
             </Link>
-           
+            
             <Link
               to="/contrat"
-              className="text-slate-300 hover:text-gray-300 hover:bg-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "
+              className="text-slate-300 hover:text-black hover:bg-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "
             >
               Contrat
             </Link>

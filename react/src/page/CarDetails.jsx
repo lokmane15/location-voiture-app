@@ -37,7 +37,7 @@ export default function CarDetails() {
     return (
         <>
             <div className="container car-details flex justify-center  mt-20 mb-20">
-                <div className="card mb-3" style={{width:"30rem"}} >
+                <div className="card mb-3" style={{width:"30rem"}}>
                     <img src={`/public/${data.image}`} className="card-img-top img-fluid" alt="image"/>
                     <div  className="card-body">
                         <h3 style={{textTransform: "uppercase"}} className="text-2xl font-medium mb-3">{data.marque} {data.model && data.model.nom_model}</h3>

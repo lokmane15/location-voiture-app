@@ -3,7 +3,7 @@ import { FaFacebookF, FaLinkedinIn, FaInstagram, FaTwitter } from 'react-icons/f
 const Footer = () => {
   return (
     
-      <footer className="text-center text-lg-start mt-" style={{ backgroundColor: "#000" }}>
+      <footer className="text-center text-lg-start" style={{ backgroundColor: "#000" }}>
         <div className="container d-flex justify-content-center py-5">
             <FaFacebookF style={{color:"white",marginRight:"10px"}} size={17} />
             <FaLinkedinIn style={{color:"white",marginRight:"10px"}} size={17} />

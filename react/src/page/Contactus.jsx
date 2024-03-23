@@ -24,7 +24,7 @@ function ContactForm() {
   };
 
   return (
-    <div className="bg-cover bg-center bg-no-repeat  mt-5" style={{ backgroundImage: "url()" }}>
+    <div className="bg-cover bg-center bg-no-repeat  mt-5" style={{minHeight:"70vh"}}>
 
     <div className="max-w-md mx-auto bg-white rounded-md p-8 shadow-md mt-20">
       <h2 className="text-2xl font-semibold ">Contact Us</h2>

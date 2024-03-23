@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .reserve-form{
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     padding: 30px;
@@ -65,3 +64,4 @@ main button{
   box-shadow: rgba(103, 232, 249, 0.705) 0px 22px 70px 4px;
   /* box-shadow: rgb(103 232 249) 0px 22px 70px 4px; */
 }
+

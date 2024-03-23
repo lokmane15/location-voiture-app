@@ -1,12 +1,21 @@
 import { Link } from "react-router-dom";
 import useAuthContext from "../hooks/useAuthContext";
-
-
+import { FaRegUserCircle } from "react-icons/fa";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 import { FaCarSide } from "react-icons/fa";
-import ProfilUser from "../page/ProfilUser";
+import { useState } from "react";
+import { useLogout } from "../hooks/useLogout";
 function Navbar() {
   const {user}=useAuthContext()
+  const [profil,setProfil] =useState(false)
+  const {logout} =useLogout()
 
+  const handleClick =  () => {
+    setProfil(!profil)
+  }
+  const handleClickLogout = () =>{
+    logout()
+  }
   return ( 
     <nav className="bg-sky-600 w-full fixed top-0 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,7 +71,18 @@ function Navbar() {
                   </Link>
                 </div>)
                 :
-                <ProfilUser/>
+                <div className="dropdown">
+                <FaRegUserCircle className="profil-icon text-white cursor-pointer text-2xl" onClick={handleClick} />
+                {profil && (
+                  <div className="dropdown-menu bg-white p-3 mt-2">
+                    <div className="dropdown-menu-item ml-3">Username: {user.user.nom}</div>
+                    <button onClick={handleClickLogout} className="dropdown-menu-item">
+                      Logout
+                      <RiLogoutCircleRLine className="inline ml-2" />
+                    </button>
+                  </div>
+                )}
+              </div>              
               }
             </div>
           </div>

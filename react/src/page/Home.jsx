@@ -25,7 +25,7 @@ function Home() {
     <main className="bg-center bg-sky-600">
       <div className="container mx-auto p-20">
         <div className="flex flex-col md:flex-row">
-          <div className="md:w-1/2 mb-10 md:mb-0">
+          <div className="md:w-1/2 mb-10 md:mb-0 p-20">
             <h1 className="mb-3">Car Rental</h1>
             <p className="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente aliquid odit perspiciatis corporis eveniet porro voluptas commodi perferendis officia maxime, nulla laborum ea optio molestiae dolor possimus officiis ratione est.</p>
             <button className="bg-cyan-400"><Link to="/cars">Explore More</Link></button>
@@ -37,7 +37,7 @@ function Home() {
       </div>
     </main>
       <div className="container mx-auto mt-5">
-        <Link className="flex p-3 font-normal text-cyan-400 justify-end" to="/cars">Voir Plus</Link>
+        <Link className="flex p-3 font-normal text-cyan-400 justify-end " to="/cars">See More  &gt;</Link>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {cars.slice(0, 3).map((car, index) => (
             <div key={index} className="bg-white p-4 rounded-md my-1 flex flex-col justify-between">

@@ -99,12 +99,12 @@ export default function Payment() {
                     </div>
                     <form onSubmit={handleSubmit} className="flex justify-end items-center mr-3 mt-4" method="POST">
                             {error && <div className="text-red-500">{error}</div>}
-                            <span className="bg-cyan-300  hover:bg-cyan-400  mr-3 text-white text-center font-bold w-20 py-2 block  rounded"><Link to='/cars'>annuler</Link> </span>
+                            <span className="bg-sky-600  hover:bg-cyan-400  mr-3 text-white text-center font-bold w-20 py-2 block  rounded"><Link to='/cars'>annuler</Link> </span>
                             
                             <button
                                 disabled={isLoading}
                                 type="submit"
-                                className={`bg-cyan-300 hover:bg-cyan-400  text-white font-bold py-2 px-4 rounded ${
+                                className={`bg-sky-600 hover:bg-cyan-400  text-white font-bold py-2 px-4 rounded ${
                                     isLoading ? 'opacity-50 cursor-not-allowed' : ''
                                 }`}
                             >

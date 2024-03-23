@@ -29,12 +29,7 @@ function Navbar() {
             >
               Contactez-nous
             </Link>
-            <Link
-              to="/about"
-              className="text-slate-300 hover:text-gray-300 hover:bg-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "
-            >
-              À propos
-            </Link>
+           
             <Link
               to="/contrat"
               className="text-slate-300 hover:text-gray-300 hover:bg-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "

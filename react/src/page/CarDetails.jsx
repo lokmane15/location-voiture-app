@@ -37,7 +37,7 @@ export default function CarDetails() {
     return (
         <>
             <div className="container car-details flex justify-center  mt-20 mb-20">
-                <div className="card mb-3" style={{width:"30rem"}}>
+                <div className="card mb-3" style={{width:"30rem"}} >
                     <img src={`/public/${data.image}`} className="card-img-top img-fluid" alt="image"/>
                     <div  className="card-body">
                         <h3 style={{textTransform: "uppercase"}} className="text-2xl font-medium mb-3">{data.marque} {data.model && data.model.nom_model}</h3>
@@ -47,7 +47,7 @@ export default function CarDetails() {
                         <p className="card-text mb-1 font-medium"> <BsFillFuelPumpFill  className="size-6 inline mr-3"/> type carburant: {data.model && data.model.type_carburant}</p>
                         <p className="card-text mb-1 font-medium"><MdGpsFixed  className="size-6 inline mr-3"/> GPS: {data.model && data.model.gps === 0 ? "Non disponible" : "Disponible"}</p>
                         <p className="card-text mb-1 font-medium"> <MdOutlineReduceCapacity className="size-6 inline mr-3" />  Capacite assises: {data.model && data.model.capacite_assises}</p>
-                        <button className="mt-3  bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-indigo-600"><Link to={`/reserve/${data.id}`} >Reserve</Link></button>
+                        <button className="mt-3  bg-sky-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-cyan-400"><Link to={`/reserve/${data.id}`} >Reserve</Link></button>
                     </div>
                 </div>
             </div>  

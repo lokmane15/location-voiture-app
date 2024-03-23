@@ -47,10 +47,11 @@ export default function Reserve() {
     
     
     return (
-        <div className="container mx-auto px-4 py-8 mt-20">
-            <div className="container mx-auto px-4 py-8 mt-20">
+       
+        <div className="container mx-auto px-4 py-8 mt-20"  >
+            <div className="container mx-auto px-4 py-8 mt-16 " >
 
-            <form className="max-w-lg mx-auto reserve-form" onSubmit={handleFormSubmit} >
+            <form className="max-w-lg mx-auto reserve-form " onSubmit={handleFormSubmit}  style={{boxShadow:" rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;"} } >
                 <div className="mb-4">
                     <h1 className="text-center text-2xl font-black mb-3 ">FORMULAIRE DE RESERVATION</h1>
                     <label className="block text-gray-700 text-sm font-bold mb-2">Nom</label>
@@ -100,7 +101,7 @@ export default function Reserve() {
 
                 <div className="flex justify-center">
                     <button 
-                        className="bg-cyan-300  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-cyan-400 "
+                        className="bg-sky-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-cyan-400 "
                     >
                         Réserver
                     </button>
@@ -108,5 +109,6 @@ export default function Reserve() {
             </form>
         </div>
         </div>
+        
     );
 }

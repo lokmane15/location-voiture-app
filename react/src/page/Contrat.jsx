@@ -86,7 +86,7 @@ const Contrat = () => {
     };
 
     return (
-        <div className="container mx-auto mt-40">
+        <div style={{minHeight:"70vh"}} className="container mx-auto mt-40">
             {data.map((contract, index) => (
                 <div key={index} className="mb-4">
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4" onClick={() => openContractInNewTab(contract)}>View Contract {index + 1}</button>

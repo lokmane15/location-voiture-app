@@ -36,7 +36,7 @@ export default function CarDetails() {
     
     return (
         <>
-            <div className="container car-details flex justify-center  mt-20 mb-20">
+            <div style={{minHeight:"70vh"}} className="container car-details flex justify-center  mt-20 mb-20">
                 <div className="card mb-3" style={{width:"30rem"}}>
                     <img src={`/public/${data.image}`} className="card-img-top img-fluid" alt="image"/>
                     <div  className="card-body">

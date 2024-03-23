@@ -83,7 +83,7 @@ export default function Payment() {
     };
 
     return (
-        <div className="pt-20 mt-20 container">
+        <div style={{minHeight:"70vh"}} className="pt-20 mt-20 container">
             <div className="card mb-3" >
                 <div className="row g-0">
                     <div className="col-md-4">

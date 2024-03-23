@@ -27,7 +27,7 @@ export default function Payment() {
         if (data.datef && data.dated) {
             const startDate = new Date(data.dated);
             const endDate = new Date(data.datef);
-            const differenceInMillis = endDate - startDate;
+            const differenceInMillis = endDate.getTime() - startDate.getTime();
             const daysDifference = differenceInMillis / (1000 * 60 * 60 * 24); // Convert milliseconds to days
             setDuration(daysDifference);
         }
@@ -35,13 +35,13 @@ export default function Payment() {
     
     // useEffect to calculate total price whenever duration changes
     useEffect(() => {
-        // Assuming car rental rate is stored in car.ratePerDay
+        // Assuming car rental rate is stored in car.prix
         if (car && car.prix) {
             const calculatedPrice = car.prix * duration;
             setTotalPrice(calculatedPrice);
         }
     }, [duration, car]);
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);

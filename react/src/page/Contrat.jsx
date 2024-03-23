@@ -104,12 +104,14 @@ const Contrat = () => {
         newWindow.document.write(contractHtml);
     };
     
-
     const downloadContractAsPDF = (contract) => {
-        const contractHtml = generateContractHTML(contract);
-        html2pdf().from(contractHtml).save('contract.pdf');
+        const contractHtml = ReactDOMServer.renderToString(generateContractHTML(contract));
+        html2pdf().from(contractHtml).save('contract.pdf', () => {
+            // This callback function will be executed once the PDF generation is complete
+            console.log('PDF generated successfully');
+        });
     };
-
+    
     // Function to format date in 'YYYY-MM-DD' format
     const formatDate = (date) => {
         const year = date.getFullYear();

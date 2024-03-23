@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import fetchCars from '../services/FetchCars';
 
 export default function Cars() {
     const baseUrl = 'http://127.0.0.1:8000/api';
+    const location = useLocation();
 
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -13,9 +14,8 @@ export default function Cars() {
     const [marqueFilter, setMarqueFilter] = useState('');
     const [prixFilter, setPrixFilter] = useState('');
     const [couleurFilter, setCouleurFilter] = useState('');
-    const [marqueUrl, setMarqueUrl] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [dataPerPage] = useState(2);
+    const [dataPerPage] = useState(10);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,21 +40,21 @@ export default function Cars() {
     }, [baseUrl]);
 
     useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(location.search);
         const variable = params.get('marque');
         if (variable) {
-            setMarqueUrl(variable);
+            setMarqueFilter(variable);
         } else {
-            setMarqueUrl('');
+            setMarqueFilter('');
         }
-    }, []);
+    }, [location.search]);
 
     useEffect(() => {
         filterData();
-    }, [marqueUrl, marqueFilter, prixFilter, couleurFilter, currentPage]);
+    }, [marqueFilter, prixFilter, couleurFilter, currentPage, data]); // Include 'data' in dependencies
 
     const filterData = () => {
-        let filtered = [...data]; // Start with the entire dataset
+        let filtered = [...data];
 
         if (marqueFilter) {
             filtered = filtered.filter(car => car.marque === marqueFilter);
@@ -68,31 +68,24 @@ export default function Cars() {
             filtered = filtered.filter(car => car.couleur === couleurFilter);
         }
 
-        if (marqueUrl) {
-            filtered = filtered.filter(car => car.marque === marqueUrl);
-        }
-
-        // Update filteredData with filtered results
         setFilteredData(filtered);
     };
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    // Calculate pagination
     const indexOfLastCar = currentPage * dataPerPage;
     const indexOfFirstCar = indexOfLastCar - dataPerPage;
     const currentCars = filteredData.slice(indexOfFirstCar, indexOfLastCar);
 
-    // Generate page numbers for pagination
     const pageNumbers = [];
     for (let i = 1; i <= Math.ceil(filteredData.length / dataPerPage); i++) {
         pageNumbers.push(i);
     }
 
     return (
-        <div style={{minHeight:"70vh"}} className="container mx-auto mt-20">
+        <div style={{ minHeight: "70vh" }} className="container mx-auto mt-20">
             <div className="flex mb-4">
-            <select onChange={(e) => setMarqueFilter(e.target.value)} value={marqueFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
+                <select onChange={(e) => setMarqueFilter(e.target.value)} value={marqueFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
                     <option value="">Filtrer par Marque</option>
                     {marques.map(marque => (
                         <option key={marque} value={marque}>{marque}</option>
@@ -131,20 +124,19 @@ export default function Cars() {
                 ) : (
                     <p>Aucune voiture ne correspond aux filtres sélectionnés.</p>
                 )}
-
-                {/* Pagination */}
             </div>
-                <nav className='flex justify-center'>
-                    <ul className="pagination">
-                        {pageNumbers.map(number => (
-                            <li key={number} className="page-item">
-                                <button onClick={() => paginate(number)} className="page-link">
-                                    {number}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
+
+            <nav className='flex justify-center'>
+                <ul className="pagination">
+                    {pageNumbers.map(number => (
+                        <li key={number} className="page-item">
+                            <button onClick={() => paginate(number)} className="page-link">
+                                {number}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
         </div>
     );
 }

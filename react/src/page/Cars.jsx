@@ -14,22 +14,23 @@ export default function Cars() {
     const [prixFilter, setPrixFilter] = useState('');
     const [couleurFilter, setCouleurFilter] = useState('');
     const [marqueUrl, setMarqueUrl] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [dataPerPage] = useState(2);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                    const jsonData = await fetchCars(baseUrl);
-                    setData(jsonData);
-                    setFilteredData(jsonData);
+                const jsonData = await fetchCars(baseUrl);
+                setData(jsonData);
+                setFilteredData(jsonData);
 
-                    // Extract unique values for marque, prix, and couleur
-                    const uniqueMarques = Array.from(new Set(jsonData.map(item => item.marque)));
-                    const uniquePrix = Array.from(new Set(jsonData.map(item => parseFloat(item.prix))));
-                    const uniqueCouleurs = Array.from(new Set(jsonData.map(item => item.couleur)));
+                const uniqueMarques = Array.from(new Set(jsonData.map(item => item.marque)));
+                const uniquePrix = Array.from(new Set(jsonData.map(item => parseFloat(item.prix))));
+                const uniqueCouleurs = Array.from(new Set(jsonData.map(item => item.couleur)));
 
-                    setMarques(uniqueMarques);
-                    setPrix(uniquePrix);
-                    setCouleurs(uniqueCouleurs);
+                setMarques(uniqueMarques);
+                setPrix(uniquePrix);
+                setCouleurs(uniqueCouleurs);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -50,10 +51,10 @@ export default function Cars() {
 
     useEffect(() => {
         filterData();
-    }, [marqueUrl,marqueFilter, prixFilter, couleurFilter, data]);
+    }, [marqueUrl, marqueFilter, prixFilter, couleurFilter, currentPage]);
 
     const filterData = () => {
-        let filtered = [...data];
+        let filtered = [...data]; // Start with the entire dataset
 
         if (marqueFilter) {
             filtered = filtered.filter(car => car.marque === marqueFilter);
@@ -66,18 +67,32 @@ export default function Cars() {
         if (couleurFilter) {
             filtered = filtered.filter(car => car.couleur === couleurFilter);
         }
+
         if (marqueUrl) {
             filtered = filtered.filter(car => car.marque === marqueUrl);
         }
-        
 
+        // Update filteredData with filtered results
         setFilteredData(filtered);
     };
 
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    // Calculate pagination
+    const indexOfLastCar = currentPage * dataPerPage;
+    const indexOfFirstCar = indexOfLastCar - dataPerPage;
+    const currentCars = filteredData.slice(indexOfFirstCar, indexOfLastCar);
+
+    // Generate page numbers for pagination
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(filteredData.length / dataPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
     return (
-        <div className="container mx-auto mt-20">
+        <div style={{minHeight:"70vh"}} className="container mx-auto mt-20">
             <div className="flex mb-4">
-                <select onChange={(e) => setMarqueFilter(e.target.value)} value={marqueFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
+            <select onChange={(e) => setMarqueFilter(e.target.value)} value={marqueFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
                     <option value="">Filtrer par Marque</option>
                     {marques.map(marque => (
                         <option key={marque} value={marque}>{marque}</option>
@@ -100,19 +115,36 @@ export default function Cars() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 my-2">
-                {filteredData.length > 0 ? filteredData.map(item => (
-                    <div key={item.id} className="bg-white p-4 rounded-md shadow-md my-1 flex flex-col justify-between">
-                        <Link to={`/carDetails/${item.id}`}>
-                            <div>
-                                <img src={item.image} alt="Car" className="mb-2" />
-                                <h1 className="text-xl font-bold mb-2">{item.marque} {item.model.nom_model}</h1>
-                                <p className="text-gray-700">Num Matricule: {item.num_matricule}</p>
-                                <p className="text-gray-700">Prix: {item.prix}DH/Jour</p>
-                            </div>
-                        </Link>
-                    </div>
-                )) : <p>Aucune voiture ne correspond aux filtres sélectionnés.</p>}
+                {currentCars.length > 0 ? (
+                    currentCars.map(item => (
+                        <div key={item.id} className="bg-white p-4 rounded-md shadow-md my-1 flex flex-col justify-between">
+                            <Link to={`/carDetails/${item.id}`}>
+                                <div>
+                                    <img src={item.image} alt="Car" className="mb-2" />
+                                    <h1 className="text-xl font-bold mb-2">{item.marque} {item.model.nom_model}</h1>
+                                    <p className="text-gray-700">Num Matricule: {item.num_matricule}</p>
+                                    <p className="text-gray-700">Prix: {item.prix}DH/Jour</p>
+                                </div>
+                            </Link>
+                        </div>
+                    ))
+                ) : (
+                    <p>Aucune voiture ne correspond aux filtres sélectionnés.</p>
+                )}
+
+                {/* Pagination */}
             </div>
+                <nav className='flex justify-center'>
+                    <ul className="pagination">
+                        {pageNumbers.map(number => (
+                            <li key={number} className="page-item">
+                                <button onClick={() => paginate(number)} className="page-link">
+                                    {number}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
         </div>
     );
 }

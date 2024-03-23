@@ -46,3 +46,22 @@
     background-color: #f0f0f0;
   }
   
+
+main h1{
+  color: white;
+  font-size: 50px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+main p{
+  color: white;
+  margin-top: 10px;
+}
+main button{
+  padding: 15px;
+  border-radius: 30px;
+  margin-top: 10px;
+  width: 240px;
+  box-shadow: rgba(103, 232, 249, 0.705) 0px 22px 70px 4px;
+  /* box-shadow: rgb(103 232 249) 0px 22px 70px 4px; */
+}

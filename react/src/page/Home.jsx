@@ -73,7 +73,7 @@ function Home() {
       <div className="row">
         <h1 className=" font-weight-bold text-2xl font-semibold mb-3">All Brands</h1>
         {marque.map(item => (
-          <div key={item.id} className="col-md-2 mb-4">
+          <div key={item.id} className="col-md-2 col-sm-6 mb-4">
             <Link to={`/cars?marque=${item.nom_marque}`}>
             <div className="card" style={{width:"12rem", height: "10rem"}}>
               <img src={item.image_path} style={{objectFit: "cover"}} className="" alt={item.nom_marque} />

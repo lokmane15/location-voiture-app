@@ -36,6 +36,12 @@ export default function CarDetails() {
     
     return (
         <>
+        <div style={{marginTop:"80px"}}>
+            <Link
+                to="/cars"
+                className="p-4"
+            >&larr; <span>Back</span></Link>
+        </div>
             <div className="container car-details flex justify-center  mt-20 mb-20">
                 <div className="card mb-3" style={{width:"30rem"}}>
                     <img src={`/public/${data.image}`} className="card-img-top img-fluid" alt="image"/>

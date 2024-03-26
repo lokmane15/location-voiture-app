@@ -53,7 +53,7 @@ const Contrat = () => {
                     <p><strong>End Date:</strong> {formatDate(endDate)}</p>
                 </div>
                 <div style={{ width: '50%' }}>
-                    <p><strong>Duration:</strong> {differenceInDays}</p>
+                    <p><strong>Duration:</strong> {differenceInDays} Days</p>
                     <p><strong>Total Price:</strong> {totalPrice.toFixed(2)} DH</p>
                 </div>
             </div>

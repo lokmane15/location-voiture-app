@@ -23,14 +23,14 @@ function Home() {
   return (
     <>
     <main className="bg-center bg-sky-600">
-      <div className="container mx-auto p-20">
-        <div className="flex flex-col md:flex-row">
-          <div className="md:w-1/2 mb-10 md:mb-0 p-20">
-            <h1 className="mb-3">Car Rental</h1>
+      <div className="container mx-auto p-5">
+        <div className="flex flex-col md:flex-row items-center">
+          <div className="md:w-1/2 p-5">
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">Car Rental</h1>
             <p className="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente aliquid odit perspiciatis corporis eveniet porro voluptas commodi perferendis officia maxime, nulla laborum ea optio molestiae dolor possimus officiis ratione est.</p>
             <button className="bg-cyan-400"><Link to="/cars">Explore More</Link></button>
           </div>
-          <div className="md:w-1/2">
+          <div className="md:w-1/2 p-5">
             <img src="../../public/bro-takes-photos-fKNPmWPtESI-unsplash-removebg-preview.png" alt="" />
           </div>
         </div>
@@ -73,10 +73,10 @@ function Home() {
       <div className="row">
         <h1 className=" font-weight-bold text-2xl font-semibold mb-3">All Brands</h1>
         {marque.map(item => (
-          <div key={item.id} className="col-md-4 mb-4">
+          <div key={item.id} className="col-md-2 col-sm-6 mb-4">
             <Link to={`/cars?marque=${item.nom_marque}`}>
-            <div className="card" style={{width:"16rem", height: "14rem"}}>
-              <img src={item.image_path} style={{objectFit: "cover"}} className="card-img-top" alt={item.nom_marque} />
+            <div className="card" style={{width:"12rem", height: "10rem"}}>
+              <img src={item.image_path} style={{objectFit: "cover"}} className="" alt={item.nom_marque} />
             </div>
             </Link>
           </div>

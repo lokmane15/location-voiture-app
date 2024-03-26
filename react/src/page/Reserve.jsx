@@ -47,8 +47,14 @@ export default function Reserve() {
     
     
     return (
-       
-        <div className="container mx-auto px-4 py-8 mt-20"  >
+       <>
+               <div style={{marginTop:"80px"}}>
+            <Link
+                to={`/carDetails/${id}`}
+                className="p-4"
+            >&larr; <span>Back</span></Link>
+        </div>
+        <div className="container mx-auto px-4  mt-5"  >
             <div className="container mx-auto px-4 py-8 mt-16 " >
 
             <form className="max-w-lg mx-auto reserve-form " onSubmit={handleFormSubmit}  style={{boxShadow:" rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;"} } >
@@ -109,6 +115,8 @@ export default function Reserve() {
             </form>
         </div>
         </div>
+       
+       </>
         
     );
 }

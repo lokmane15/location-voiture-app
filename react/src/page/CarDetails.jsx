@@ -53,7 +53,7 @@ export default function CarDetails() {
                         <p className="card-text mb-1 font-medium"> <BsFillFuelPumpFill  className="size-6 inline mr-3"/> type carburant: {data.model && data.model.type_carburant}</p>
                         <p className="card-text mb-1 font-medium"><MdGpsFixed  className="size-6 inline mr-3"/> GPS: {data.model && data.model.gps === 0 ? "Non disponible" : "Disponible"}</p>
                         <p className="card-text mb-1 font-medium"> <MdOutlineReduceCapacity className="size-6 inline mr-3" />  Capacite assises: {data.model && data.model.capacite_assises}</p>
-                        <button className="mt-3  bg-sky-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-cyan-400"><Link to={`/reserve/${data.id}`} >Reserve</Link></button>
+                        <button className="mt-3  bg-cyan-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-cyan-500"><Link to={`/reserve/${data.id}`} >Reserve</Link></button>
                     </div>
                 </div>
             </div>  

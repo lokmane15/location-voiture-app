@@ -85,29 +85,36 @@ export default function Cars() {
     return (
         <div style={{ minHeight: "70vh" }} className="container mx-auto mt-20">
             <div className="flex mb-4">
-                <select onChange={(e) => setMarqueFilter(e.target.value)} value={marqueFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
-                    <option value="">Filtrer par Marque</option>
-                    {marques.map(marque => (
-                        <option key={marque} value={marque}>{marque}</option>
+                <div className="row">
+                    <div className="col-lg-4 col-md-4 col-sm-12">
+                    <select onChange={(e) => setMarqueFilter(e.target.value)} value={marqueFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
+                        <option value="">Filtrer par Marque</option>
+                        {marques.map(marque => (
+                            <option key={marque} value={marque}>{marque}</option>
+                        ))}
+                    </select>
+                    </div>
+                    <div className="col-lg-4 col-md-4 col-sm-12">
+                    <select onChange={(e) => setPrixFilter(e.target.value)} value={prixFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
+                        <option value="">Filtrer par Prix</option>
+                        {prix.map(p => (
+                            <option key={p} value={p}>{p}</option>
                     ))}
-                </select>
-
-                <select onChange={(e) => setPrixFilter(e.target.value)} value={prixFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
-                    <option value="">Filtrer par Prix</option>
-                    {prix.map(p => (
-                        <option key={p} value={p}>{p}</option>
-                    ))}
-                </select>
-
-                <select onChange={(e) => setCouleurFilter(e.target.value)} value={couleurFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
-                    <option value="">Filtrer par Couleur</option>
-                    {couleurs.map(couleur => (
+                    </select>
+                    </div>
+                    <div className="col-lg-4 col-md-4 col-sm-12">
+                    <select onChange={(e) => setCouleurFilter(e.target.value)} value={couleurFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
+                        <option value="">Filtrer par Couleur</option>
+                        {couleurs.map(couleur => (
                         <option key={couleur} value={couleur}>{couleur}</option>
                     ))}
                 </select>
+                    </div>
+                </div>
+
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 my-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 transition-transform duration-300 transform hover:scale-10 my-2">
                 {currentCars.length > 0 ? (
                     currentCars.map(item => (
                         <div key={item.id} className="bg-white p-4 rounded-md shadow-md my-1 flex flex-col justify-between">

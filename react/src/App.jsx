@@ -60,8 +60,8 @@ function App() {
           element={user?<Contrat/>:<Navigate to="/login"/>}
           />
         </Routes>
-      <Footer/>
       </BrowserRouter>
+      <Footer/>
     </div>
   )
 }

@@ -125,7 +125,7 @@ const Contrat = () => {
             {data.map((contract, index) => (
                 <div key={index} className="mb-4">
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4" onClick={() => openContractInNewTab(contract)}>View Contract {index + 1}</button>
-                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={() => downloadContractAsPDF(contract)}>Download Contract {index + 1} as PDF</button>
+                    <button className="bg-green-500 hover:bg-green-700 text-white mt-3 font-bold py-2 px-4 rounded" onClick={() => downloadContractAsPDF(contract)}>Download Contract {index + 1} as PDF</button>
                 </div>
             ))}
         </div>

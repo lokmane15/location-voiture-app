@@ -9,6 +9,7 @@ function RegistrationForm() {
   const [adresse, setAdresse] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
   const {signup,error,isLoading} = useSignup()
   const handleCINChange = (e) => {
     setNum_cin(e.target.value);
@@ -37,23 +38,80 @@ function RegistrationForm() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+  const validateForm = () =>{
+    let errors = {};
+    let isValid =true;
+
+    if(!email){
+      errors.email = "Veuillez entrer votre adresse e-mail.";
+      isValid = false;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      errors.email = "Veuillez entrer une adresse e-mail valide.";
+      isValid = false;
+    }
+    if (!password) {
+      errors.password = "Veuillez entrer votre mot de passe.";
+      isValid = false;
+    }else if (password.length < 8) {
+      errors.password = "Le mot de passe doit contenir au moins 8 caractères.";
+      isValid = false;
+    }
+    
+    if (!num_cin) {
+      errors.num_cin = "Veuillez entrer votre num cin.";
+      isValid = false;
+    }
+    if (!nom) {
+      errors.nom = "Veuillez entrer votre nom.";
+      isValid = false;
+    }
+    if (!prenom) {
+      errors.prenom = "Veuillez entrer votre prenom.";
+      isValid = false;
+    }
+    if (!num_tel) {
+      errors.num_tel = "Veuillez entrer votre numero de telephone.";
+      isValid = false;
+    }else{
+      const phonePattern = /^\d{10}$/;
+      if (!phonePattern.test(num_tel)) {
+        errors.num_tel = "Veuillez entrer un numéro de téléphone valide (10 chiffres).";
+        isValid = false;
+      }
+    }
+    if (!adresse) {
+      errors.adresse = "Veuillez entrer votre adress.";
+      isValid = false;
+    }
+
+
+    setErrors(errors)
+    return isValid
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup(num_cin,nom,prenom,num_tel,adresse,email,password);
+
+    if (validateForm()) {
+      await signup(num_cin,nom,prenom,num_tel,adresse,email,password);
+    }
   };
+  
 
   return (
     <div className="bg-cover bg-center bg-no-repeat  " style={{ backgroundImage: "url(https://infodunordsainteagathe.ca/wp-content/uploads/2023/07/concessionnaire20001-1024x768.jpg)" }}>
-    <div className="  flex items-center justify-center h-screen mt-12  " >
-      <div className="border border-white p-2 rounded shadow-md w-full sm:w-96 text-black  " style={{backdropFilter: "blur(20px)"}}>
+    <div className="  flex items-center justify-center h-screen mt-12" >
+      <div className="border border-white p-2 rounded shadow-md w-full sm:w-96 text-black  " style={{backdropFilter: "blur(20px)",minHeight: "400px" }}>
         <h2 className="text-2xl font-semibold mb-4 text-center">Inscription</h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
-            <div className="mb-4">
+            <div className="mb-1">
               <label
                 htmlFor="cin"
-                className="block text-sm font-medium text-black"
+                className="block text-sm  font-medium text-black"
               >
                 CIN
               </label>
@@ -63,10 +121,11 @@ function RegistrationForm() {
                 name="cin"
                 value={num_cin}
                 onChange={handleCINChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
+                className={`block w-full rounded-md  shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
               />
+            {errors.num_cin && <div className="text-red-500 text-sm">{errors.num_cin}</div>}
             </div>
-            <div className="mb-4">
+            <div className="mb-1">
               <label
                 htmlFor="nom"
                 className="block text-sm font-medium text-black"
@@ -79,10 +138,11 @@ function RegistrationForm() {
                 name="nom"
                 value={nom}
                 onChange={handleNomChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
+                className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
               />
+                {errors.nom && <div className="text-red-500 text-sm">{errors.nom}</div>}
             </div>
-            <div className="mb-4">
+            <div className="mb-1">
               <label
                 htmlFor="prenom"
                 className="block text-sm font-medium text-black"
@@ -95,10 +155,11 @@ function RegistrationForm() {
                 name="prenom"
                 value={prenom}
                 onChange={handlePrenomChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
+                className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
               />
+              {errors.prenom && <div className="text-red-500 text-sm">{errors.prenom}</div>}
             </div>
-            <div className="mb-4">
+            <div className="mb-1">
               <label
                 htmlFor="telephone"
                 className="block text-sm font-medium text-black"
@@ -111,10 +172,11 @@ function RegistrationForm() {
                 name="telephone"
                 value={num_tel}
                 onChange={handleTelephoneChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
+                className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
               />
-                          </div>
-            <div className="mb-4 col-span-2">
+              {errors.num_tel && <div className="text-red-500 text-sm">{errors.num_tel}</div>}
+              </div>
+            <div className="mb-1 col-span-2">
               <label
                 htmlFor="adresse"
                 className="block text-sm font-medium text-black"
@@ -127,10 +189,11 @@ function RegistrationForm() {
                 name="adresse"
                 value={adresse}
                 onChange={handleAdresseChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
+                className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
               />
+                {errors.adresse && <div className="text-red-500 text-sm">{errors.adresse}</div>}
             </div>
-            <div className="mb-4 col-span-2">
+            <div className="mb-1 col-span-2">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-black"
@@ -143,10 +206,11 @@ function RegistrationForm() {
                 name="email"
                 value={email}
                 onChange={handleEmailChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
+                className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 `}
               />
+              {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
             </div>
-            <div className="mb-4 col-span-2">
+            <div className="mb-1 col-span-2">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-black"
@@ -159,15 +223,16 @@ function RegistrationForm() {
                 name="password"
                 value={password}
                 onChange={handlePasswordChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 }`}
+                className={` block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 }`}
               />
+              {errors.password && <div className="text-red-500 text-sm">{errors.password}</div>}
             </div>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="mt-1 flex items-center justify-between">
             <button
               disabled={isLoading}
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600 btn-center"
+              className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 ocus:outline-none btn-center"
             >
               {isLoading ? "LOADING..." : "S'inscrire"}
             </button>

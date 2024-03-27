@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import fetchMarque from "../services/FetchMarque";
 import fetchCars from "../services/FetchCars";
 import { MdPriceChange } from "react-icons/md";
+import { MdOutlineDateRange } from "react-icons/md";
+import { MdOutlinePayment } from "react-icons/md";
+import { FaCar } from "react-icons/fa";
 function Home() {
   const baseUrl = 'http://127.0.0.1:8000/api';
   const [marque, setMarque] = useState([]);
@@ -36,7 +39,7 @@ function Home() {
         </div>
       </div>
     </main>
-
+    <div className="container">
       <div className="container mx-auto mt-5">
         <div className="flex justify-between mb-4">
         <h1 className=" font-weight-bold text-2xl font-semibold">Explore Cars picked for you</h1>
@@ -82,6 +85,52 @@ function Home() {
           </div>
         ))}
       </div>
+    </div>
+      <h1 className="text-center text-5xl mb-4 font-bold">How it works</h1>
+    <div className="flex flex-wrap mb-2">
+  <div className="w-full lg:w-1/4 px-2 mb-4">
+    <div className="card p-4 bg-slate-50 hover:bg-white text-center transition-transform duration-300 transform hover:scale-105 hover:z-10">
+      <div className="flex justify-center">
+        <FaCar className="text-sky-500 w-20 h-20 text-3xl center" />
+      </div>
+      <h1 className="card-title font-bold text-2xl">choose a car</h1>
+      <p className="mb-3 p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!</p>
+    </div>
+  </div>
+  <div className="w-full lg:w-1/4 px-1 mb-4">
+    <div className="card  p-4 bg-slate-50 hover:bg-white text-center transition-transform duration-300 transform hover:scale-105 hover:z-10">
+      <div className="flex justify-center">
+        <MdOutlineDateRange className="text-sky-500 w-20 h-20 text-3xl center" />
+      </div>
+      <h1 className="card-title font-bold text-2xl">Select A Date</h1>
+      <p className="mb-3 p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!</p>
+    </div>
+  </div>
+  <div className="w-full lg:w-1/4 px-2 mb-4">
+    <div className="card p-4 bg-slate-50 hover:bg-white text-center transition-transform duration-300 transform hover:scale-105 hover:z-10">
+      <div className="flex justify-center">
+        <FaCar className="text-sky-500 w-20 h-20 text-3xl center" />
+      </div>
+      <h1 className="card-title font-bold text-2xl">Make Reservation</h1>
+      <p className="mb-3 p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!</p>
+    </div>
+  </div>
+  <div className="w-full lg:w-1/4 px-2 mb-4">
+    <div className="card p-4 bg-slate-50 hover:bg-white text-center transition-transform duration-300 transform hover:scale-105 hover:z-10">
+      <div className="flex justify-center">
+        <MdOutlinePayment  className="text-sky-500 w-20 h-20 text-3xl center" />
+      </div>
+      <h1 className="card-title font-bold text-2xl">Payment online</h1>
+      <p className="mb-3 p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!</p>
+    </div>
+  </div> 
+</div>
+
+
+
+
+
+
     </div>
     </>
 

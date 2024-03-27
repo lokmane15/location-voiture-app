@@ -5,7 +5,7 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { FaCarSide } from "react-icons/fa";
 import { useState } from "react";
 import { useLogout } from "../hooks/useLogout";
-import { MdNavigateBefore } from "react-icons/md";
+import { RxDropdownMenu } from "react-icons/rx";
 function Sidebar({ isOpen, onClose }) {
   const { logout } = useLogout();
   const handleClickLogout = () => {
@@ -137,7 +137,7 @@ function Navbar() {
             </button>
           </div>
         )} */}
-        <MdNavigateBefore className="text-white cursor-pointer text-2xl ml-4 absolute top-5 right-5" onClick={toggleSidebar} />
+        <RxDropdownMenu  className="text-white cursor-pointer text-2xl ml-4 absolute top-5 right-5" onClick={toggleSidebar} />
         {isSidebarOpen && (
           <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
         )}

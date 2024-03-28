@@ -48,13 +48,14 @@ function Home() {
         <div className="row">
   {cars.slice(0, 6).map((car, index) => (
     <div key={index} className="col-md-4">
-      <div className="card mb-4 box-shadow" >
+      <div className="card mb-4 box-shadow transition-transform duration-300 transform hover:scale-105" >
         <Link to={`/carDetails/${car.id}`} className="text-decoration-none">
           <img className="card-img-top" src={car.image}alt="Car" />
           <div className="card-body">
             <h1 className="card-title">{car.marque} {car.model.nom_model}</h1>
             <p className="card-text text-gray-700">
               <MdPriceChange className="size-6 inline mr-3" /> Prix: {car.prix} DH/Jour
+              <span className="text-2xl flex justify-end">&rarr;</span>
             </p>
           </div>
         </Link>
@@ -86,21 +87,21 @@ function Home() {
         ))}
       </div>
     </div>
-      <h1 className="text-center text-5xl mb-4 font-bold">How it works</h1>
+      <h1 className="text-center text-4xl mb-4 font-bold text-sky-500 ">How it works</h1>
     <div className="flex flex-wrap mb-2">
   <div className="w-full lg:w-1/4 px-2 mb-4">
     <div className="card p-4 bg-slate-50 hover:bg-white text-center transition-transform duration-300 transform hover:scale-105 hover:z-10">
       <div className="flex justify-center">
-        <FaCar className="text-sky-500 w-20 h-20 text-3xl center" />
+        <FaCar className="text-sky-500  text-3xl center" />
       </div>
-      <h1 className="card-title font-bold text-2xl">choose a car</h1>
+      <h1 className="card-title font-bold text-2xl">choose a Car</h1>
       <p className="mb-3 p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!</p>
     </div>
   </div>
   <div className="w-full lg:w-1/4 px-1 mb-4">
     <div className="card  p-4 bg-slate-50 hover:bg-white text-center transition-transform duration-300 transform hover:scale-105 hover:z-10">
       <div className="flex justify-center">
-        <MdOutlineDateRange className="text-sky-500 w-20 h-20 text-3xl center" />
+        <MdOutlineDateRange className="text-sky-500 text-3xl center" />
       </div>
       <h1 className="card-title font-bold text-2xl">Select A Date</h1>
       <p className="mb-3 p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!</p>
@@ -109,7 +110,7 @@ function Home() {
   <div className="w-full lg:w-1/4 px-2 mb-4">
     <div className="card p-4 bg-slate-50 hover:bg-white text-center transition-transform duration-300 transform hover:scale-105 hover:z-10">
       <div className="flex justify-center">
-        <FaCar className="text-sky-500 w-20 h-20 text-3xl center" />
+        <FaCar className="text-sky-500  text-3xl center" />
       </div>
       <h1 className="card-title font-bold text-2xl">Make Reservation</h1>
       <p className="mb-3 p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!</p>
@@ -118,7 +119,7 @@ function Home() {
   <div className="w-full lg:w-1/4 px-2 mb-4">
     <div className="card p-4 bg-slate-50 hover:bg-white text-center transition-transform duration-300 transform hover:scale-105 hover:z-10">
       <div className="flex justify-center">
-        <MdOutlinePayment  className="text-sky-500 w-20 h-20 text-3xl center" />
+        <MdOutlinePayment  className="text-sky-500  text-3xl center" />
       </div>
       <h1 className="card-title font-bold text-2xl">Payment online</h1>
       <p className="mb-3 p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!</p>
@@ -126,7 +127,23 @@ function Home() {
   </div> 
 </div>
 
-
+  {/* <div className="container">
+    <div className="row mb-3">
+      <div className="col-lg-6">
+        <div>
+          <img src="../../public/eric-saunders-crUGdn1j-RE-unsplash (1).jpg"  className="img-fluid " alt="" />
+        </div>
+      </div>
+      <div className="col-lg-6">
+        <div className="card p-4 ">
+          <h1 className=" text-2xl font-bold text-sky-500 ">More than 40+ special collection cars</h1>
+          <p className="mb-3 ">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis dicta odio, nesciunt officia quibusdam possimus doloremque itaque consectetur ad assumenda quo debitis aliquam soluta officiis cum maxime ducimus incidunt eveniet?</p>
+          <p className="mb-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis dicta odio, nesciunt officia quibusdam possimus doloremque itaque consectetur ad assumenda quo debitis aliquam soluta officiis cum maxime ducimus incidunt eveniet?</p>
+          <p className="mb-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis dicta odio, nesciunt officia quibusdam possimus doloremque itaque consectetur ad assumenda quo debitis aliquam soluta officiis cum maxime ducimus incidunt eveniet?</p>
+        </div>
+      </div>
+    </div>
+  </div> */}
 
 
 

@@ -67,7 +67,7 @@ function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div>
             <Link to="/" className="text-slate-300 font-bold">
-              <h6>Location<span className="text-cyan-400">Voiture</span><FaCarSide className="inline ml-1 text-lg" /></h6>
+              <h6 className=" text-2xl">Car<span className="text-cyan-400 text-2xl">Rental</span><FaCarSide className="inline ml-1 text-2xl" /></h6>
             </Link>
           </div>
           <div className="hidden md:block flex items-center justify-center space-x-8">

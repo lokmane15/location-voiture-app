@@ -92,9 +92,9 @@ export default function Payment() {
                     <div className="col-md-8">
                     <div className="card-body">
                         <h5 className="text-lg mb-2 font-medium">{car.marque} {car.model && car.model.nom_model}</h5>
-                        <p className="card-text mb-2 font-medium">Prix: {car.prix} DH/24hours</p>
-                        <p className="card-text mb-2 font-medium">Duree: {duration} jours</p>
-                        <p className="card-text mb-2 font-medium">Prix Total: <span className="text-lg font-medium">{totalPrice}DH </span></p>
+                        <p className="card-text mb-2 font-medium">Price: {car.prix} DH/Day</p>
+                        <p className="card-text mb-2 font-medium">Duration: {duration} Dayss</p>
+                        <p className="card-text mb-2 font-medium">Total price: <span className="text-lg font-medium">{totalPrice}DH </span></p>
 
                     </div>
                     <form onSubmit={handleSubmit} className="flex justify-end items-center mr-3 mt-4" method="POST">
@@ -108,7 +108,7 @@ export default function Payment() {
                                     isLoading ? 'opacity-50 cursor-not-allowed' : ''
                                 }`}
                             >
-                        {isLoading?"traiter...":"paiement en ligne"}
+                        {isLoading?"on proccess...":"online payment"}
                     </button>
                 </form>
                     </div>

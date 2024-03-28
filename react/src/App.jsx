@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import {  Routes, Route, Navigate } from 'react-router-dom'
 import Home from './page/Home'
 import Contactus from './page/Contactus'
 import Cars from './page/Cars'
@@ -17,8 +17,7 @@ import Cancel from './page/Cancel'
 function App() {
   const {user}=useAuthContext()
   return (
-    <div className="app">
-      <BrowserRouter>
+    <>
       <Nav/>
         <Routes>
           <Route path='/' element={<Home/>}/>
@@ -60,9 +59,8 @@ function App() {
           element={user?<Contrat/>:<Navigate to="/login"/>}
           />
         </Routes>
-      </BrowserRouter>
       <Footer/>
-    </div>
+    </>
   )
 }
 

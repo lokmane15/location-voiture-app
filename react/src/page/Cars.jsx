@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import fetchCars from '../services/FetchCars';
-
+import ReactLoading from 'react-loading';
 export default function Cars() {
     const baseUrl = 'http://127.0.0.1:8000/api';
     const location = useLocation();
@@ -16,6 +16,7 @@ export default function Cars() {
     const [couleurFilter, setCouleurFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [dataPerPage] = useState(10);
+    const [isLoading,setIsLoading]=useState(true)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,7 +24,7 @@ export default function Cars() {
                 const jsonData = await fetchCars(baseUrl);
                 setData(jsonData);
                 setFilteredData(jsonData);
-
+                setIsLoading(false)
                 const uniqueMarques = Array.from(new Set(jsonData.map(item => item.marque)));
                 const uniquePrix = Array.from(new Set(jsonData.map(item => parseFloat(item.prix))));
                 const uniqueCouleurs = Array.from(new Set(jsonData.map(item => item.couleur)));
@@ -38,7 +39,7 @@ export default function Cars() {
 
         fetchData();
     }, [baseUrl]);
-
+  
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const variable = params.get('marque');
@@ -88,7 +89,7 @@ export default function Cars() {
                 <div className="row">
                     <div className="col-lg-4 col-md-4 col-sm-12">
                     <select onChange={(e) => setMarqueFilter(e.target.value)} value={marqueFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
-                        <option value="">Filtrer par Marque</option>
+                        <option value="">Filter by Brand</option>
                         {marques.map(marque => (
                             <option key={marque} value={marque}>{marque}</option>
                         ))}
@@ -96,7 +97,7 @@ export default function Cars() {
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-12">
                     <select onChange={(e) => setPrixFilter(e.target.value)} value={prixFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
-                        <option value="">Filtrer par Prix</option>
+                        <option value="">Filter by price</option>
                         {prix.map(p => (
                             <option key={p} value={p}>{p}</option>
                     ))}
@@ -104,7 +105,7 @@ export default function Cars() {
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-12">
                     <select onChange={(e) => setCouleurFilter(e.target.value)} value={couleurFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
-                        <option value="">Filtrer par Couleur</option>
+                        <option value="">Filter by color</option>
                         {couleurs.map(couleur => (
                         <option key={couleur} value={couleur}>{couleur}</option>
                     ))}
@@ -113,27 +114,37 @@ export default function Cars() {
                 </div>
 
             </div>
+            <div > {/* Flex container to center vertically and horizontally */}
+    {isLoading ? (
+        <div className="flex justify-center items-center h-screen">
+            <ReactLoading type={'spin'} color={'#000'} height={'3rem'} width={'3rem'} />
+        </div>
+        
+    ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 my-2">
+            {currentCars.length > 0 ? (
+                currentCars.map(item => (
+                    <div key={item.id} className="bg-white p-4 rounded-md shadow-md my-1 flex flex-col justify-between">
+                        <Link to={`/carDetails/${item.id}`}>
+                            <div>
+                                <img src={item.image} alt="Car" className="mb-2 transition-transform duration-300 transform hover:scale-110" />
+                                <h1 className="text-xl font-bold mb-2">{item.marque} {item.model.nom_model}</h1>
+                                <p className="text-gray-700">Num Matricule: {item.num_matricule}</p>
+                                <p className="text-gray-700">Price: {item.prix}DH/Day</p>
+                            </div>
+                        </Link>
+                    </div>
+                ))
+            ) : (
+                <p style={{ textAlign: "center" }} className='text-2xl'>No cars match the selected filters.</p>
+            )}
+        </div>
+    )}
+</div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 transition-transform duration-300 transform hover:scale-10 my-2">
-                {currentCars.length > 0 ? (
-                    currentCars.map(item => (
-                        <div key={item.id} className="bg-white p-4 rounded-md shadow-md my-1 flex flex-col justify-between">
-                            <Link to={`/carDetails/${item.id}`}>
-                                <div>
-                                    <img src={item.image} alt="Car" className="mb-2" />
-                                    <h1 className="text-xl font-bold mb-2">{item.marque} {item.model.nom_model}</h1>
-                                    <p className="text-gray-700">Num Matricule: {item.num_matricule}</p>
-                                    <p className="text-gray-700">Prix: {item.prix}DH/Jour</p>
-                                </div>
-                            </Link>
-                        </div>
-                    ))
-                ) : (
-                    <p>Aucune voiture ne correspond aux filtres sélectionnés.</p>
-                )}
-            </div>
 
-            <nav className='flex justify-center'>
+
+            <nav className='flex justify-center mb-3'>
                 <ul className="pagination">
                     {pageNumbers.map(number => (
                         <li key={number} className="page-item">

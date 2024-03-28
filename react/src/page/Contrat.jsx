@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
+import Modal from 'react-modal';
 import html2pdf from 'html2pdf.js';
 import useAuthContext from '../hooks/useAuthContext';
 import ReactDOMServer from 'react-dom/server';
+import ReactLoading from 'react-loading';
+import { FaCarSide } from "react-icons/fa";
 
 const Contrat = () => {
     const baseUrl = 'http://localhost:8000/api';
     const [data, setData] = useState([]);
     const { user } = useAuthContext();
-    console.log(data);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedContract, setSelectedContract] = useState(null);
+    const [isLoading,setIsLoading]=useState(true)
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -20,14 +26,16 @@ const Contrat = () => {
                 if (response.ok) {
                     const jsonData = await response.json();
                     setData(jsonData);
-                }else if(response.status === 401) {
+                    setIsLoading(false)
+                } else if(response.status === 401) {
                     localStorage.removeItem('user')
                     location.reload()
-                }else{
+                } else {
                     console.error('Failed to fetch contract data');
                 }
             } catch (error) {
                 console.error('Error fetching contract data:', error);
+                setIsLoading(false)
             }
         };
 
@@ -41,78 +49,59 @@ const Contrat = () => {
         const differenceInDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)); // Convert milliseconds to days and round up
         const totalPrice = differenceInDays * contract.car.prix; // Total price based on duration and car price
 
-        return <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
-        <h6 style={{ fontWeight: 'medium', fontSize: '1.125rem' }}>Location<span style={{ color: '#2DD4BF' }}>Voiture</span></h6>
-        <h1 style={{ textAlign: 'center', fontSize: '1.875rem', marginTop: '1rem', marginBottom: '2rem', fontWeight: 'bold' }}>Car Rental Contract</h1>
-    
-        <div style={{ borderTop: '1px solid #CBD5E0', paddingTop: '1.5rem' }}>
-            <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Reservation Information:</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                <div style={{ width: '50%', marginBottom: '0.75rem' }}>
-                    <p><strong>Start Date:</strong> {formatDate(startDate)}</p>
-                    <p><strong>End Date:</strong> {formatDate(endDate)}</p>
+        return (
+            <div style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#F7FAFC', padding: '20px', maxWidth: '800px', margin: 'auto', borderRadius: '10px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
+                <h6 className="text-2xl">Car<span className="text-cyan-400">Rental</span><FaCarSide className="inline ml-1 text-2xl" /></h6>
+                <h1 style={{ textAlign: 'center', fontSize: '1.875rem', fontWeight: 'bold', marginBottom: '20px', color: '#2D3748' }}>Car Rental Contract</h1>
+                <div style={{ borderBottom: '1px solid #E2E8F0', paddingBottom: '20px', marginBottom: '20px' }}>
+                    <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '10px', color: '#4A5568' }}>Reservation Information:</h2>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                        <p><strong>Start Date:</strong> {formatDate(startDate)}</p>
+                        <p><strong>End Date:</strong> {formatDate(endDate)}</p>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <p><strong>Duration:</strong> {differenceInDays} Days</p>
+                        <p><strong>Total Price:</strong> {totalPrice.toFixed(2)} DH</p>
+                    </div>
                 </div>
-                <div style={{ width: '50%' }}>
-                    <p><strong>Duration:</strong> {differenceInDays} Days</p>
-                    <p><strong>Total Price:</strong> {totalPrice.toFixed(2)} DH</p>
-                </div>
-            </div>
-        </div>
-    
-        <div style={{ borderTop: '1px solid #CBD5E0', paddingTop: '1.5rem', marginBottom: '0.75rem' }}>
-            <h2 style={{ fontSize: '1.25rem', marginTop: '1.5rem', marginBottom: '1rem' }}>User Information:</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                <div style={{ width: '50%', marginBottom: '0.75rem' }}>
+                <div style={{ borderBottom: '1px solid #E2E8F0', paddingBottom: '20px', marginBottom: '20px' }}>
+                    <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '10px', color: '#4A5568' }}>User Information:</h2>
                     <p><strong>Name:</strong> {contract.user.nom} {contract.user.prenom}</p>
                     <p><strong>CIN:</strong> {contract.user.num_cin}</p>
-                </div>
-                <div style={{ width: '50%' }}>
                     <p><strong>Address:</strong> {contract.user.adresse}</p>
                     <p><strong>Phone:</strong> {contract.user.num_tel}</p>
                     <p><strong>Email:</strong> {contract.user.email}</p>
                 </div>
-            </div>
-        </div>
-    
-        <div style={{ borderTop: '1px solid #CBD5E0', paddingTop: '1.5rem' }}>
-            <h2 style={{ fontSize: '1.25rem', marginTop: '1.5rem', marginBottom: '1rem' }}>Car Information:</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                <div style={{ width: '50%', marginBottom: '0.75rem' }}>
+                <div style={{ borderBottom: '1px solid #E2E8F0', paddingBottom: '20px', marginBottom: '20px' }}>
+                    <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '10px', color: '#4A5568' }}>Car Information:</h2>
                     <p><strong>Matricule:</strong> {contract.car.num_matricule}</p>
                     <p><strong>Kilomitrage:</strong> {contract.car.kilomitrage}</p>
                     <p><strong>Year:</strong> {contract.car.annee}</p>
-                </div>
-                <div style={{ width: '50%' }}>
                     <p><strong>Color:</strong> {contract.car.couleur}</p>
-                    <p><strong>Price per day:</strong> {contract.car.prix}</p>
+                    <p><strong>Price per day:</strong> {contract.car.prix} DH</p>
                     <p><strong>Brand:</strong> {contract.car.marque}</p>
                 </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+                    <img src="../../public/signteur.png" style={{ width: '100px', marginRight: '20px' }} alt="signature" />
+                </div>
             </div>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <img src="../../public/signteur.png" style={{ width: '100px' }} alt="signteur" />
-        </div>
-    </div>
-    
+
+
+        );
     };
 
-
-
-    const openContractInNewTab = (contract) => {
-        const contractHtml = ReactDOMServer.renderToString(generateContractHTML(contract));
-        const newWindow = window.open('', '_blank');
-        newWindow.document.write(contractHtml);
+    const openContractInModal = (contract) => {
+        setSelectedContract(contract);
+        setIsModalOpen(true);
     };
     
     const downloadContractAsPDF = (contract) => {
         const contractHtml = ReactDOMServer.renderToString(generateContractHTML(contract));
         html2pdf().from(contractHtml).save('contract.pdf', () => {
-            // This callback function will be executed once the PDF generation is complete
             console.log('PDF generated successfully');
         });
     };
     
-    // Function to format date in 'YYYY-MM-DD' format
     const formatDate = (date) => {
         const year = date.getFullYear();
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -122,12 +111,31 @@ const Contrat = () => {
 
     return (
         <div style={{minHeight:"70vh"}} className="container mx-auto mt-40">
-            {data.map((contract, index) => (
-                <div key={index} className="mb-4">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4" onClick={() => openContractInNewTab(contract)}>View Contract {index + 1}</button>
-                    <button className="bg-green-500 hover:bg-green-700 text-white mt-3 font-bold py-2 px-4 rounded" onClick={() => downloadContractAsPDF(contract)}>Download Contract {index + 1} as PDF</button>
+            {isLoading ? (
+                <div className='flex justify-center items-center'>
+                <ReactLoading  type={'spin'} color={'#000'} height={'3rem'} width={'3rem'} />
                 </div>
-            ))}
+            ):data.length > 0 ? data.map((contract, index) => (
+                <div key={index} className="mb-4">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4" onClick={() => openContractInModal(contract)}>View Contract {index + 1}</button>
+                    <button className="bg-green-500 hover:bg-green-700 text-white mt-3 font-bold py-2 px-4 rounded" onClick={() => downloadContractAsPDF(contract)}>Download Contract {index + 1} as PDF</button>
+                    </div>
+            )):(
+                <h1 className="p-40 text-center text-2xl ">You haven&apos;t made any reservations yet :(</h1>
+            )}
+            <Modal 
+                isOpen={isModalOpen} 
+                onRequestClose={() => setIsModalOpen(false)}
+                style={{
+                    content: {
+                        width: '60%',
+                        height: '80%',
+                        margin: 'auto'
+                    }
+                }}
+            >
+                {selectedContract && generateContractHTML(selectedContract)}
+            </Modal>
         </div>
     );
 };

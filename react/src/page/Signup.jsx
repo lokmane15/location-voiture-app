@@ -49,41 +49,41 @@ function RegistrationForm() {
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-      errors.email = "Veuillez entrer une adresse e-mail valide.";
+      errors.email = "Please enter a valid email address.";
       isValid = false;
     }
     if (!password) {
-      errors.password = "Veuillez entrer votre mot de passe.";
+      errors.password = "Please enter your password.";
       isValid = false;
     }else if (password.length < 8) {
-      errors.password = "Le mot de passe doit contenir au moins 8 caractères.";
+      errors.password = "The password must contain at least 8 characters.";
       isValid = false;
     }
     
     if (!num_cin) {
-      errors.num_cin = "Veuillez entrer votre num cin.";
+      errors.num_cin = "Please enter your cin.";
       isValid = false;
     }
     if (!nom) {
-      errors.nom = "Veuillez entrer votre nom.";
+      errors.nom = "VPlease enter your last name.";
       isValid = false;
     }
     if (!prenom) {
-      errors.prenom = "Veuillez entrer votre prenom.";
+      errors.prenom = "Please enter your first name.";
       isValid = false;
     }
     if (!num_tel) {
-      errors.num_tel = "Veuillez entrer votre numero de telephone.";
+      errors.num_tel = "Please enter your phone number.";
       isValid = false;
     }else{
       const phonePattern = /^\d{10}$/;
       if (!phonePattern.test(num_tel)) {
-        errors.num_tel = "Veuillez entrer un numéro de téléphone valide (10 chiffres).";
+        errors.num_tel = "Please enter a valid phone number (10 digits).";
         isValid = false;
       }
     }
     if (!adresse) {
-      errors.adresse = "Veuillez entrer votre adress.";
+      errors.adresse = "Please enter your adress.";
       isValid = false;
     }
 
@@ -105,7 +105,7 @@ function RegistrationForm() {
     <div className="bg-cover bg-center bg-no-repeat  " style={{ backgroundImage: "url(https://infodunordsainteagathe.ca/wp-content/uploads/2023/07/concessionnaire20001-1024x768.jpg)" }}>
     <div className="  flex items-center justify-center h-screen mt-12" >
       <div className="border border-white p-2 rounded shadow-md w-full sm:w-96 text-black  " style={{backdropFilter: "blur(20px)",minHeight: "400px" }}>
-        <h2 className="text-2xl font-semibold mb-4 text-center">Inscription</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Sign up</h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
             <div className="mb-1">
@@ -130,7 +130,7 @@ function RegistrationForm() {
                 htmlFor="nom"
                 className="block text-sm font-medium text-black"
               >
-                Nom
+                Last name
               </label>
               <input
                 type="text"
@@ -147,7 +147,7 @@ function RegistrationForm() {
                 htmlFor="prenom"
                 className="block text-sm font-medium text-black"
               >
-                Prénom
+                First name
               </label>
               <input
                 type="text"
@@ -164,7 +164,7 @@ function RegistrationForm() {
                 htmlFor="telephone"
                 className="block text-sm font-medium text-black"
               >
-                Numéro de téléphone
+                Phone number
               </label>
               <input
                 type="tel"
@@ -181,7 +181,7 @@ function RegistrationForm() {
                 htmlFor="adresse"
                 className="block text-sm font-medium text-black"
               >
-                Adresse
+                Adress
               </label>
               <input
                 type="text"
@@ -234,7 +234,7 @@ function RegistrationForm() {
               type="submit"
               className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 ocus:outline-none btn-center"
             >
-              {isLoading ? "LOADING..." : "S'inscrire"}
+              {isLoading ? "LOADING..." : "Sign up"}
             </button>
             {error && <div className="error">{error}</div>}
           </div>

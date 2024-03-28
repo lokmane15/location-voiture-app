@@ -37,8 +37,8 @@ class ReservController extends Controller
                 $lineItems = [
                     [
                         'price_data' => [
-                            'currency' => 'usd',
-                            'unit_amount' => $prix_total * 10, // Convert to cents
+                            'currency' => 'mad',
+                            'unit_amount' => $prix_total * 100, // Convert to cents
                             'product_data' => [
                                 'name' => 'Car Reservation',
                             ],

@@ -11,7 +11,11 @@
 .dropdown {
   position: relative;
 }
-
+/* body{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+} */
 .dropdown-menu {
   display: block;
   position: absolute;
@@ -96,9 +100,7 @@ main button{
 
 /* Assuming you have a CSS file, you can add the following styles */
 .app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* This ensures that the app takes up at least the full height of the viewport */
+ /* This ensures that the app takes up at least the full height of the viewport */
 }
 
 .footer {

@@ -54,7 +54,7 @@ function LoginForm() {
     <div className="bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url(https://infodunordsainteagathe.ca/wp-content/uploads/2023/07/concessionnaire20001-1024x768.jpg)" }}>
       <div className="flex items-center justify-center h-screen">
         <div className="border border-white p-8 rounded shadow-md w-full sm:w-96" style={{ backdropFilter: "blur(10px)" }}>
-          <h2 className="text-2xl font-semibold mb-4">Login</h2>
+          <h2 className="text-2xl font-semibold text-center mb-4">Login</h2>
           {error && <div className="text-red-500 mb-4">{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -91,9 +91,9 @@ function LoginForm() {
                 type="submit"
                 className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 focus:outline-none focus:bg-blue-600"
               >
-                Login
+                {isLoading?"LOADING...":"Login"}
               </button>
-              <Link to="/signup" className="text-white  hover:underline">créer un compte</Link>
+              <Link to="/signup" className="text-white  hover:underline">create an account</Link>
             </div>
           </form>
         </div>

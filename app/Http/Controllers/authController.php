@@ -7,13 +7,24 @@ use App\Http\Requests\signupRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function signup(signupRequest $request)
+    public function signup(Request $request)
     {
         // Validate the request using the defined rules in your form request (e.g., LoginRequest)
-        $request->validated();
+        $validator = Validator::make($request->all(), [
+            'num_cin' => 'required',
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
+            'num_tel' => 'required',
+            'adresse' => 'required|string',
+            'email' => 'required|email|string|unique:users,email'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
 
         // Create a new user
         $user = User::create([

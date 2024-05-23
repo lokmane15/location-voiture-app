@@ -106,6 +106,16 @@ function RegistrationForm() {
     <div className="  flex items-center justify-center h-screen mt-10" >
       <div className="border border-white p-2 rounded shadow-md w-full sm:w-96 text-black  " style={{backdropFilter: "blur(20px)",minHeight: "400px" }}>
         <h2 className="text-2xl font-semibold mb-4 text-center">Sign up</h2>
+            {/* errors */}
+            <div className="text-center ">
+        {error && Object.keys(error).map((field, index) => (
+            error[field].map((errorMessage, subIndex) => (
+                <p className='text-red-500 text-base' key={`${field}-${subIndex}`}>
+                    {errorMessage}
+                </p>
+            ))
+        ))}
+      </div>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
             <div className="mb-1">
@@ -236,7 +246,7 @@ function RegistrationForm() {
             >
               {isLoading ? "LOADING..." : "Sign up"}
             </button>
-            {error && <div className="error">{error}</div>}
+
           </div>
         </form>
       </div>

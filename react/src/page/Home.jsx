@@ -30,7 +30,7 @@ function Home() {
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 p-5">
             <h1 className="text-3xl md:text-4xl font-bold mb-3">Car Rental</h1>
-            <p className="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente aliquid odit perspiciatis corporis eveniet porro voluptas commodi perferendis officia maxime, nulla laborum ea optio molestiae dolor possimus officiis ratione est.</p>
+            <p className="mb-3">Rev up your journey with our seamless car rental web app. Browse, book, and hit the road hassle-free. From compact to luxury, find the perfect ride for every adventure. Your next memorable trip starts here.</p>
             <button className="bg-cyan-400"><Link to="/cars">Explore More</Link></button>
           </div>
           <div className="md:w-1/2 p-5">

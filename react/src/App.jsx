@@ -4,8 +4,7 @@ import Contactus from './page/Contactus'
 import Cars from './page/Cars'
 import Login from './page/Login'
 import Signup from './page/Signup'
-import Nav from './Components/Nav'
-import Footer from './Components/Footer'
+
 import useAuthContext from './hooks/useAuthContext'
 import CarDetails from './page/CarDetails'
 import Reserve from './page/Reserve'
@@ -13,12 +12,15 @@ import Payment from './page/Payment'
 import Success from './page/Success'
 import Contrat from './page/Contrat'
 import Cancel from './page/Cancel'
-
+import Navbar from './Components/Navbar'
+import Footer from './Components/Footer'
 function App() {
   const {user}=useAuthContext()
   return (
-    <>
-      <Nav/>
+    <div className="app">
+      <Navbar/>
+      <div className="main-content">
+
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/Contactus' element={<Contactus/>}/>
@@ -59,8 +61,9 @@ function App() {
           element={user?<Contrat/>:<Navigate to="/login"/>}
           />
         </Routes>
-      <Footer/>
-    </>
+        <Footer/>
+      </div>
+    </div>
   )
 }
 

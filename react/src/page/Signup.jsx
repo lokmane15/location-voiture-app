@@ -103,7 +103,7 @@ function RegistrationForm() {
 
   return (
     <div className="bg-cover bg-center bg-no-repeat  " style={{ backgroundImage: "url(https://infodunordsainteagathe.ca/wp-content/uploads/2023/07/concessionnaire20001-1024x768.jpg)" }}>
-    <div className="  flex items-center justify-center h-screen mt-12" >
+    <div className="  flex items-center justify-center h-screen mt-10" >
       <div className="border border-white p-2 rounded shadow-md w-full sm:w-96 text-black  " style={{backdropFilter: "blur(20px)",minHeight: "400px" }}>
         <h2 className="text-2xl font-semibold mb-4 text-center">Sign up</h2>
         <form onSubmit={handleSubmit}>

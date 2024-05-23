@@ -46,7 +46,7 @@ export default function Success() {
             <IoCheckmarkDoneCircle style={{color:"green",fontSize:"45px",marginBottom:"15px"}} className='' />
                 <h1 style={{color:"green"}} className="text-xl font-bold  mb-2">Payment successful</h1>
                 <p className="text-gray-600">Congratulations! Your reservation has been successfuly confirmed</p>
-                <button style={{backgroundColor:"green",width:"20%"}} className=" text-white font-bold py-2 px-4 mt-3 rounded focus:outline-none focus:shadow-outline" ><Link to='/contrat'>voir ton contrat</Link> </button>
+                <button style={{backgroundColor:"green",width:"20%"}} className=" text-white font-bold py-2 px-4 mt-3 rounded focus:outline-none focus:shadow-outline" ><Link to='/contrat'>see your contract</Link> </button>
             </div>
         </div>
     );

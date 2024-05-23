@@ -9,7 +9,7 @@ const Footer = () => {
         <FaInstagram style={{color:"white",marginRight:"10px"}} size={17} />
         <FaTwitter style={{color:"white",marginRight:"10px"}} size={17} />
       </div>
-      <div className="text-center text-white p-3" style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}>
+      <div className="text-center text-white p-3 " style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}>
         © 2024 Abderrahamane Bsar & Lokmane Ouarrachi
       </div>
     </footer>

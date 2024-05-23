@@ -7,15 +7,22 @@
     padding: 30px;
     
 }
+/* html, 
+body {   
+  height: 100%; 
+}  */
+#root { 
+  display: flex; 
+  flex-direction: column-reverse;  
+}
+/* .footer {   
+  flex-shrink: 0; 
+} */
+
 /* Dropdown */
 .dropdown {
   position: relative;
 }
-/* body{
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-} */
 .dropdown-menu {
   display: block;
   position: absolute;
@@ -97,23 +104,3 @@ main button{
   box-shadow: rgba(103, 232, 249, 0.705) 0px 22px 70px 4px;
   /* box-shadow: rgb(103 232 249) 0px 22px 70px 4px; */
 }
-
-/* Assuming you have a CSS file, you can add the following styles */
-.app {
- /* This ensures that the app takes up at least the full height of the viewport */
-}
-
-.footer {
-  margin-top: auto; /* This pushes the footer to the bottom of the page */
-}
-
-
-/* how it works */
-/* .card {
-  width: 250px; 
-  height: 300px; 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-} 
-*/

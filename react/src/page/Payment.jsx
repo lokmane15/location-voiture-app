@@ -93,7 +93,7 @@ export default function Payment() {
                     <div className="card-body">
                         <h5 className="text-lg mb-2 font-medium">{car.marque} {car.model && car.model.nom_model}</h5>
                         <p className="card-text mb-2 font-medium">Price: {car.prix} DH/Day</p>
-                        <p className="card-text mb-2 font-medium">Duration: {duration} Dayss</p>
+                        <p className="card-text mb-2 font-medium">Duration: {duration} Days</p>
                         <p className="card-text mb-2 font-medium">Total price: <span className="text-lg font-medium">{totalPrice}DH </span></p>
 
                     </div>

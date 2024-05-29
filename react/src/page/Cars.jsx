@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import fetchCars from '../services/FetchCars';
-import ReactLoading from 'react-loading';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 export default function Cars() {
     const baseUrl = 'http://127.0.0.1:8000/api';
     const location = useLocation();
@@ -16,7 +18,7 @@ export default function Cars() {
     const [couleurFilter, setCouleurFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [dataPerPage] = useState(10);
-    const [isLoading,setIsLoading]=useState(true)
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,7 +26,7 @@ export default function Cars() {
                 const jsonData = await fetchCars(baseUrl);
                 setData(jsonData);
                 setFilteredData(jsonData);
-                setIsLoading(false)
+                setIsLoading(false);
                 const uniqueMarques = Array.from(new Set(jsonData.map(item => item.marque)));
                 const uniquePrix = Array.from(new Set(jsonData.map(item => parseFloat(item.prix))));
                 const uniqueCouleurs = Array.from(new Set(jsonData.map(item => item.couleur)));
@@ -39,7 +41,7 @@ export default function Cars() {
 
         fetchData();
     }, [baseUrl]);
-  
+
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const variable = params.get('marque');
@@ -52,7 +54,7 @@ export default function Cars() {
 
     useEffect(() => {
         filterData();
-    }, [marqueFilter, prixFilter, couleurFilter, currentPage, data]); // Include 'data' in dependencies
+    }, [marqueFilter, prixFilter, couleurFilter, currentPage, data]);
 
     const filterData = () => {
         let filtered = [...data];
@@ -62,7 +64,7 @@ export default function Cars() {
         }
 
         if (prixFilter) {
-            filtered = filtered.filter(car => parseFloat(car.prix) <= parseFloat(prixFilter));
+            filtered = filtered.filter(car => parseFloat(car.prix) == parseFloat(prixFilter));
         }
 
         if (couleurFilter) {
@@ -83,67 +85,71 @@ export default function Cars() {
         pageNumbers.push(i);
     }
 
+    const renderSkeleton = () => {
+        return Array(dataPerPage).fill().map((_, index) => (
+            <div key={index} className="bg-gray p-4 rounded-md shadow-md my-1 flex flex-col justify-between">
+                <Skeleton height={200} />
+                <Skeleton count={3} />
+            </div>
+        ));
+    };
+
     return (
         <div style={{ minHeight: "70vh" }} className="container mx-auto mt-20">
             <div className="flex mb-4">
                 <div className="row">
                     <div className="col-lg-4 col-md-4 col-sm-12">
-                    <select onChange={(e) => setMarqueFilter(e.target.value)} value={marqueFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
-                        <option value="">Filter by Brand</option>
-                        {marques.map(marque => (
-                            <option key={marque} value={marque}>{marque}</option>
-                        ))}
-                    </select>
+                        <select onChange={(e) => setMarqueFilter(e.target.value)} value={marqueFilter} className="text-neutral-500 m-2 p-2 border-solid border-0 rounded border-gray-300">
+                            <option value="">Filter by Brand</option>
+                            {marques.map(marque => (
+                                <option key={marque} value={marque}>{marque}</option>
+                            ))}
+                        </select>
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-12">
-                    <select onChange={(e) => setPrixFilter(e.target.value)} value={prixFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
-                        <option value="">Filter by price</option>
-                        {prix.map(p => (
-                            <option key={p} value={p}>{p}</option>
-                    ))}
-                    </select>
+                        <select onChange={(e) => setPrixFilter(e.target.value)} value={prixFilter} className="text-neutral-500 m-2 p-2 border-solid border-0 rounded border-gray-300">
+                            <option value="">Filter by price</option>
+                            {prix.map(p => (
+                                <option key={p} value={p}>{p}DH</option>
+                            ))}
+                        </select>
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-12">
-                    <select onChange={(e) => setCouleurFilter(e.target.value)} value={couleurFilter} className="text-neutral-500 m-2 p-2 border-solid border-2 rounded border-gray-300">
-                        <option value="">Filter by color</option>
-                        {couleurs.map(couleur => (
-                        <option key={couleur} value={couleur}>{couleur}</option>
-                    ))}
-                </select>
+                        <select onChange={(e) => setCouleurFilter(e.target.value)} value={couleurFilter} className="text-neutral-500 m-2 p-2 border-solid border-0 rounded border-gray-300">
+                            <option value="">Filter by color</option>
+                            {couleurs.map(couleur => (
+                                <option key={couleur} value={couleur}>{couleur}</option>
+                            ))}
+                        </select>
                     </div>
                 </div>
-
             </div>
-            <div > {/* Flex container to center vertically and horizontally */}
-    {isLoading ? (
-        <div className="flex justify-center items-center h-screen">
-            <ReactLoading type={'spin'} color={'#000'} height={'3rem'} width={'3rem'} />
-        </div>
-        
-    ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 my-2">
-            {currentCars.length > 0 ? (
-                currentCars.map(item => (
-                    <div key={item.id} className="bg-white p-4 rounded-md shadow-md my-1 flex flex-col justify-between">
-                        <Link to={`/carDetails/${item.id}`}>
-                            <div>
-                                <img src={item.image} alt="Car" className="mb-2 transition-transform duration-300 transform hover:scale-110" />
-                                <h1 className="text-xl font-bold mb-2">{item.marque} {item.model.nom_model}</h1>
-                                <p className="text-gray-700">Num Matricule: {item.num_matricule}</p>
-                                <p className="text-gray-700">Price: {item.prix}DH/Day</p>
-                            </div>
-                        </Link>
+            <div>
+                {isLoading ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 my-2">
+                        {renderSkeleton()}
                     </div>
-                ))
-            ) : (
-                <p style={{ textAlign: "center" }} className='text-2xl'>No cars match the selected filters.</p>
-            )}
-        </div>
-    )}
-</div>
-
-
-
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 my-2">
+                        {currentCars.length > 0 ? (
+                            currentCars.map(item => (
+                                <div key={item.id} className="bg-white p-4 rounded-md shadow-md my-1 flex flex-col justify-between">
+                                    <Link to={`/carDetails/${item.id}`}>
+                                        <div>
+                                            <img src={item.image} alt="Car" className="mb-2 transition-transform duration-300 transform hover:scale-110" />
+                                            <h1 className="text-xl font-bold mb-2">{item.marque} {item.model.nom_model}</h1>
+                                            <p className="text-gray-700">Num Matricule: {item.num_matricule}</p>
+                                            <p className="text-gray-700">Price: {item.prix}DH/Day</p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ))
+                        ) : (
+                            <p style={{ textAlign: "center" }} className='text-2xl'>No cars match the selected filters.</p>
+                        )}
+                    </div>
+                )}
+            </div>
             <nav className='flex justify-center mb-3'>
                 <ul className="pagination">
                     {pageNumbers.map(number => (

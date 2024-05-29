@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import fetchCars from '../services/FetchCars';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from '@headlessui/react';
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
 export default function Cars() {
     const baseUrl = 'http://127.0.0.1:8000/api';
@@ -19,6 +21,10 @@ export default function Cars() {
     const [currentPage, setCurrentPage] = useState(1);
     const [dataPerPage] = useState(10);
     const [isLoading, setIsLoading] = useState(true);
+
+    function classNames(...classes) {
+        return classes.filter(Boolean).join(' ');
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -64,7 +70,7 @@ export default function Cars() {
         }
 
         if (prixFilter) {
-            filtered = filtered.filter(car => parseFloat(car.prix) == parseFloat(prixFilter));
+            filtered = filtered.filter(car => parseFloat(car.prix) === parseFloat(prixFilter));
         }
 
         if (couleurFilter) {
@@ -97,30 +103,228 @@ export default function Cars() {
     return (
         <div style={{ minHeight: "70vh" }} className="container mx-auto mt-20">
             <div className="flex mb-4">
-                <div className="row">
+                <div className="row w-full">
                     <div className="col-lg-4 col-md-4 col-sm-12">
-                        <select onChange={(e) => setMarqueFilter(e.target.value)} value={marqueFilter} className="text-neutral-500 m-2 p-2 border-solid border-0 rounded border-gray-300">
-                            <option value="">Filter by Brand</option>
-                            {marques.map(marque => (
-                                <option key={marque} value={marque}>{marque}</option>
-                            ))}
-                        </select>
+                        <Listbox value={marqueFilter} onChange={setMarqueFilter}>
+                            {({ open }) => (
+                                <>
+                                    <Label className="block text-sm font-medium leading-6 text-gray-900">Filter by Brand</Label>
+                                    <div className="relative mt-2">
+                                        <ListboxButton className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                                            <span className="block truncate">{marqueFilter || "Select a brand"}</span>
+                                            <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                                                <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                            </span>
+                                        </ListboxButton>
+                                        <Transition show={open} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                            <ListboxOptions className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                <ListboxOption
+                                                    className={({ active }) =>
+                                                        classNames(
+                                                            active ? 'bg-sky-600 text-white' : 'text-gray-900',
+                                                            'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                        )
+                                                    }
+                                                    value=""
+                                                >
+                                                    {({ selected, active }) => (
+                                                        <>
+                                                            <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                None
+                                                            </span>
+                                                            {selected ? (
+                                                                <span className={classNames(
+                                                                    active ? 'text-white' : 'text-indigo-600',
+                                                                    'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                )}>
+                                                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </ListboxOption>
+                                                {marques.map((marque, idx) => (
+                                                    <ListboxOption
+                                                        key={idx}
+                                                        className={({ active }) =>
+                                                            classNames(
+                                                                active ? 'bg-sky-600 text-white' : 'text-gray-900',
+                                                                'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                            )
+                                                        }
+                                                        value={marque}
+                                                    >
+                                                        {({ selected, active }) => (
+                                                            <>
+                                                                <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                    {marque}
+                                                                </span>
+                                                                {selected ? (
+                                                                    <span className={classNames(
+                                                                        active ? 'text-white' : 'text-indigo-600',
+                                                                        'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                    )}>
+                                                                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                    </span>
+                                                                ) : null}
+                                                            </>
+                                                        )}
+                                                    </ListboxOption>
+                                                ))}
+                                            </ListboxOptions>
+                                        </Transition>
+                                    </div>
+                                </>
+                            )}
+                        </Listbox>
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-12">
-                        <select onChange={(e) => setPrixFilter(e.target.value)} value={prixFilter} className="text-neutral-500 m-2 p-2 border-solid border-0 rounded border-gray-300">
-                            <option value="">Filter by price</option>
-                            {prix.map(p => (
-                                <option key={p} value={p}>{p}DH</option>
-                            ))}
-                        </select>
+                        <Listbox value={prixFilter} onChange={setPrixFilter}>
+                            {({ open }) => (
+                                <>
+                                    <Label className="block text-sm font-medium leading-6 text-gray-900">Filter by Price</Label>
+                                    <div className="relative mt-2">
+                                        <ListboxButton className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                                            <span className="block truncate">{prixFilter ? `${prixFilter}DH` : "Select a price"}</span>
+                                            <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                                                <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                            </span>
+                                        </ListboxButton>
+                                        <Transition show={open} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                            <ListboxOptions className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                <ListboxOption
+                                                    className={({ active }) =>
+                                                        classNames(
+                                                            active ? 'bg-sky-600 text-white' : 'text-gray-900',
+                                                            'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                        )
+                                                    }
+                                                    value=""
+                                                >
+                                                    {({ selected, active }) => (
+                                                        <>
+                                                            <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                None
+                                                            </span>
+                                                            {selected ? (
+                                                                <span className={classNames(
+                                                                    active ? 'text-white' : 'text-indigo-600',
+                                                                    'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                )}>
+                                                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </ListboxOption>
+                                                {prix.map((p, idx) => (
+                                                    <ListboxOption
+                                                        key={idx}
+                                                        className={({ active }) =>
+                                                            classNames(
+                                                                active ? 'bg-sky-600 text-white' : 'text-gray-900',
+                                                                'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                            )
+                                                        }
+                                                        value={p}
+                                                    >
+                                                        {({ selected, active }) => (
+                                                            <>
+                                                                <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                    {p}DH
+                                                                </span>
+                                                                {selected ? (
+                                                                    <span className={classNames(
+                                                                        active ? 'text-white' : 'text-indigo-600',
+                                                                        'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                    )}>
+                                                                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                    </span>
+                                                                ) : null}
+                                                            </>
+                                                        )}
+                                                    </ListboxOption>
+                                                ))}
+                                            </ListboxOptions>
+                                        </Transition>
+                                    </div>
+                                </>
+                            )}
+                        </Listbox>
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-12">
-                        <select onChange={(e) => setCouleurFilter(e.target.value)} value={couleurFilter} className="text-neutral-500 m-2 p-2 border-solid border-0 rounded border-gray-300">
-                            <option value="">Filter by color</option>
-                            {couleurs.map(couleur => (
-                                <option key={couleur} value={couleur}>{couleur}</option>
-                            ))}
-                        </select>
+                        <Listbox value={couleurFilter} onChange={setCouleurFilter}>
+                            {({ open }) => (
+                                <>
+                                    <Label className="block text-sm font-medium leading-6 text-gray-900">Filter by Color</Label>
+                                    <div className="relative mt-2">
+                                        <ListboxButton className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                                            <span className="block truncate">{couleurFilter || "Select a color"}</span>
+                                            <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                                                <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                            </span>
+                                        </ListboxButton>
+                                        <Transition show={open} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                            <ListboxOptions className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                <ListboxOption
+                                                    className={({ active }) =>
+                                                        classNames(
+                                                            active ? 'bg-sky-600 text-white' : 'text-gray-900',
+                                                            'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                        )
+                                                    }
+                                                    value=""
+                                                >
+                                                    {({ selected, active }) => (
+                                                        <>
+                                                            <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                None
+                                                            </span>
+                                                            {selected ? (
+                                                                <span className={classNames(
+                                                                    active ? 'text-white' : 'text-indigo-600',
+                                                                    'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                )}>
+                                                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </ListboxOption>
+                                                {couleurs.map((couleur, idx) => (
+                                                    <ListboxOption
+                                                        key={idx}
+                                                        className={({ active }) =>
+                                                            classNames(
+                                                                active ? 'bg-sky-600 text-white' : 'text-gray-900',
+                                                                'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                            )
+                                                        }
+                                                        value={couleur}
+                                                    >
+                                                        {({ selected, active }) => (
+                                                            <>
+                                                                <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                                                                    {couleur}
+                                                                </span>
+                                                                {selected ? (
+                                                                    <span className={classNames(
+                                                                        active ? 'text-white' : 'text-indigo-600',
+                                                                        'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                                    )}>
+                                                                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                    </span>
+                                                                ) : null}
+                                                            </>
+                                                        )}
+                                                    </ListboxOption>
+                                                ))}
+                                            </ListboxOptions>
+                                        </Transition>
+                                    </div>
+                                </>
+                            )}
+                        </Listbox>
                     </div>
                 </div>
             </div>

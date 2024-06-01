@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import fetchCars from '../services/FetchCars';
 import Skeleton from 'react-loading-skeleton';
@@ -25,7 +25,7 @@ export default function Cars() {
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ');
     }
-
+    console.log(couleurs);
     useEffect(() => {
         const fetchData = async () => {
             try {

@@ -6,13 +6,33 @@ import { MdPriceChange, MdOutlineDateRange, MdOutlinePayment } from "react-icons
 import { FaCar } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
+import { BanknotesIcon,LifebuoyIcon,BuildingStorefrontIcon  } from "@heroicons/react/24/outline";
+import Marquee from "react-fast-marquee";
 
 function Home() {
   const baseUrl = 'http://127.0.0.1:8000/api';
   const [marque, setMarque] = useState([]);
   const [cars, setCars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const features = [
+    {
+      name: 'Wide Range of Vehicles',
+      description:
+        'Choose from a diverse selection of cars, from compact models for city driving to luxury vehicles for special occasions, ensuring we have the perfect car for every need and preference.',
+        icon:BuildingStorefrontIcon 
+    },
+    {
+      name: 'Outstanding Customer Support',
+      description: 'Our dedicated team is available 24/7 to assist with any questions or concerns, providing personalized support to make your rental experience as smooth and convenient as possible',
+      icon:LifebuoyIcon 
 
+    },
+    {
+      name: 'Affordable Rates',
+      description: 'Enjoy competitive pricing and great value for money, with no hidden fees or surprises. We offer flexible rental options and regular promotions to suit any budget.',
+      icon:BanknotesIcon
+    },
+  ]
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,13 +64,16 @@ function Home() {
   }
 
   const renderMarqueSkeleton = () => {
-    return Array(6).fill().map((_, index) => (
-      <div key={index} className="col-md-2 col-sm-6 mb-4">
-          <Skeleton height={150} />
+    return (
+      <div className="d-flex flex-wrap justify-content-center">
+        {Array(6).fill().map((_, index) => (
+          <div key={index} className="brand-item">
+            <Skeleton height={150} width={150} className="ml-20" />
+          </div>
+        ))}
       </div>
-    ));
-  }
-
+    );
+  };
   return (
     <>
       <main className="bg-center bg-sky-600">
@@ -71,9 +94,8 @@ function Home() {
       </main>
 
       <div className="container mx-auto mt-5">
-        <div className="flex justify-between mb-4">
-          <h1 className="text-2xl font-semibold">Explore Cars picked for you</h1>
-          <Link className="text-cyan-400" to="/cars">See More</Link>
+        <div className="flex justify-end mb-4 ml-20">
+          {isLoading ? <Skeleton/>:<Link className="text-cyan-400 text-bold" to="/cars">See More</Link>}
         </div>
         <div className="row">
           {isLoading ? (
@@ -87,10 +109,9 @@ function Home() {
                   <Link to={`/carDetails/${car.id}`} className="text-decoration-none">
                     <img className="card-img-top" src={car.image} alt="Car" />
                     <div className="card-body">
-                      <h1 className="card-title">{car.marque} {car.model.nom_model}</h1>
-                      <p className="card-text text-gray-700">
-                        <MdPriceChange className="size-6 inline mr-3" /> Prix: {car.prix} DH/Jour
-                        <span className="text-2xl flex justify-end">&rarr;</span>
+                      <h1 className="card-title font-bold">{car.marque} {car.model.nom_model}</h1>
+                      <p className="card-text text text-gray-700 font-medium">
+                        Prix: {car.prix} DH/Day
                       </p>
                     </div>
                   </Link>
@@ -111,22 +132,30 @@ function Home() {
       {/* marque */}
       <div className="container">
       <div className="row">
-        <h1 className=" font-weight-bold text-4xl text-sky-500 text-center font-bold  mb-3">All Brands</h1>
-        { isLoading ? (
-          renderMarqueSkeleton()
-        ):(
-        marque.map(item => (
-          <div key={item.id} className="col-md-2 col-sm-6 mb-4">
-            <Link to={`/cars?marque=${item.nom_marque}`}>
-              <img src={item.image_path}  className="col-span-1 max-h-24 w-full object-contain" alt={item.nom_marque} />
-            </Link>
-          </div>
-        )
-        ))}
+        {isLoading ? <Skeleton/>:<h1 className="text-center text-4xl mb-4 font-bold">All Brands</h1>}
+        <Marquee>
+          {isLoading ? (
+            renderMarqueSkeleton()
+          ) : (
+            <div className="d-flex flex-wrap justify-content-center">
+              {marque.map((item) => (
+                <div key={item.id} className="brand-item">
+                  <Link to={`/cars?marque=${item.nom_marque}`}>
+                    <img
+                      src={item.image_path}
+                      className="max-h-24 w-full ml-20 object-contain"
+                      alt={item.nom_marque}
+                    />
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
+        </Marquee>
       </div>
     </div>
 
-      <h1 className="text-center text-4xl mb-4 font-bold text-sky-500">How it works</h1>
+      <h1 className="text-center text-4xl mb-4 font-bold ">How it works</h1>
       <div className="flex flex-wrap mb-2">
         {[
           { icon: <FaCar className="text-sky-500 text-3xl" />, title: "Choose a Car", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!" },
@@ -145,6 +174,41 @@ function Home() {
           </div>
         ))}
       </div>
+
+      {/* section with images */}
+      <div className="overflow-hidden bg-white py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+          <div className="lg:pr-8 lg:pt-4">
+            <div className="lg:max-w-lg">
+              <h2 className="text-base font-semibold leading-7 text-sky-600">Rental faster</h2>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why Choose Us</p>
+              <p className="mt-6 text-lg leading-8 text-gray-600">
+              At Car Rantel, we offer a superior car rental experience tailored to your needs with a fleet of well-maintained vehicles, exceptional customer service, and competitive pricing. Whether for business or leisure, our commitment to quality ensures a seamless and stress-free journey.
+              </p>
+              <div className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
+                {features.map((feature) => (
+                  <div key={feature.name} className="relative pl-9">
+                    <dt className="inline font-semibold text-gray-900">
+                    <feature.icon className="absolute left-1 top-1 h-5 w-5 text-sky-600" aria-hidden="true" />
+                      {feature.name}
+                    </dt>{' '}
+                    <dd className="inline">{feature.description}</dd>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <img
+            src="../../public/pexels-pixabay-164634 (1).jpg"
+            alt="Product screenshot"
+            className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
+            width={2432}
+            height={1442}
+          />
+        </div>
+      </div>
+    </div>
     </>
   );
 }

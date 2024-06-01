@@ -3,7 +3,7 @@ import { useDataContext } from "../Context/DataContext";
 import { useParams, Link } from "react-router-dom";
 import useAuthContext from "../hooks/useAuthContext";
 import fetchCarId from "../services/FetchCarId";
-
+import Skeleton from "react-loading-skeleton";
 export default function Payment() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null); // State for storing error message
@@ -14,11 +14,13 @@ export default function Payment() {
     const [car, setCar] = useState("");
     const [duration,setDuration] =useState()
     const [totalPrice,setTotalPrice] =useState()
+    const [isLoadingSkeleton,setIsLoadingSkeleton]=useState(true)
     console.log(totalPrice,duration,data);
     useEffect(()=>{
         const getCarId = async ()=>{
         const jsonDataCar=await fetchCarId(baseUrl,id,user.token)
         setCar(jsonDataCar)
+        setIsLoadingSkeleton(false)
         }
         getCarId();
     },[baseUrl])
@@ -74,20 +76,27 @@ export default function Payment() {
                 const error = await response.json();
                 throw new Error(error.message || 'Failed to reserve car');
             }
+
         } catch (error) {
             console.error('Error:', error.message);
             setError(error.message); // Set error message state
         } finally {
             setIsLoading(false);
+
         }
     };
 
     return (
+        <>
         <div style={{minHeight:"70vh"}} className="pt-20 mt-20 container">
             <div className="card mb-3" >
                 <div className="row g-0">
                     <div className="col-md-4">
-                    <img src={`/public/${car.image}`} className="img-fluid rounded-start" alt="loading.."/>
+                        {isLoadingSkeleton ? <Skeleton height={200}/>:
+                        (
+                            <img src={`/public/${car.image}`} className="img-fluid rounded-start" alt="loading.."/>
+                        )
+                        }
                     </div>
                     <div className="col-md-8">
                     <div className="card-body">
@@ -114,6 +123,8 @@ export default function Payment() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>        
+        </>
+
     );
 }

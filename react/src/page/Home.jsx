@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import fetchMarque from "../services/FetchMarque";
 import fetchCars from "../services/FetchCars";
-import { MdPriceChange, MdOutlineDateRange, MdOutlinePayment } from "react-icons/md";
+import { MdOutlineDateRange, MdOutlinePayment } from "react-icons/md";
 import { FaCar } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
 import { BanknotesIcon,LifebuoyIcon,BuildingStorefrontIcon  } from "@heroicons/react/24/outline";
 import Marquee from "react-fast-marquee";
-
+import {motion} from "framer-motion"
+import {fedIn} from "../variants"
 function Home() {
   const baseUrl = 'http://127.0.0.1:8000/api';
   const [marque, setMarque] = useState([]);
@@ -79,15 +80,26 @@ function Home() {
       <main className="bg-center bg-sky-600">
         <div className="container mx-auto p-5">
           <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 p-5">
+            <motion.div
+                  variants={fedIn("right",0.3)}
+                  initial="hidden"
+                  whileInView={"show"}
+                  viewport={{once:false, amount:0.7}}
+            className="md:w-1/2 p-5">
               <h1 className="text-3xl md:text-4xl font-bold mb-3">Car Rental</h1>
               <p className="mb-3">Rev up your journey with our seamless car rental web app. Browse, book, and hit the road hassle-free. From compact to luxury, find the perfect ride for every adventure. Your next memorable trip starts here.</p>
               <button className="bg-cyan-400">
                 <Link to="/cars">Explore More</Link>
               </button>
-            </div>
-            <div className="md:w-1/2 p-5">
-              <img src="../../public/bro-takes-photos-fKNPmWPtESI-unsplash-removebg-preview.png" alt="Car" />
+            </motion.div>
+            <div
+              className="md:w-1/2 p-5">
+              <motion.img
+              variants={fedIn("left",0.5)}
+              initial="hidden"
+              whileInView={"show"}
+              viewport={{once:false, amount:0.5}}
+              src="../../public/bro-takes-photos-fKNPmWPtESI-unsplash-removebg-preview.png" alt="Car" />
             </div>
           </div>
         </div>
@@ -97,7 +109,12 @@ function Home() {
         <div className="flex justify-end mb-4 ml-20">
           {isLoading ? <Skeleton/>:<Link className="text-cyan-400 text-bold" to="/cars">See More</Link>}
         </div>
-        <div className="row">
+        <motion.div
+          variants={fedIn("up",0.3)}
+          initial="hidden"
+          whileInView={"show"}
+          viewport={{once:false, amount:0.4}}
+        className="row">
           {isLoading ? (
             <div className="row">
               {renderSkeleton()}
@@ -126,7 +143,8 @@ function Home() {
               </div>
             ))
           )}
-        </div>
+        </motion.div>
+
       </div>
 
       {/* marque */}
@@ -156,7 +174,12 @@ function Home() {
     </div>
 
       <h1 className="text-center text-4xl mb-4 font-bold ">How it works</h1>
-      <div className="flex flex-wrap mb-2">
+      <motion.div
+      variants={fedIn("up",0.2)}
+      initial="hidden"
+      whileInView={"show"}
+      viewport={{once:false, amount:0.7}}
+      className="flex flex-wrap mb-2">
         {[
           { icon: <FaCar className="text-sky-500 text-3xl" />, title: "Choose a Car", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!" },
           { icon: <MdOutlineDateRange className="text-sky-500 text-3xl" />, title: "Select A Date", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!" },
@@ -173,14 +196,19 @@ function Home() {
             </div>
           </div>
         ))}
-      </div>
+      </motion.div>
 
       {/* section with images */}
       <div className="overflow-hidden bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div className="lg:pr-8 lg:pt-4">
-            <div className="lg:max-w-lg">
+            <motion.div
+              variants={fedIn("right",0.3)}
+              initial="hidden"
+              whileInView={"show"}
+              viewport={{once:false, amount:0.7}}
+            className="lg:max-w-lg">
               <h2 className="text-base font-semibold leading-7 text-sky-600">Rental faster</h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why Choose Us</p>
               <p className="mt-6 text-lg leading-8 text-gray-600">
@@ -197,15 +225,24 @@ function Home() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
+
           </div>
-          <img
-            src="../../public/pexels-pixabay-164634 (1).jpg"
-            alt="Product screenshot"
-            className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-            width={2432}
-            height={1442}
-          />
+          <motion.div
+            variants={fedIn("left",0.3)}
+            initial="hidden"
+            whileInView={"show"}
+            viewport={{once:false, amount:0.7}}
+          >
+            <img
+              src="../../public/pexels-pixabay-164634 (1).jpg"
+              alt="Product screenshot"
+              className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
+              width={2432}
+              height={1442}
+            />
+          </motion.div>
+
         </div>
       </div>
     </div>

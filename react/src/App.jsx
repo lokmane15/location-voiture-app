@@ -14,6 +14,7 @@ import Contrat from './page/Contrat'
 import Cancel from './page/Cancel'
 import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
+import AboutUs from './page/AboutUs'
 function App() {
   const {user}=useAuthContext()
   return (
@@ -59,6 +60,10 @@ function App() {
           <Route 
           path='/contrat' 
           element={user?<Contrat/>:<Navigate to="/login"/>}
+          />
+          <Route 
+          path='/aboutus' 
+          element={<AboutUs/>}
           />
         </Routes>
         <Footer/>

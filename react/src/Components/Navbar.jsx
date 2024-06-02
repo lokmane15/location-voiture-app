@@ -30,7 +30,7 @@ function Sidebar({ isOpen, onClose }) {
         </div>
         <nav className="mt-6">
           <Link to="/cars" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Cars</Link>
-          <Link to="/contactus" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Contact Us</Link>
+          <Link to="/aboutus" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">About Us</Link>
           <Link to="/contrat" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Contrat</Link>
           <button onClick={handleClickLogout} className="dropdown-menu-item px-4 py-2">
                       Logout
@@ -76,10 +76,10 @@ function Navbar() {
               Cars
             </Link>
             <Link
-              to="/contactus"
+              to="/aboutus"
               className="text-slate-300 hover:text-black hover:bg-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 "
             >
-              Contact Us
+              About Us
             </Link>
             
             <Link

@@ -14,7 +14,6 @@ export default function CarDetails() {
     const [data, setData] = useState({});
     const baseUrl = 'http://127.0.0.1:8000/api';
     const [isLoading,setIsloading]=useState(true)
-
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`${baseUrl}/car/${id}`, {

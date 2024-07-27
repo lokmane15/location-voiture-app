@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useLogout } from "../hooks/useLogout";
 import { RxDropdownMenu } from "react-icons/rx";
 function Sidebar({ isOpen, onClose }) {
+  const { user } = useAuthContext();
   const { logout } = useLogout();
   const handleClickLogout = () => {
     logout();
@@ -31,10 +32,21 @@ function Sidebar({ isOpen, onClose }) {
         <nav className="mt-6">
           <Link to="/cars" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Cars</Link>
           <Link to="/aboutus" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">About Us</Link>
-          <Link to="/contrat" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Contrat</Link>
-          <button onClick={handleClickLogout} className="dropdown-menu-item px-4 py-2">
-                      Logout
-          </button>
+          
+          {user ? (
+            <button onClick={handleClickLogout} className="dropdown-menu-item px-4 py-2">
+              Logout
+            </button>
+          )
+            
+          : (
+            <div>
+              <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
+              <Link to="/signup" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">signup</Link>
+
+            </div>
+          )
+          }
         </nav>
       </div>
     </div>

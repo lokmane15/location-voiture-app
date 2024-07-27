@@ -60,7 +60,7 @@ export default function Reserve() {
             <form className="max-w-md mx-auto reserve-form" onSubmit={handleFormSubmit}  style={{boxShadow:" rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;"} } >
                 <div className="mb-4">
                     <h1 className="text-center text-2xl font-black mb-3 ">FORMULAIRE DE RESERVATION</h1>
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Nom</label>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">first nsme</label>
                     <input
                         type="text" 
                         value={user.user.nom} 
@@ -69,7 +69,7 @@ export default function Reserve() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Prenom</label>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">last name</label>
                     <input 
                         type="text" 
                         value={user.user.prenom} 
@@ -78,7 +78,7 @@ export default function Reserve() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Voiture</label>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Car</label>
                     <input 
                         type="text" 
                         value={car.marque} 
@@ -89,7 +89,7 @@ export default function Reserve() {
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Date de début</label>
                     <input 
-                        type="datetime-local" 
+                        type="date" 
                         required
                         onChange={e => setDateD(e.target.value)} 
                         className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
@@ -98,13 +98,13 @@ export default function Reserve() {
                 <div className="mb-6">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Date de fin</label>
                     <input 
-                        type="datetime-local" 
+                        type="date" 
                         required
                         onChange={e => setDateF(e.target.value)} 
                         className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
                     />
                 </div>
-
+                {/* datetime-local */}
                 <div className="flex justify-center">
                     <button 
                         className="bg-cyan-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-cyan-500 "

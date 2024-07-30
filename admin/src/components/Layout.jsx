@@ -2,12 +2,12 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
 export default function Layout() {
-    return (
-        <div className="flex flex-row bg-neutral-100 h-screen w-screen overflow-hidden">
-                <Sidebar/>
-                <div className="p-4">
-                    <Outlet/>
-            </div>
-        </div>
-    )
+  return (
+    <div className="flex bg-neutral-100">
+      <Sidebar />
+      <div className="ml-60 p-4 flex-1">
+        <Outlet />
+      </div>
+    </div>
+  );
 }

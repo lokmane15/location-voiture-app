@@ -29,6 +29,8 @@ Route::post('/login', authController::class . '@login');
 
 Route::get('/car/{id}', CarsController::class . '@show');
 
+Route::get('/getCar/{id}', CarsController::class . '@showForAdmin');
+
 Route::get('/getContrat', ContratController::class . '@getContrat');
 
 //cars
@@ -59,3 +61,9 @@ Route::get('/marque', MarqueController::class . '@show');
 
 
 Route::post('/reservecar/{id}', ReservController::class . "@reserveCar");
+
+
+
+//for the admin
+Route::get('users', authController::class . '@users');
+Route::delete('destroyUser/{id}', authController::class . '@DestroyUser');

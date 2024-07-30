@@ -85,4 +85,16 @@ class AuthController extends Controller
     //         'success' =>true
     //     ]);
     // }
+
+    public function Users()
+    {
+        return User::all();
+    }
+    public function destroyUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted successfully'], 200);
+    }
 }

@@ -29,43 +29,63 @@ class CarsController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
     }
+    public function showForAdmin($id)
+    {
+        $car = Cars::with('model')->findOrFail($id);
+        return response()->json($car, 200);
+    }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $formFields = $request->validate([
             'num_matricule' => 'required',
             'kilomitrage' => 'required',
             'annee' => 'required',
             'couleur' => 'required',
             'prix' => 'required',
             'etat' => 'required',
-            'image' => 'required',
+            'image' => 'required|image',
             'marque' => 'required',
             'model_id' => 'required',
         ]);
 
-        $car = Cars::create($request->all());
+        if ($request->hasFile('image')) {
+            $formFields['image'] = $request->file('image')->store('car', 'public');
+        }
+
+        $car = Cars::create($formFields);
+
         return response()->json($car, 201);
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $formFeilds = $request->validate([
             'num_matricule' => 'required',
             'kilomitrage' => 'required',
             'annee' => 'required',
             'couleur' => 'required',
             'prix' => 'required',
             'etat' => 'required',
-            'image' => 'required',
+            'image' => 'nullable|image', // Ensure image is actually an image
             'marque' => 'required',
             'model_id' => 'required',
         ]);
 
         $car = Cars::findOrFail($id);
-        $car->update($request->all());
+
+        if ($request->hasFile('image')) {
+            $formFeilds['image'] = $request->file('image')->store('car', 'public');
+        } else {
+            // If no new image is provided, retain the existing image
+            unset($formFeilds['image']);
+        }
+
+        $car->fill($formFeilds)->save();
+
         return response()->json($car, 200);
     }
+
 
     public function destroy($id)
     {

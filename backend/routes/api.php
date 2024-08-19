@@ -4,7 +4,9 @@ use App\Http\Controllers\authController;
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\ContratController;
 use App\Http\Controllers\MarqueController;
+use App\Http\Controllers\ModelController;
 use App\Http\Controllers\ReservController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +43,7 @@ Route::get('/carsDispo', CarsController::class . '@getCarsDisponible');
 
 Route::post('/newcar', CarsController::class . '@store');
 
-Route::put('/updatecar/{id}', CarsController::class . '@update');
+Route::post('/updatecar/{id}', CarsController::class . '@update');
 
 Route::delete('/destroycar/{id}', CarsController::class . '@destroy');
 
@@ -53,11 +55,6 @@ Route::post('/reservation/success/{id}', ReservController::class . "@reservation
 
 
 
-//marque
-
-Route::post('/marque', MarqueController::class . '@store');
-
-Route::get('/marque', MarqueController::class . '@show');
 
 
 Route::post('/reservecar/{id}', ReservController::class . "@reserveCar");
@@ -67,3 +64,34 @@ Route::post('/reservecar/{id}', ReservController::class . "@reserveCar");
 //for the admin
 Route::get('users', authController::class . '@users');
 Route::delete('destroyUser/{id}', authController::class . '@DestroyUser');
+Route::get('user/{id}', authController::class . '@show');
+
+//marque
+
+
+Route::get('/marque', MarqueController::class . '@show');
+Route::get('/onemarque/{id}', MarqueController::class . '@getmarque');
+Route::post('/createmarque', MarqueController::class . '@store');
+Route::post('/marque/{id}', MarqueController::class . '@update');
+Route::delete('/marque/{id}', MarqueController::class . '@destroy');
+
+//models
+Route::get('/models', ModelController::class . '@index');
+Route::get('/models/{id}', ModelController::class . '@show');
+Route::post('/models', ModelController::class . '@store');
+Route::put('/models/{id}', ModelController::class . '@update');
+Route::delete('/models/{id}', ModelController::class . '@destroy');
+
+
+//reservetion 
+Route::get('/reservation', ReservController::class . '@index');
+
+
+//the model by the marque id
+
+Route::get('/modelByMarqueid/{id}', ModelController::class . '@getModelsByMarqueid');
+
+
+Route::get('/test-image', function () {
+    return response()->file(storage_path('app/public/car/yxUtnTOMbVH8YjTMI54eC1udE8plrRBdfj5PMzFf.jpg'));
+});

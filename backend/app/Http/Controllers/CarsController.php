@@ -57,7 +57,6 @@ class CarsController extends Controller
 
         return response()->json($car, 201);
     }
-
     public function update(Request $request, $id)
     {
         $formFeilds = $request->validate([

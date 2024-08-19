@@ -28,12 +28,12 @@ export default function Users() {
 
   return (
     <div>
-      <button className="px-3 py-2 text-white flex bg-blue-500 rounded-md mb-5">
+      {/* <button className="px-3 py-2 text-white flex bg-blue-500 rounded-md mb-5">
         <MdLibraryAdd className="mt-1" />
         <Link to="/addUser">
           <span className="ml-2">Add new User</span>
         </Link>
-      </button>
+      </button> */}
       <div className="bg-white-100 px-4 pb-4 rounded-sm border border-gray-200">
         <strong className="text-gray-700 font-medium">User list</strong>
         <div className="mt-3 overflow-x-auto">

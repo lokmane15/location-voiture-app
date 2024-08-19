@@ -1,6 +1,6 @@
 const fetchMarque = async (baseUrl)=>{
     try {
-        const response = await fetch(`${baseUrl}/marque`, {
+        const response = await fetch(`${baseUrl}/marquehhh`, {
             method:"GET",
             headers: { 'Content-Type': 'application/json' }
         });

@@ -90,6 +90,11 @@ class AuthController extends Controller
     {
         return User::all();
     }
+    public function Show($id)
+    {
+        $user = User::findOrFail($id);
+        return $user;
+    }
     public function destroyUser($id)
     {
         $user = User::findOrFail($id);

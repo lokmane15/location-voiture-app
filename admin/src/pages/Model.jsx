@@ -1,39 +1,32 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchCars, fetchDeleteCar } from "../api/Cars";
-import { MdLibraryAdd, MdDelete } from "react-icons/md";
+import { MdLibraryAdd } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { GrUpdate } from "react-icons/gr";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { DeleteModel, fetchModel } from "../api/Cars";
 import { Link } from "react-router-dom";
 
-export default function Cars() {
+export default function Model() {
   const queryClient = useQueryClient();
 
-  // Fetch car data
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["cars"],
-    queryFn: fetchCars,
+  const query = useQuery({
+    queryKey: ["model"],
+    queryFn: fetchModel,
   });
-  console.log(data);
-  // Delete car mutation
-  const deleteMutation = useMutation({
-    mutationFn: fetchDeleteCar,
+  const DeleteModelMutation = useMutation({
+    mutationFn: DeleteModel,
     onSuccess: () => {
-      queryClient.invalidateQueries(["cars"]);
+      queryClient.invalidateQueries(["model"]);
     },
   });
-
-  const handleDelete = (id) => {
-    deleteMutation.mutate(id);
+  const handledelete = (id) => {
+    DeleteModelMutation.mutate(id);
   };
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading data</div>;
-
   return (
-    <>
+    <div>
       <button className="px-3 py-2 text-white flex bg-blue-500 rounded-md mb-5">
         <MdLibraryAdd className="mt-1" />
-        <Link to="/addcar">
-          <span className="ml-2">Add new Car</span>
+        <Link to="/addmodel">
+          <span className="ml-2">Add new Model</span>
         </Link>
       </button>
       <div className="bg-white-100 px-4 pb-4 rounded-sm border border-gray-200">
@@ -46,64 +39,47 @@ export default function Cars() {
                   Id
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Brand Name
+                  Model
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Matricule
+                  type_carburant
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Year
+                  gps
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Color
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Action
+                  capacite assises
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {data &&
-                data.map((item) => (
+              {query.data &&
+                query.data.map((item) => (
                   <tr key={item.id} className="hover:bg-gray-100">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
                       #{item.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {item.marque}
+                      {item.nom_model}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {item.num_matricule}
+                      {item.type_carburant}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {item.annee}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {item.couleur}
+                      {item.gps}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
-                      {item.etat == 1 ? (
-                        <p className="text-green-600 text-xs rounded-md px-2 py-1 capitalize bg-green-100">
-                          availible
-                        </p>
-                      ) : (
-                        <p className="text-red-600 text-xs rounded-md px-2 py-1 capitalize bg-red-100">
-                          reserved
-                        </p>
-                      )}
+                      {item.capacite_assises}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <button className="text-white bg-blue-600 p-2 rounded-md">
-                        <Link to={`/updatecar/${item.id}`}>
+                        <Link to={`/updatemodel/${item.id}`}>
                           <GrUpdate />
                         </Link>
                       </button>
                       <button
                         className="ml-4 text-white bg-red-600 p-2 rounded-md"
-                        onClick={() => handleDelete(item.id)}
+                        onClick={() => handledelete(item.id)}
                       >
                         <MdDelete />
                       </button>
@@ -114,6 +90,6 @@ export default function Cars() {
           </table>
         </div>
       </div>
-    </>
+    </div>
   );
 }

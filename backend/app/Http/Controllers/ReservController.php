@@ -95,7 +95,7 @@ class ReservController extends Controller
                     $reservation = Reservation::create([
                         'date_debut' => Carbon::parse($request->input('date_debut')),
                         'date_fin' => Carbon::parse($request->input('date_fin')),
-                        'prix_total' => $session->amount_total / 10, // Convert from cents
+                        'prix_total' => $session->amount_total / 100, // Convert from cents
                         'marque' => $car->marque ?? null, // Ensure 'marque' is set or set to null
                         'user_id' => $user_id, // Assuming user is authenticated
                         'car_id' => $car->id,
@@ -128,5 +128,10 @@ class ReservController extends Controller
             // Handle any errors during Stripe API interaction or reservation creation
             return response()->json(['message' => $error->getMessage()], 500);
         }
+    }
+
+    public function index()
+    {
+        return Reservation::all();
     }
 }

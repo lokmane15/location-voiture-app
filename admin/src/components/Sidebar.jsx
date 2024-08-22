@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import { FaCarSide, FaRegUser } from "react-icons/fa";
 import { IoDocumentTextOutline } from "react-icons/io5";
@@ -7,15 +7,18 @@ import { IoLogoModelS } from "react-icons/io";
 
 function Sidebar() {
   return (
-    <div className="fixed h-full  w-60 p-3 flex flex-col ">
+    <div className="fixed h-full bg-neutral-900 text-white w-60 p-3 flex flex-col ">
       <div className="flex items-center gap-2 px-1 py-3">
-        <span className=" font-extrabold text-lg">CarRental</span>
+        <h6 className=" text-2xl font-semibold">
+          Car<span className="text-cyan-400 text-2xl">Rental</span>
+          <FaCarSide className="inline ml-1 text-2xl" />
+        </h6>
       </div>
       <div className="flex-1 py-8 flex space-y-2 flex-col gap-0.5">
         <NavLink
           className={({ isActive }) =>
             `flex items-center px-2 py-2 font-light rounded-md text-base ${
-              isActive ? "bg-sky-200 " : " hover:bg-sky-200 hover:no-underline"
+              isActive ? "bg-cyan-400" : " hover:bg-cyan-400 hover:no-underline"
             }`
           }
           to="/"
@@ -26,7 +29,7 @@ function Sidebar() {
         <NavLink
           className={({ isActive }) =>
             `flex items-center px-2 py-2 font-light rounded-md text-base ${
-              isActive ? "bg-sky-200 " : " hover:bg-sky-200 hover:no-underline"
+              isActive ? "bg-cyan-400" : " hover:bg-cyan-400 hover:no-underline"
             }`
           }
           to="/cars"
@@ -37,7 +40,7 @@ function Sidebar() {
         <NavLink
           className={({ isActive }) =>
             `flex items-center px-2 py-2 font-light rounded-md text-base ${
-              isActive ? "bg-sky-200 " : " hover:bg-sky-200 hover:no-underline"
+              isActive ? "bg-cyan-400" : " hover:bg-cyan-400 hover:no-underline"
             }`
           }
           to="/users"
@@ -48,7 +51,7 @@ function Sidebar() {
         <NavLink
           className={({ isActive }) =>
             `flex items-center px-2 py-2 font-light rounded-md text-base ${
-              isActive ? "bg-sky-200 " : " hover:bg-sky-200 hover:no-underline"
+              isActive ? "bg-cyan-400" : " hover:bg-cyan-400 hover:no-underline"
             }`
           }
           to="/reservation"
@@ -59,7 +62,7 @@ function Sidebar() {
         <NavLink
           className={({ isActive }) =>
             `flex items-center px-2 py-2 font-light rounded-md text-base ${
-              isActive ? "bg-sky-200 " : " hover:bg-sky-200 hover:no-underline"
+              isActive ? "bg-cyan-400" : " hover:bg-cyan-400 hover:no-underline"
             }`
           }
           to="/marque"
@@ -70,7 +73,7 @@ function Sidebar() {
         <NavLink
           className={({ isActive }) =>
             `flex items-center px-2 py-2 font-light rounded-md text-base ${
-              isActive ? "bg-sky-200 " : " hover:bg-sky-200 hover:no-underline"
+              isActive ? "bg-cyan-400" : " hover:bg-cyan-400 hover:no-underline"
             }`
           }
           to="/model"

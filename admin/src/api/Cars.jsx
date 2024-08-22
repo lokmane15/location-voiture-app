@@ -2,6 +2,19 @@ export async function fetchCars() {
   const response = await fetch("http://127.0.0.1:8000/api/cars");
   return response.json();
 }
+
+//car disponible
+
+export async function getDisponibleCars() {
+  const response = await fetch("http://127.0.0.1:8000/api/carsDispo");
+  return response.json();
+}
+
+export async function getCarsNotDisponible() {
+  const response = await fetch("http://127.0.0.1:8000/api/carsNotDispo");
+  return response.json();
+}
+
 export async function fetchSingleCar(id) {
   const response = await fetch(`http://127.0.0.1:8000/api/getCar/${id}`);
   return response.json();
@@ -188,5 +201,14 @@ export async function fetchmodelbymarqueid(id) {
   const response = await fetch(
     `http://127.0.0.1:8000/api/modelByMarqueid/${id}`
   );
+  return response.json();
+}
+//stripe balance
+export async function getBalance() {
+  const response = await fetch("http://127.0.0.1:8000/api/earnings");
+  return response.json();
+}
+export async function getEarningstoday() {
+  const response = await fetch("http://127.0.0.1:8000/api/todays-payments");
   return response.json();
 }

@@ -6,7 +6,7 @@ use App\Http\Controllers\ContratController;
 use App\Http\Controllers\MarqueController;
 use App\Http\Controllers\ModelController;
 use App\Http\Controllers\ReservController;
-
+use App\Http\Controllers\StripeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +40,9 @@ Route::get('/getContrat', ContratController::class . '@getContrat');
 Route::get('/cars', CarsController::class . '@getCars');
 //only cars disponible
 Route::get('/carsDispo', CarsController::class . '@getCarsDisponible');
+//car reserved already
+Route::get('/carsNotDispo', CarsController::class . '@getCarsNotDisponible');
+
 
 Route::post('/newcar', CarsController::class . '@store');
 
@@ -92,6 +95,14 @@ Route::get('/reservation', ReservController::class . '@index');
 Route::get('/modelByMarqueid/{id}', ModelController::class . '@getModelsByMarqueid');
 
 
-Route::get('/test-image', function () {
-    return response()->file(storage_path('app/public/car/yxUtnTOMbVH8YjTMI54eC1udE8plrRBdfj5PMzFf.jpg'));
-});
+// Route::get('/test-image', function () {
+//     return response()->file(storage_path('app/public/car/yxUtnTOMbVH8YjTMI54eC1udE8plrRBdfj5PMzFf.jpg'));
+// });
+
+
+
+//stripe balance
+Route::get('/earnings', [StripeController::class, 'getEarnings']);
+
+
+Route::get('/todays-payments', [StripeController::class, 'getTodaysPayments']);

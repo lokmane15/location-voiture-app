@@ -19,6 +19,11 @@ class CarsController extends Controller
         $cars = Cars::where('etat', 1)->with('model')->get();
         return response()->json($cars, 200);
     }
+    public function getCarsNotDisponible()
+    {
+        $cars = Cars::where('etat', 0)->with('model')->get();
+        return response()->json($cars, 200);
+    }
 
     public function show($id)
     {

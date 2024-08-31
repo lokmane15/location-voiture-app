@@ -4,16 +4,19 @@ import { GrUpdate } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteMarque, fetchMarque } from "../api/Cars";
+import ReactLoading from "react-loading";
+import useAuth from "../hooks/useAuth";
 
 export default function Marque() {
   const queryClient = useQueryClient();
+  const { admin } = useAuth();
   const query = useQuery({
     queryKey: ["cars"],
-    queryFn: fetchMarque,
+    queryFn: () => fetchMarque(admin),
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteMarque,
+    mutationFn: (id) => deleteMarque(id, admin),
     onSuccess: () => {
       queryClient.invalidateQueries(["cars"]);
     },
@@ -23,7 +26,12 @@ export default function Marque() {
     deleteMutation.mutate(id);
   };
 
-  if (query.isLoading) return <div>Loading...</div>;
+  if (query.isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
+      </div>
+    );
   if (query.isError) return <div>Error loading data</div>;
   return (
     <div>

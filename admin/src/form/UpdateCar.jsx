@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchMarque, fetchmodelbymarqueid, fetchSingleCar } from "../api/Cars";
+import {
+  fetchMarque,
+  fetchmodelbymarqueid,
+  fetchSingleCar,
+  fetchupdateCar,
+} from "../api/Cars";
 import { useQuery } from "@tanstack/react-query";
+import useAuth from "../hooks/useAuth";
 
 export default function UpdateCar() {
   const { id } = useParams();
+  const { admin } = useAuth();
   const navigate = useNavigate();
   const { data: carData } = useQuery({
     queryKey: ["car", id],
     queryFn: () => fetchSingleCar(id),
   });
-
   const [data, setData] = useState({
     num_matricule: "",
     kilomitrage: 0,
@@ -61,33 +67,6 @@ export default function UpdateCar() {
     }
   }, [data.marque, datamarque]);
 
-  const updateData = async (id) => {
-    const formData = new FormData();
-
-    for (const key in data) {
-      formData.append(key, data[key]);
-    }
-
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/updatecar/${id}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      if (response.ok) {
-        console.log("The data updated successfully!");
-        navigate("/cars");
-      } else {
-        console.log("There was an error updating the data.");
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-  };
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
@@ -103,11 +82,6 @@ export default function UpdateCar() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateData(id);
-  };
-
   const handleFileChange = (e) => {
     setData({
       ...data,
@@ -115,6 +89,17 @@ export default function UpdateCar() {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    // Append each property in data to FormData
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+    await fetchupdateCar({ formData, id, token: admin });
+    navigate("/cars");
+  };
   console.log(data);
 
   return (

@@ -1,83 +1,156 @@
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export async function fetchCars() {
-  const response = await fetch("http://127.0.0.1:8000/api/cars");
+  const response = await fetch(`${apiUrl}/cars`);
   return response.json();
 }
 
 //car disponible
 
 export async function getDisponibleCars() {
-  const response = await fetch("http://127.0.0.1:8000/api/carsDispo");
+  const response = await fetch(`${apiUrl}/carsDispo`);
   return response.json();
 }
 
 export async function getCarsNotDisponible() {
-  const response = await fetch("http://127.0.0.1:8000/api/carsNotDispo");
+  const response = await fetch(`${apiUrl}/carsNotDispo`);
   return response.json();
 }
 
 export async function fetchSingleCar(id) {
-  const response = await fetch(`http://127.0.0.1:8000/api/getCar/${id}`);
+  const response = await fetch(`${apiUrl}/getCar/${id}`);
   return response.json();
 }
-export async function createCar(newCar) {
-  const response = await fetch("http://127.0.0.1:8000/api/newcar", {
-    method: "POST",
-    // No need to set Content-Type manually here
-    body: newCar,
-  });
+export async function fetchCreateCar({ data, token }) {
+  try {
+    const response = await fetch(`${apiUrl}/newcar`, {
+      method: "POST",
+      body: data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  // Check if the response is not OK
-  if (!response.ok) {
-    // Handle errors accordingly
-    throw new Error("Network response was not ok");
+    if (response.ok) {
+      console.log("The data created successfully!");
+    } else {
+      const errorData = await response.json();
+      console.log("There was an error creating the data:", errorData);
+    }
+  } catch (error) {
+    console.error("Network or server error:", error);
   }
-
-  return response.json();
 }
-export async function fetchupdateCar(updatedPost, id) {
-  const response = await fetch(`http://127.0.0.1:8000/api/updatecar/${id}`, {
-    method: "PUT",
-    body: JSON.stringify(updatedPost),
-  });
-
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
+export async function fetchupdateCar({ formData, id, token }) {
+  try {
+    const response = await fetch(`${apiUrl}/updatecar/${id}`, {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.ok) {
+      console.log("The data updated successfully!");
+    } else {
+      console.error("There was an error updating the data.");
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
   }
-
-  return response.json();
 }
-export async function fetchDeleteCar(id) {
-  const response = await fetch(`http://127.0.0.1:8000/api/destroycar/${id}`, {
+export async function fetchDeleteCar(id, token) {
+  const response = await fetch(`${apiUrl}/destroycar/${id}`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (response.ok) {
     console.log("the car was deleted successufly");
   }
 }
-export async function fetchUsers() {
-  const response = await fetch("http://127.0.0.1:8000/api/users");
+export async function fetchUsers(token) {
+  const response = await fetch(`${apiUrl}/users`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.json();
 }
-export async function fetchSingleUser(id) {
-  const response = await fetch(`http://127.0.0.1:8000/api/user/${id}`);
+export async function fetchSingleUser({ id, token }) {
+  const response = await fetch(`${apiUrl}/user/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.json();
 }
 
-export async function deleteUser(id) {
-  const response = await fetch(`http://127.0.0.1:8000/api/destroyUser/${id}`);
+export async function deleteUser(id, token) {
+  const response = await fetch(`${apiUrl}/destroyUser/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   if (response.ok) {
     console.log("deleted!!!");
   }
 }
-export async function updateData(data, id) {
+
+//marque
+export async function fetchMarque(token) {
+  const response = await fetch(`${apiUrl}/marque`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.json();
+}
+export async function fetchSingleMarque({ id, token }) {
+  const response = await fetch(`${apiUrl}/onemarque/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.json();
+}
+export async function createMarque({ formData, token }) {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/updatecar/${id}`, {
-      method: "PUT",
+    const response = await fetch(`${apiUrl}/createmarque`, {
+      method: "POST",
+      body: formData,
       headers: {
-        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(data), // Serialize data to JSON
+    });
+
+    if (response.ok) {
+      console.log("The data created successfully!");
+    } else {
+      const errorData = await response.json();
+      console.log("There was an error creating the data:", errorData);
+    }
+  } catch (error) {
+    console.error("Network or server error:", error);
+  }
+}
+export async function updateMarque({ formData, id, token }) {
+  try {
+    const response = await fetch(`${apiUrl}/marque/${id}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
     });
 
     if (response.ok) {
@@ -89,58 +162,13 @@ export async function updateData(data, id) {
     console.error("An error occurred:", error);
   }
 }
-//marque
-export async function fetchMarque() {
-  const response = await fetch("http://127.0.0.1:8000/api/marque");
-  return response.json();
-}
-export async function fetchSingleMarque(id) {
-  const response = await fetch(`http://127.0.0.1:8000/api/onemarque/${id}`);
-  return response.json();
-}
-
-export async function createMarque(data) {
-  try {
-    const response = await fetch("http://127.0.0.1:8000/api/createmarque", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (response.ok) {
-      console.log("The data created successfully!");
-    } else {
-      console.log("There was an error creating the data.");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-//   const updateMarque = async (id) => {
-//     try {
-//       const response = await fetch(`http://127.0.0.1:8000/api/marque/${id}`, {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(marque),
-//       });
-
-//       if (response.ok) {
-//         console.log("The data updated successfully!");
-//         navigate("/marque");
-//       } else {
-//         console.log("There was an error updating the data.");
-//       }
-//     } catch (error) {
-//       console.error("An error occurred:", error);
-//     }
-//   };
-
-export async function deleteMarque(id) {
-  const response = await fetch(`http://127.0.0.1:8000/api/marque/${id}`, {
+export async function deleteMarque(id, token) {
+  const response = await fetch(`${apiUrl}/marque/${id}`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   });
   if (response.ok) {
     console.log("deleted!!!");
@@ -148,20 +176,37 @@ export async function deleteMarque(id) {
 }
 
 //the models
-export async function fetchModel() {
-  const response = await fetch("http://127.0.0.1:8000/api/models");
-  return response.json();
+export async function fetchModel(token) {
+  const response = await fetch(`${apiUrl}/models`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch models");
+  }
+
+  return await response.json();
 }
-export async function fetchSingleModel(id) {
-  const response = await fetch(`http://127.0.0.1:8000/api/models/${id}`);
+export async function fetchSingleModel({ id, token }) {
+  const response = await fetch(`${apiUrl}/models/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.json();
 }
 
-export async function CreateModel(data) {
-  const response = await fetch("http://127.0.0.1:8000/api/models", {
+export async function CreateModel({ data, token }) {
+  const response = await fetch(`${apiUrl}/models`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(data),
   });
@@ -171,17 +216,22 @@ export async function CreateModel(data) {
     console.log("not working :(");
   }
 }
-export async function DeleteModel(id) {
-  const response = await fetch(`http://127.0.0.1:8000/api/models/${id}`, {
+export async function DeleteModel(id, token) {
+  const response = await fetch(`${apiUrl}/models/${id}`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   });
   return response.json();
 }
-export async function fetchUpdateModel(data, id) {
-  const response = await fetch(`http://127.0.0.1:8000/api/models/${id}`, {
+export async function fetchUpdateModel({ data, id, token }) {
+  const response = await fetch(`${apiUrl}/models/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(data),
   });
@@ -190,25 +240,49 @@ export async function fetchUpdateModel(data, id) {
 
 //reservation
 
-export async function fetchReservation() {
-  const response = await fetch("http://127.0.0.1:8000/api/reservation");
+export async function fetchReservation(token) {
+  const response = await fetch(`${apiUrl}/reservation`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.json();
 }
 
 //fetch model by the marque id
 
 export async function fetchmodelbymarqueid(id) {
-  const response = await fetch(
-    `http://127.0.0.1:8000/api/modelByMarqueid/${id}`
-  );
+  const response = await fetch(`${apiUrl}/modelByMarqueid/${id}`);
   return response.json();
 }
 //stripe balance
 export async function getBalance() {
-  const response = await fetch("http://127.0.0.1:8000/api/earnings");
+  const response = await fetch(`${apiUrl}/earnings`);
   return response.json();
 }
 export async function getEarningstoday() {
-  const response = await fetch("http://127.0.0.1:8000/api/todays-payments");
+  const response = await fetch(`${apiUrl}/todays-payments`);
+  return response.json();
+}
+
+//admin login
+
+export async function adminlogin(username, password) {
+  const response = await fetch(`${apiUrl}/admin/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+  return response.json();
+}
+export async function adminlogout(token) {
+  const response = await fetch(`${apiUrl}/admin/logout`, {
+    method: "POST", // Specify the HTTP method
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.json();
 }

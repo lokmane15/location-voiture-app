@@ -5,6 +5,7 @@ import PopularCars from "./PopularCars";
 import { BsGraphUpArrow } from "react-icons/bs";
 import Doughnut from "./Doughnut";
 import RandomCars from "./RandomCars";
+import ReactLoading from "react-loading";
 
 export default function Dashboard() {
   const { data: balance, isLoading: isLoadingBalance } = useQuery({
@@ -17,21 +18,27 @@ export default function Dashboard() {
   });
 
   if (isLoadingBalance || isLoadingErningsToday) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
+      </div>
+    );
   }
-  const amount = balance.available[0].amount;
+  // Safely access the data properties
+  const amount = balance?.available?.[0]?.amount ?? 0;
   const formattedAmount = (amount / 100).toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  const panding = balance.pending[0].amount;
-  const formattedPendingAmount = (panding / 100).toLocaleString("en-US", {
+
+  const pending = balance?.pending?.[0]?.amount ?? 0;
+  const formattedPendingAmount = (pending / 100).toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
-  const eartoday = earningToDay.data[0].amount;
-  const formattedeartodayAmount = (eartoday / 1000).toLocaleString("en-US", {
+  const earToday = earningToDay?.data?.[0]?.amount ?? 0;
+  const formattedEarTodayAmount = (earToday / 1000).toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
@@ -48,7 +55,7 @@ export default function Dashboard() {
         </div>
         <div className="py-4 w-52 pl-4 border bg-white rounded-md">
           <p>Today Earning</p>
-          <strong>$ {formattedeartodayAmount}</strong>
+          <strong>$ {formattedEarTodayAmount}</strong>
         </div>
         <div className="py-4 w-52 pl-4 border bg-white rounded-md">
           <p>Pending</p>

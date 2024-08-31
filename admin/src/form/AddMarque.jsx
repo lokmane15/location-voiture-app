@@ -1,29 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-export async function createMarque(data) {
-  const formData = new FormData();
-  formData.append("nom_marque", data.nom_marque);
-  formData.append("image_path", data.image_path);
-
-  try {
-    const response = await fetch("http://127.0.0.1:8000/api/createmarque", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (response.ok) {
-      console.log("The data created successfully!");
-    } else {
-      console.log("There was an error creating the data.");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
+import useAuth from "../hooks/useAuth";
+import { createMarque } from "../api/Cars";
 
 export default function AddMarque() {
   const navigate = useNavigate();
+  const { admin } = useAuth();
   const [data, setData] = useState({
     nom_marque: "",
     image_path: null,
@@ -46,8 +28,11 @@ export default function AddMarque() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("nom_marque", data.nom_marque);
+    formData.append("image_path", data.image_path);
     try {
-      await createMarque(data);
+      await createMarque({ formData, token: admin });
       navigate("/marque");
     } catch (error) {
       console.log(error);

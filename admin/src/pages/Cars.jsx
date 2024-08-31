@@ -3,19 +3,20 @@ import { fetchCars, fetchDeleteCar } from "../api/Cars";
 import { MdLibraryAdd, MdDelete } from "react-icons/md";
 import { GrUpdate } from "react-icons/gr";
 import { Link } from "react-router-dom";
-
+import ReactLoading from "react-loading";
+import useAuth from "../hooks/useAuth";
 export default function Cars() {
   const queryClient = useQueryClient();
+  const { admin } = useAuth();
 
   // Fetch car data
   const { data, isLoading, isError } = useQuery({
     queryKey: ["cars"],
     queryFn: fetchCars,
   });
-  console.log(data);
   // Delete car mutation
   const deleteMutation = useMutation({
-    mutationFn: fetchDeleteCar,
+    mutationFn: (id) => fetchDeleteCar(id,admin),
     onSuccess: () => {
       queryClient.invalidateQueries(["cars"]);
     },
@@ -25,7 +26,12 @@ export default function Cars() {
     deleteMutation.mutate(id);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
+      </div>
+    );
   if (isError) return <div>Error loading data</div>;
 
   return (

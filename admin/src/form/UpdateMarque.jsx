@@ -1,14 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchSingleMarque } from "../api/Cars";
+import { fetchSingleMarque, updateMarque } from "../api/Cars";
 import { useEffect, useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 export default function UpdateMarque() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { admin } = useAuth();
   const { data: marquedata } = useQuery({
     queryKey: ["marque", id],
-    queryFn: () => fetchSingleMarque(id),
+    queryFn: () => fetchSingleMarque({ id, token: admin }),
   });
   const [marque, setMarque] = useState({
     nom_marque: "",
@@ -24,46 +26,6 @@ export default function UpdateMarque() {
     }
   }, [marquedata]);
 
-  // const updateMarque = async (id) => {
-  //   try {
-  //     const response = await fetch(`http://127.0.0.1:8000/api/marque/${id}`, {
-  //       method: "PUT",
-  //       body: JSON.stringify(marque),
-  //     });
-
-  //     if (response.ok) {
-  //       console.log("The data updated successfully!");
-  //       navigate("/marque");
-  //     } else {
-  //       console.log("There was an error updating the data.");
-  //     }
-  //   } catch (error) {
-  //     console.error("An error occurred:", error);
-  //   }
-  // };
-  const updateMarque = async (id) => {
-    const formData = new FormData();
-
-    for (const key in marque) {
-      formData.append(key, marque[key]);
-    }
-
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/marque/${id}`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        console.log("The data updated successfully!");
-        navigate("/marque");
-      } else {
-        console.log("There was an error updating the data.");
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setMarque({
@@ -72,10 +34,6 @@ export default function UpdateMarque() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateMarque(id);
-  };
   const handleFileChange = (e) => {
     setMarque({
       ...marque,
@@ -83,6 +41,17 @@ export default function UpdateMarque() {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    for (const key in marque) {
+      formData.append(key, marque[key]);
+    }
+
+    await updateMarque({ formData, id, token: admin });
+    navigate("/marque");
+  };
   return (
     <form
       onSubmit={handleSubmit}

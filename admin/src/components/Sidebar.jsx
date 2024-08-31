@@ -4,12 +4,20 @@ import { FaCarSide, FaRegUser } from "react-icons/fa";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { SiPorsche } from "react-icons/si";
 import { IoLogoModelS } from "react-icons/io";
-
+import useAuth from "../hooks/useAuth";
+import { adminlogout } from "../api/Cars";
 function Sidebar() {
+  const { admin, logoutAdmin } = useAuth();
+
+  const handleLogout = async () => {
+    await adminlogout(admin);
+    localStorage.removeItem("admin");
+    await logoutAdmin();
+  };
   return (
     <div className="fixed h-full bg-neutral-900 text-white w-60 p-3 flex flex-col ">
       <div className="flex items-center gap-2 px-1 py-3">
-        <h6 className=" text-2xl font-semibold">
+        <h6 className=" text-2xl font-bold">
           Car<span className="text-cyan-400 text-2xl">Rental</span>
           <FaCarSide className="inline ml-1 text-2xl" />
         </h6>
@@ -84,7 +92,9 @@ function Sidebar() {
       </div>
       <div>
         <hr className="opacity-20" />
-        <p className="text-red-600 p-4 cursor-pointer">Logout</p>
+        <p className="text-red-600 p-4 cursor-pointer">
+          <button onClick={handleLogout}>Logout</button>
+        </p>
       </div>
     </div>
   );

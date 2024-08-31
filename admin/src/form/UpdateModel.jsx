@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { fetchSingleModel, fetchUpdateModel } from "../api/Cars";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-
+import useAuth from "../hooks/useAuth";
 export default function UpdateModel() {
   const navigate = useNavigate();
+  const {admin} = useAuth()
   const { id } = useParams();
   const { data: modelData } = useQuery({
     queryKey: ["model", id],
-    queryFn: () => fetchSingleModel(id),
+    queryFn: () => fetchSingleModel({ id, token: admin }),
   });
   const [data, setData] = useState({
     nom_model: "",
@@ -38,7 +39,7 @@ export default function UpdateModel() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetchUpdateModel(data, id);
+      await fetchUpdateModel({data, id,token:admin});
       navigate("/model");
     } catch (error) {
       console.log(error);

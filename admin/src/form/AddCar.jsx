@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-  createCar,
-  fetchMarque,
-  fetchModel,
-  fetchmodelbymarqueid,
-} from "../api/Cars";
+import { fetchCreateCar, fetchMarque, fetchmodelbymarqueid } from "../api/Cars";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import useAuth from "../hooks/useAuth";
 
 export default function AddCar() {
   const navigate = useNavigate();
+  const { admin } = useAuth();
   const [formData, setFormData] = useState({
     num_matricule: "",
     kilomitrage: "",
@@ -25,7 +22,7 @@ export default function AddCar() {
 
   const { data: datamarque } = useQuery({
     queryKey: ["marque"],
-    queryFn: fetchMarque,
+    queryFn: () => fetchMarque(admin),
   });
   console.log(formData);
   // Function to get the marque ID from its name
@@ -74,7 +71,7 @@ export default function AddCar() {
       data.append(key, formData[key]);
     }
     try {
-      createCar(data);
+      fetchCreateCar({ data, token: admin });
       navigate("/cars");
     } catch (err) {
       console.log("Error creating car:", err);

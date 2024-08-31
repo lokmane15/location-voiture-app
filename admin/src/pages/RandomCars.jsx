@@ -23,36 +23,37 @@ export default function RandomCars() {
             </tr>
           </thead>
           <tbody>
-            {cars.slice(0, 6).map((car) => (
-              <tr key={car.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
-                  #{car.id}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {car.marque}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {car.num_matricule}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {car.annee}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {car.couleur}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
-                  {car.etat == 1 ? (
-                    <p className="text-green-600 text-xs rounded-md px-2 py-1 capitalize bg-green-100">
-                      availible
-                    </p>
-                  ) : (
-                    <p className="text-red-600 text-xs rounded-md px-2 py-1 capitalize bg-red-100">
-                      reserved
-                    </p>
-                  )}
-                </td>
-              </tr>
-            ))}
+            {cars &&
+              cars.slice(0, 6).map((car) => (
+                <tr key={car.id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
+                    #{car.id}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {car.marque}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {car.num_matricule}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {car.annee}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {car.couleur}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
+                    {car.etat == 1 ? (
+                      <p className="text-green-600 text-xs rounded-md px-2 py-1 capitalize bg-green-100">
+                        availible
+                      </p>
+                    ) : (
+                      <p className="text-red-600 text-xs rounded-md px-2 py-1 capitalize bg-red-100">
+                        reserved
+                      </p>
+                    )}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

@@ -6,7 +6,6 @@ export default function PopularCars() {
     queryKey: ["cars"],
     queryFn: getCarsNotDisponible,
   });
-  console.log(cars);
 
   return (
     <div className="w-[20rem] bg-white p-4 rounded-sm border border-gray-200">
@@ -23,7 +22,10 @@ export default function PopularCars() {
               />
             </div>
             <div className="ml-4 flex-1">
-              <p className="text-sm text-gray-800">{`${car.marque} ${car.model?.nom_model}`}</p>
+              <span className="text-sm text-gray-800">{car.marque}</span>
+              <span className="text-sm text-gray-800 ml-1">
+                {car.model && car.model?.nom_model}
+              </span>
             </div>
             <div className="text-xs text-gray-400 pl-1.5">{car.prix} DH</div>
           </div>

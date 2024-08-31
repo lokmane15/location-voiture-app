@@ -1,21 +1,26 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchUsers, deleteUser } from "../api/Cars";
-import { Link } from "react-router-dom";
-import { MdLibraryAdd, MdDelete } from "react-icons/md";
-
+import { MdDelete } from "react-icons/md";
+import ReactLoading from "react-loading";
+import useAuth from "../hooks/useAuth";
 export default function Users() {
   const queryClient = useQueryClient();
   const query = useQuery({ queryKey: ["users"], queryFn: fetchUsers });
-
+  const { admin } = useAuth();
   const deleteMutation = useMutation({
-    mutationFn: deleteUser,
+    mutationFn: (id) => deleteUser(id, admin),
     onSuccess: () => {
-      queryClient.invalidateQueries(["users"]); // Ensure this matches your query key
+      queryClient.invalidateQueries(["users"]);
+    },
+    onError: (error) => {
+      console.error("Error deleting user:", error);
     },
   });
 
   const handleDelete = (id) => {
-    deleteMutation.mutate(id);
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      deleteMutation.mutate(id);
+    }
   };
 
   const formatDate = (dateString) => {
@@ -23,7 +28,12 @@ export default function Users() {
     return date.toLocaleDateString();
   };
 
-  if (query.isLoading) return <div>Loading...</div>;
+  if (query.isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
+      </div>
+    );
   if (query.isError) return <div>Error loading data</div>;
 
   return (

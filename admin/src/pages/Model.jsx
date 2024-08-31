@@ -4,23 +4,34 @@ import { GrUpdate } from "react-icons/gr";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DeleteModel, fetchModel } from "../api/Cars";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import ReactLoading from "react-loading";
 
 export default function Model() {
   const queryClient = useQueryClient();
-
-  const query = useQuery({
+  const { admin } = useAuth();
+  const { data: model, isLoading } = useQuery({
     queryKey: ["model"],
-    queryFn: fetchModel,
+    queryFn: () => fetchModel(admin),
   });
   const DeleteModelMutation = useMutation({
-    mutationFn: DeleteModel,
+    mutationFn: (id) => DeleteModel(id, admin),
     onSuccess: () => {
       queryClient.invalidateQueries(["model"]);
     },
   });
+
   const handledelete = (id) => {
     DeleteModelMutation.mutate(id);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
+      </div>
+    );
+  }
   return (
     <div>
       <button className="px-3 py-2 text-white flex bg-blue-500 rounded-md mb-5">
@@ -53,8 +64,8 @@ export default function Model() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {query.data &&
-                query.data.map((item) => (
+              {model &&
+                model.map((item) => (
                   <tr key={item.id} className="hover:bg-gray-100">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
                       #{item.id}

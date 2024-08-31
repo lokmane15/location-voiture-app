@@ -4,12 +4,13 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
+import ReactLoading from "react-loading";
 
 export default function Reservation() {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [car, setCar] = useState();
   const [user, setUser] = useState();
-  const query = useQuery({
+  const { data: reservation, isLoading } = useQuery({
     queryKey: ["reservation"],
     queryFn: fetchReservation,
   });
@@ -29,6 +30,14 @@ export default function Reservation() {
     setUser(carData);
     setIsModelOpen(true);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
+      </div>
+    );
+  }
   const generateCarHtml = (car) => {
     return (
       <div className="mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex">
@@ -50,7 +59,7 @@ export default function Reservation() {
       </div>
     );
   };
-  console.log(user);
+
   const generateUserHtml = (user) => {
     return (
       <div className="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex">
@@ -77,14 +86,10 @@ export default function Reservation() {
       </div>
     );
   };
+  console.log(reservation);
+
   return (
     <>
-      {/* <button className="px-3 py-2 text-white flex bg-blue-500 rounded-md mb-5">
-        <MdLibraryAdd className="mt-1" />
-        <Link to="/addcar">
-          <span className="ml-2">Add new Car</span>
-        </Link>
-      </button> */}
       <div className="bg-white-100 px-4 pb-4 rounded-sm border border-gray-200">
         <strong className="text-gray-700 font-medium">Car list</strong>
         <div className="mt-3">
@@ -115,8 +120,8 @@ export default function Reservation() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {query.data &&
-                query.data.map((item) => (
+              {reservation &&
+                reservation.map((item) => (
                   <tr key={item.id} className="hover:bg-gray-100">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
                       #{item.id}
@@ -145,19 +150,7 @@ export default function Reservation() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500">
                       {item.marque}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {/* <button className="text-white bg-blue-600 p-2 rounded-md">
-                      <Link to={`/updatecar/${item.id}`}>
-                        <GrUpdate />
-                      </Link>
-                    </button> */}
-                      {/* <button
-                      className="ml-4 text-white bg-red-600 p-2 rounded-md"
-                      onClick={() => handleDelete(item.id)}
-                    >
-                      <MdDelete />
-                    </button> */}
-                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
                   </tr>
                 ))}
             </tbody>

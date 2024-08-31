@@ -2,12 +2,14 @@ import { useState } from "react";
 import { CreateModel, fetchMarque } from "../api/Cars";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import useAuth from "../hooks/useAuth";
 
 export default function AddModel() {
   const navigate = useNavigate();
+  const { admin } = useAuth();
   const { data: marquedata } = useQuery({
     queryKey: ["marque"],
-    queryFn: fetchMarque,
+    queryFn: () => fetchMarque(admin),
   });
 
   const [data, setData] = useState({
@@ -27,13 +29,12 @@ export default function AddModel() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await CreateModel(data);
+      await CreateModel({ data, token: admin });
       navigate("/model");
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(data);
   return (
     <form
       onSubmit={handleSubmit}
@@ -125,7 +126,7 @@ export default function AddModel() {
                   />
                 </div> */}
                 <select name="marque_id" id="" onChange={handleChange}>
-                  {marquedata.map((item) => (
+                  {marquedata?.map((item) => (
                     <option key={item.id} value={item.id}>
                       {item.nom_marque}
                     </option>

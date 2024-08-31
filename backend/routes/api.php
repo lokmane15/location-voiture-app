@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\authController;
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\ContratController;
@@ -44,11 +45,11 @@ Route::get('/carsDispo', CarsController::class . '@getCarsDisponible');
 Route::get('/carsNotDispo', CarsController::class . '@getCarsNotDisponible');
 
 
-Route::post('/newcar', CarsController::class . '@store');
+Route::middleware('auth:sanctum')->post('/newcar', CarsController::class . '@store');
 
-Route::post('/updatecar/{id}', CarsController::class . '@update');
+Route::middleware('auth:sanctum')->post('/updatecar/{id}', CarsController::class . '@update');
 
-Route::delete('/destroycar/{id}', CarsController::class . '@destroy');
+Route::middleware('auth:sanctum')->delete('/destroycar/{id}', CarsController::class . '@destroy');
 
 
 //reservation
@@ -66,24 +67,24 @@ Route::post('/reservecar/{id}', ReservController::class . "@reserveCar");
 
 //for the admin
 Route::get('users', authController::class . '@users');
-Route::delete('destroyUser/{id}', authController::class . '@DestroyUser');
+Route::middleware('auth:sanctum')->delete('destroyUser/{id}', authController::class . '@DestroyUser');
 Route::get('user/{id}', authController::class . '@show');
 
 //marque
 
 
-Route::get('/marque', MarqueController::class . '@show');
-Route::get('/onemarque/{id}', MarqueController::class . '@getmarque');
-Route::post('/createmarque', MarqueController::class . '@store');
-Route::post('/marque/{id}', MarqueController::class . '@update');
-Route::delete('/marque/{id}', MarqueController::class . '@destroy');
+Route::middleware('auth:sanctum')->get('/marque', MarqueController::class . '@show');
+Route::middleware('auth:sanctum')->get('/onemarque/{id}', MarqueController::class . '@getmarque');
+Route::middleware('auth:sanctum')->post('/createmarque', MarqueController::class . '@store');
+Route::middleware('auth:sanctum')->post('/marque/{id}', MarqueController::class . '@update');
+Route::middleware('auth:sanctum')->delete('/marque/{id}', MarqueController::class . '@destroy');
 
 //models
-Route::get('/models', ModelController::class . '@index');
-Route::get('/models/{id}', ModelController::class . '@show');
-Route::post('/models', ModelController::class . '@store');
-Route::put('/models/{id}', ModelController::class . '@update');
-Route::delete('/models/{id}', ModelController::class . '@destroy');
+Route::middleware('auth:sanctum')->get('/models', ModelController::class . '@index');
+Route::middleware('auth:sanctum')->get('/models/{id}', ModelController::class . '@show');
+Route::middleware('auth:sanctum')->post('/models', ModelController::class . '@store');
+Route::middleware('auth:sanctum')->put('/models/{id}', ModelController::class . '@update');
+Route::middleware('auth:sanctum')->delete('/models/{id}', ModelController::class . '@destroy');
 
 
 //reservetion 
@@ -106,3 +107,10 @@ Route::get('/earnings', [StripeController::class, 'getEarnings']);
 
 
 Route::get('/todays-payments', [StripeController::class, 'getTodaysPayments']);
+
+
+//admin 
+
+Route::post("admin/login", AdminController::class . '@login');
+Route::post("admin/signup", AdminController::class . '@signup');
+Route::middleware('auth:sanctum')->post('admin/logout', [AdminController::class, 'logout']);

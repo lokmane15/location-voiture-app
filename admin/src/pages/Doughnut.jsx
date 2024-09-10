@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut as DoughnutChart } from "react-chartjs-2";
 import { getCarsNotDisponible, getDisponibleCars } from "../api/Cars";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 // Register the components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -17,7 +19,7 @@ export default function Doughnut() {
   });
 
   if (isLoadingDispo || isLoadingNotDispo) {
-    return "Loading...";
+    return <Skeleton height={300} width={300} />;
   }
 
   const data = {

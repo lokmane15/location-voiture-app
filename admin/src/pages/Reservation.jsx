@@ -4,9 +4,12 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
+import useAuth from "../hooks/useAuth";
+import Skeleton from "react-loading-skeleton";
 
 export default function Reservation() {
+  const { admin } = useAuth();
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [car, setCar] = useState();
   const [user, setUser] = useState();
@@ -25,19 +28,19 @@ export default function Reservation() {
     setIsModelOpen(true);
   };
   const handleUserModel = async (id) => {
-    const carData = await fetchSingleUser(id);
+    const carData = await fetchSingleUser({ id, token: admin });
     setCar("");
     setUser(carData);
     setIsModelOpen(true);
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
+  //     </div>
+  //   );
+  // }
   const generateCarHtml = (car) => {
     return (
       <div className="mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex">
@@ -86,7 +89,6 @@ export default function Reservation() {
       </div>
     );
   };
-  console.log(reservation);
 
   return (
     <>
@@ -120,39 +122,67 @@ export default function Reservation() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {reservation &&
-                reservation.map((item) => (
-                  <tr key={item.id} className="hover:bg-gray-100">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
-                      #{item.id}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatDate(item.date_debut)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatDate(item.date_fin)}
-                    </td>
-                    <td
-                      className="px-6 py-4 whitespace-nowrap text-sm text-blue-300 cursor-pointer"
-                      onClick={() => handleUserModel(item.user_id)}
-                    >
-                      #{item.user_id}
-                    </td>
-                    <td
-                      className="px-6 py-4 whitespace-nowrap text-sm text-blue-300 cursor-pointer"
-                      onClick={() => carInfo(item.car_id)}
-                    >
-                      #{item.car_id}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {item.prix_total}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500">
-                      {item.marque}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
-                  </tr>
-                ))}
+              {isLoading
+                ? Array(10)
+                    .fill()
+                    .map((_, index) => (
+                      <tr key={index} className="hover:bg-gray-100">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
+                          <Skeleton />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <Skeleton />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <Skeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <Skeleton />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500">
+                          <Skeleton />
+                        </td>
+                      </tr>
+                    ))
+                : reservation &&
+                  reservation.map((item) => (
+                    <tr key={item.id} className="hover:bg-gray-100">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
+                        #{item.id}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {formatDate(item.date_debut)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {formatDate(item.date_fin)}
+                      </td>
+                      <td
+                        className="px-6 py-4 whitespace-nowrap text-sm text-blue-300 cursor-pointer"
+                        onClick={() => handleUserModel(item.user_id)}
+                      >
+                        #{item.user_id}
+                      </td>
+                      <td
+                        className="px-6 py-4 whitespace-nowrap text-sm text-blue-300 cursor-pointer"
+                        onClick={() => carInfo(item.car_id)}
+                      >
+                        #{item.car_id}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {item.prix_total}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500">
+                        {item.marque}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>

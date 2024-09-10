@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchUsers, deleteUser } from "../api/Cars";
 import { MdDelete } from "react-icons/md";
-import ReactLoading from "react-loading";
 import useAuth from "../hooks/useAuth";
+import Skeleton from "react-loading-skeleton";
 export default function Users() {
   const queryClient = useQueryClient();
   const query = useQuery({ queryKey: ["users"], queryFn: fetchUsers });
@@ -28,12 +28,12 @@ export default function Users() {
     return date.toLocaleDateString();
   };
 
-  if (query.isLoading)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
-      </div>
-    );
+  // if (query.isLoading)
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
+  //     </div>
+  //   );
   if (query.isError) return <div>Error loading data</div>;
 
   return (
@@ -74,36 +74,65 @@ export default function Users() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {query.data.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-100">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
-                    #{item.id}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.num_cin}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.nom + " " + item.prenom}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.email}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
-                    {item.adresse}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
-                    {formatDate(item.created_at)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button
-                      className="ml-4 text-white bg-red-600 p-2 rounded-md"
-                      onClick={() => handleDelete(item.id)}
-                    >
-                      <MdDelete />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {query.isLoading
+                ? Array(10)
+                    .fill()
+                    .map((_, index) => (
+                      <tr className="hover:bg-gray-100" key={index}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
+                          <Skeleton />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <Skeleton />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <Skeleton />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <Skeleton />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
+                          <Skeleton />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
+                          <Skeleton />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                          <Skeleton width={30} height={30} />
+                        </td>
+                      </tr>
+                    ))
+                : query.data &&
+                  query.data.map((item) => (
+                    <tr key={item.id} className="hover:bg-gray-100">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-300">
+                        #{item.id}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {item.num_cin}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {item.nom + " " + item.prenom}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {item.email}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
+                        {item.adresse}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
+                        {formatDate(item.created_at)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <button
+                          className="ml-4 text-white bg-red-600 p-2 rounded-md"
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          <MdDelete />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>

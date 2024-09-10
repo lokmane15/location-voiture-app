@@ -5,7 +5,8 @@ import PopularCars from "./PopularCars";
 import { BsGraphUpArrow } from "react-icons/bs";
 import Doughnut from "./Doughnut";
 import RandomCars from "./RandomCars";
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
+import Skeleton from "react-loading-skeleton";
 
 export default function Dashboard() {
   const { data: balance, isLoading: isLoadingBalance } = useQuery({
@@ -17,13 +18,13 @@ export default function Dashboard() {
     queryFn: getEarningstoday,
   });
 
-  if (isLoadingBalance || isLoadingErningsToday) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
-      </div>
-    );
-  }
+  // if (isLoadingBalance || isLoadingErningsToday) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <ReactLoading type={"spin"} color={"black"} height={50} width={50} />
+  //     </div>
+  //   );
+  // }
   // Safely access the data properties
   const amount = balance?.available?.[0]?.amount ?? 0;
   const formattedAmount = (amount / 100).toLocaleString("en-US", {
@@ -46,21 +47,33 @@ export default function Dashboard() {
   return (
     <div className="mt-5">
       <div className="flex items-center justify-around">
-        <div className="py-4 w-52 pl-4 border bg-white rounded-md">
-          <p className="capitalize">Income</p>
-          <strong className="font-extrabold flex items-center">
-            $ {formattedAmount}
-            <BsGraphUpArrow className="text-green-700 ml-2 text-xl" />
-          </strong>
-        </div>
-        <div className="py-4 w-52 pl-4 border bg-white rounded-md">
-          <p>Today Earning</p>
-          <strong>$ {formattedEarTodayAmount}</strong>
-        </div>
-        <div className="py-4 w-52 pl-4 border bg-white rounded-md">
-          <p>Pending</p>
-          <strong>$ {formattedPendingAmount} </strong>
-        </div>
+        {isLoadingBalance ? (
+          <Skeleton width={170} height={70} />
+        ) : (
+          <div className="py-4 w-52 pl-4 border bg-white rounded-md">
+            <p className="capitalize">Income</p>
+            <strong className="font-extrabold flex items-center">
+              $ {formattedAmount}
+              <BsGraphUpArrow className="text-green-700 ml-2 text-xl" />
+            </strong>
+          </div>
+        )}
+        {isLoadingErningsToday ? (
+          <Skeleton width={170} height={70} />
+        ) : (
+          <div className="py-4 w-52 pl-4 border bg-white rounded-md">
+            <p>Today Earning</p>
+            <strong>$ {formattedEarTodayAmount}</strong>
+          </div>
+        )}
+        {isLoadingBalance ? (
+          <Skeleton height={70} width={170} />
+        ) : (
+          <div className="py-4 w-52 pl-4 border bg-white rounded-md">
+            <p>Pending</p>
+            <strong>$ {formattedPendingAmount} </strong>
+          </div>
+        )}
       </div>
       <div className="flex flex-row gap-4 justify-around w-full mt-10 item-center">
         <div className="w-3/5">

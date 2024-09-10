@@ -11,6 +11,8 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { fetchReservation } from "../api/Cars";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 // Register the components
 ChartJS.register(
@@ -30,7 +32,7 @@ export default function Graph() {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>; // Handle loading state
+    return <Skeleton height={300} width={600} />;
   }
 
   // Process the reservation data to count reservations per month

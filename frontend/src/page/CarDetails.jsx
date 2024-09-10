@@ -1,5 +1,4 @@
 import { useParams, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import useAuthContext from "../hooks/useAuthContext";
 import { FaRoad } from "react-icons/fa";
 import { BsFillFuelPumpFill } from "react-icons/bs";
@@ -8,34 +7,25 @@ import { MdOutlineReduceCapacity } from "react-icons/md";
 import { IoCalendarClear } from "react-icons/io5";
 import { MdPriceChange } from "react-icons/md";
 import Skeleton from "react-loading-skeleton";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCarId } from "../services/api";
 export default function CarDetails() {
   const { id } = useParams();
   const { user } = useAuthContext();
-  const [data, setData] = useState({});
-  const baseUrl = "http://127.0.0.1:8000/api";
-  const baseImageUrl = "http://127.0.0.1:8000";
-  const [isLoading, setIsloading] = useState(true);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`${baseUrl}/car/${id}`, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+  // const [data, setData] = useState({});
+  const baseImageUrl = import.meta.env.VITE_API_URL_IMAGE;
+  // const [isLoading, setIsloading] = useState(true);
 
-      if (response.ok) {
-        const json = await response.json();
-        setData(json);
-        setIsloading(false);
-      }
-      if (response.status === 401) {
-        localStorage.removeItem("user");
-        location.reload();
-      }
-    };
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["car", id], // add id as part of queryKey for caching purposes
+    queryFn: () => fetchCarId(id, user.token), // pass id and token separately
+  });
 
-    if (user) {
-      fetchData();
-    }
-  }, [user, id]);
+  if (isError) {
+    return (
+      <p>There was an error loading the car details. Please try again later.</p>
+    );
+  }
 
   return (
     <>

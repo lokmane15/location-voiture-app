@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useLogout } from "../hooks/useLogout";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -8,7 +7,6 @@ export default function ProfilUser() {
     const { logout } = useLogout();
 
     const { user } = useAuthContext();
-
 
     const handleClickLogout = () => {
         logout();

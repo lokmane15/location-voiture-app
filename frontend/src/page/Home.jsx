@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import fetchMarque from "../services/FetchMarque";
 import { MdOutlineDateRange, MdOutlinePayment } from "react-icons/md";
@@ -13,13 +12,11 @@ import {
 import Marquee from "react-fast-marquee";
 import { motion } from "framer-motion";
 import { fedIn } from "../variants";
-// import fetchCars from "../services/FetchCars";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCars, fetchMarque } from "../services/api";
+
 function Home() {
-  const baseUrl = "http://127.0.0.1:8000/api";
   const baseImageUrl = "http://127.0.0.1:8000";
-  const [marque, setMarque] = useState([]);
-  const [cars, setCars] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const features = [
     {
       name: "Wide Range of Vehicles",
@@ -40,54 +37,17 @@ function Home() {
       icon: BanknotesIcon,
     },
   ];
-  const testCar = async () => {
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/carsDispo`, {
-        method: "GET",
-      });
-      if (response.ok) {
-        const jsonData = await response.json();
-        return jsonData;
-      }
-      throw new Error("Failed to fetch cars");
-    } catch (error) {
-      console.error("Error fetching cars:", error);
-      throw error;
-    }
-  };
-  const testMarque = async () => {
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/marque`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      if (response.ok) {
-        const jsonData = await response.json();
-        return jsonData;
-      }
-      throw new Error("Failed to fetch marque");
-    } catch (error) {
-      console.error("Error fetching marque:", error);
-      throw error;
-    }
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const jsonDataMarque = await testMarque();
-        setMarque(jsonDataMarque);
-        const jsonDataCars = await testCar();
-        setCars(jsonDataCars);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
 
-    fetchData();
-  }, [baseUrl]);
-  console.log(marque);
+  const { data: cars, isLoading } = useQuery({
+    queryKey: ["car"],
+    queryFn: fetchCars,
+  });
+
+  const { data: marque, isLoading: marqueIsLoading } = useQuery({
+    queryKey: ["marque"],
+    queryFn: fetchMarque,
+  });
+
   const renderSkeleton = () => {
     return Array(6)
       .fill()
@@ -175,6 +135,7 @@ function Home() {
           {isLoading ? (
             <div className="row">{renderSkeleton()}</div>
           ) : (
+            cars &&
             cars.slice(0, 6).map((car, index) => (
               <div key={index} className="col-md-4">
                 <div className="card mb-4 box-shadow transition-transform duration-300 transform hover:scale-105">
@@ -222,21 +183,22 @@ function Home() {
             <h1 className="text-center text-4xl mb-4 font-bold">All Brands</h1>
           )}
           <Marquee>
-            {isLoading ? (
+            {marqueIsLoading ? (
               renderMarqueSkeleton()
             ) : (
               <div className="d-flex flex-wrap justify-content-center">
-                {marque.map((item) => (
-                  <div key={item.id} className="brand-item">
-                    <Link to={`/cars?marque=${item.nom_marque}`}>
-                      <img
-                        src={`${baseImageUrl}/storage/${item.image_path}`}
-                        className="max-h-24 w-full ml-20 object-contain"
-                        alt={item.nom_marque}
-                      />
-                    </Link>
-                  </div>
-                ))}
+                {marque &&
+                  marque.map((item) => (
+                    <div key={item.id} className="brand-item">
+                      <Link to={`/cars?marque=${item.nom_marque}`}>
+                        <img
+                          src={`${baseImageUrl}/storage/${item.image_path}`}
+                          className="max-h-24 w-full ml-20 object-contain"
+                          alt={item.nom_marque}
+                        />
+                      </Link>
+                    </div>
+                  ))}
               </div>
             )}
           </Marquee>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import fetchDispoCars from "../services/FetchCars";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useQuery } from "@tanstack/react-query";
 import {
   Label,
   Listbox,
@@ -12,12 +12,10 @@ import {
   Transition,
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { fetchCars } from "../services/api";
 
 export default function Cars() {
-  const baseUrl = "http://127.0.0.1:8000/api";
   const location = useLocation();
-
-  const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [marques, setMarques] = useState([]);
   const [prix, setPrix] = useState([]);
@@ -27,40 +25,38 @@ export default function Cars() {
   const [couleurFilter, setCouleurFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage] = useState(10);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
 
+  const {
+    data = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["cars"],
+    queryFn: fetchCars,
+  });
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const jsonData = await fetchDispoCars(baseUrl);
-        setData(jsonData);
-        setFilteredData(jsonData);
-        setIsLoading(false);
+    if (data.length > 0) {
+      setFilteredData(data);
+      const uniqueMarques = Array.from(
+        new Set(data.map((item) => item.marque))
+      );
+      const uniquePrix = Array.from(
+        new Set(data.map((item) => parseFloat(item.prix)))
+      );
+      const uniqueCouleurs = Array.from(
+        new Set(data.map((item) => item.couleur))
+      );
 
-        const uniqueMarques = Array.from(
-          new Set(jsonData.map((item) => item.marque))
-        );
-        const uniquePrix = Array.from(
-          new Set(jsonData.map((item) => parseFloat(item.prix)))
-        );
-        const uniqueCouleurs = Array.from(
-          new Set(jsonData.map((item) => item.couleur))
-        );
-
-        setMarques(uniqueMarques);
-        setPrix(uniquePrix);
-        setCouleurs(uniqueCouleurs);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [baseUrl]);
+      setMarques(uniqueMarques);
+      setPrix(uniquePrix);
+      setCouleurs(uniqueCouleurs);
+    }
+  }, [data]);
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const variable = params.get("marque");

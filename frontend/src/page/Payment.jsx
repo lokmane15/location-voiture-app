@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useDataContext } from "../Context/DataContext";
 import { useParams, Link } from "react-router-dom";
 import useAuthContext from "../hooks/useAuthContext";
-import fetchCarId from "../services/FetchCarId";
+import { fetchCarId } from "../services/api";
 import Skeleton from "react-loading-skeleton";
 export default function Payment() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null); // State for storing error message
   const { data } = useDataContext();
-  const baseUrl = "http://localhost:8000/api";
-  const baseImageUrl = "http://127.0.0.1:8000";
+  const baseUrl = import.meta.env.VITE_API_URL;
+  const baseImageUrl = import.meta.env.VITE_API_URL_IMAGE;
   const { id } = useParams();
   const { user } = useAuthContext();
   const [car, setCar] = useState("");
@@ -19,7 +19,7 @@ export default function Payment() {
   console.log(totalPrice, duration, data);
   useEffect(() => {
     const getCarId = async () => {
-      const jsonDataCar = await fetchCarId(baseUrl, id, user.token);
+      const jsonDataCar = await fetchCarId(id, user.token);
       setCar(jsonDataCar);
       setIsLoadingSkeleton(false);
     };

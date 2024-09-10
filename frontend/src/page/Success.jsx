@@ -3,7 +3,7 @@ import useAuthContext from '../hooks/useAuthContext';
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import {Link} from 'react-router-dom'
 export default function Success() {
-    const baseUrl = 'http://localhost:8000/api';
+    const baseUrl = import.meta.env.VITE_API_URL;
     const [error, setError] = useState(null); // State for storing error message
     const reservation = JSON.parse(localStorage.getItem('reservation'));
     const { user } = useAuthContext();

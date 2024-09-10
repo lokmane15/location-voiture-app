@@ -73,7 +73,7 @@ Route::get('user/{id}', authController::class . '@show');
 //marque
 
 
-Route::middleware('auth:sanctum')->get('/marque', MarqueController::class . '@show');
+Route::get('/marque', MarqueController::class . '@show');
 Route::middleware('auth:sanctum')->get('/onemarque/{id}', MarqueController::class . '@getmarque');
 Route::middleware('auth:sanctum')->post('/createmarque', MarqueController::class . '@store');
 Route::middleware('auth:sanctum')->post('/marque/{id}', MarqueController::class . '@update');

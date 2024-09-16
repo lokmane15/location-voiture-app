@@ -12,13 +12,11 @@ import { fetchCarId } from "../services/api";
 export default function CarDetails() {
   const { id } = useParams();
   const { user } = useAuthContext();
-  // const [data, setData] = useState({});
   const baseImageUrl = import.meta.env.VITE_API_URL_IMAGE;
-  // const [isLoading, setIsloading] = useState(true);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["car", id], // add id as part of queryKey for caching purposes
-    queryFn: () => fetchCarId(id, user.token), // pass id and token separately
+    queryKey: ["car", id],
+    queryFn: () => fetchCarId(id, user.token),
   });
 
   if (isError) {

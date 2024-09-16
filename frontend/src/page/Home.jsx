@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-// import fetchMarque from "../services/FetchMarque";
-import { MdOutlineDateRange, MdOutlinePayment } from "react-icons/md";
-import { FaCar } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { MdOutlineArrowOutward } from "react-icons/md";
 import {
   BanknotesIcon,
   LifebuoyIcon,
@@ -16,7 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCars, fetchMarque } from "../services/api";
 
 function Home() {
-  const baseImageUrl = "http://127.0.0.1:8000";
+  const baseImageUrl = import.meta.env.VITE_API_URL_IMAGE;
   const features = [
     {
       name: "Wide Range of Vehicles",
@@ -115,23 +114,27 @@ function Home() {
         </div>
       </main>
 
-      <div className="container mx-auto mt-5">
-        <div className="flex justify-end mb-4 ml-20">
+      <div className="container p-20 mx-auto mt-5">
+        <div className="flex justify-between mb-4 ">
           {isLoading ? (
             <Skeleton />
           ) : (
-            <Link className="text-cyan-400 text-bold" to="/cars">
-              See More
-            </Link>
+            <>
+              <div>
+                <h1 className="font-bold text-2xl pl-4 relative before:content-[''] before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-blue-500">
+                  Explore Our Cars
+                </h1>
+              </div>
+              <div>
+                <Link className="text-cyan-400 flex" to="/cars">
+                  <p className="text-sm">VIEW MORE</p>
+                  <MdOutlineArrowOutward className="ml-1" />
+                </Link>
+              </div>
+            </>
           )}
         </div>
-        <motion.div
-          variants={fedIn("up", 0.3)}
-          initial="hidden"
-          whileInView={"show"}
-          viewport={{ once: false, amount: 0.4 }}
-          className="row"
-        >
+        <div className="row">
           {isLoading ? (
             <div className="row">{renderSkeleton()}</div>
           ) : (
@@ -171,16 +174,23 @@ function Home() {
               </div>
             ))
           )}
-        </motion.div>
+        </div>
       </div>
 
       {/* marque */}
-      <div className="container">
+      <div className="container mb-10">
         <div className="row">
           {isLoading ? (
             <Skeleton />
           ) : (
-            <h1 className="text-center text-4xl mb-4 font-bold">All Brands</h1>
+            <div className="mb-3">
+              <p className="text-sm text-center text-sky-600 font-bold">
+                FIND YOUR CAR BY CAR BRAND
+              </p>
+              <h1 className="text-center text-4xl mb-4 font-bold">
+                Browse By Brands
+              </h1>
+            </div>
           )}
           <Marquee>
             {marqueIsLoading ? (
@@ -205,50 +215,22 @@ function Home() {
         </div>
       </div>
 
-      <h1 className="text-center text-4xl mb-4 font-bold ">How it works</h1>
-      <motion.div
-        variants={fedIn("up", 0.2)}
-        initial="hidden"
-        whileInView={"show"}
-        viewport={{ once: false, amount: 0.7 }}
-        className="flex flex-wrap mb-2"
-      >
-        {[
-          {
-            icon: <FaCar className="text-sky-500 text-3xl" />,
-            title: "Choose a Car",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!",
-          },
-          {
-            icon: <MdOutlineDateRange className="text-sky-500 text-3xl" />,
-            title: "Select A Date",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!",
-          },
-          {
-            icon: <FaCar className="text-sky-500 text-3xl" />,
-            title: "Make Reservation",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!",
-          },
-          {
-            icon: <MdOutlinePayment className="text-sky-500 text-3xl" />,
-            title: "Payment online",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sapiente!",
-          },
-        ].map((item, index) => (
-          <div key={index} className="w-full lg:w-1/4 px-2 mb-4">
-            <div className="card p-4 bg-slate-50 hover:bg-white text-center transition-transform duration-300 transform hover:scale-105 hover:z-10">
-              <div className="flex justify-center">{item.icon}</div>
-              <h1 className="card-title font-bold text-2xl">{item.title}</h1>
-              <p className="mb-3 p-1">{item.description}</p>
-            </div>
-          </div>
-        ))}
-      </motion.div>
-
+      {/* the road section  */}
+      <div className="flex justify-around items-center bg-[url('public/bg2.jpg')] bg-cover bg-center lg:pt-40 lg:pb-40 bg-fixed mt-20 mb-10 sm:pt-20 sm:pb-20  flex-col lg:flex-row">
+        <div className="p-10 lg:w-2/4 sm:text-center lg:text-left">
+          <p className="text-sky-400 text-xl">FIND YOUR CAR BY CAR BRAND</p>
+          <h1 className="text-5xl font-bold text-white">
+            Leading The Best Car Dealers In Morocco
+          </h1>
+        </div>
+        <div className="lg:w-2/5 p-5 lg:p-0 sm:text-center lg:text-left">
+          <p className="text-white">
+            There are many variations of simply free text passages of Lorem
+            available but the majority have suffered alteration in some form by
+            injected hum randomised words which don &#39;t slightly.
+          </p>
+        </div>
+      </div>
       {/* section with images */}
       <div className="overflow-hidden bg-white py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -304,6 +286,55 @@ function Home() {
                 height={1442}
               />
             </motion.div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex justify-between flex-col lg:flex-row p-20 mt-5 mb-5 bg-[url('public/bg1.jpg')] bg-cover bg-center">
+        <div className="mt-8 p-10">
+          <p className="text-sky-400 text-xl">Trusted Car Delaer Service</p>
+          <h1 className="text-5xl font-bold pb-4 text-white">Browse By Body</h1>
+          <p className="text-gray-300">
+            For 15 years, we raising the standard of used car retailing with one
+            of the most innovative and reliable used vehicle
+          </p>
+          <button className="text-white bg-sky-400 p-3 mt-4 rounded-md">
+            <Link to="/cars">View All Listings</Link>
+          </button>
+        </div>
+        <div className="grid grid-col-3 sm:grid-cols-3 lg:grid-cols-3 bg-white">
+          {cars &&
+            cars.slice(6, 12).map((car) => (
+              <div key={car.id} className="border p-4 hover:border-sky-300">
+                <Link to={`/carDetails/${car.id}`}>
+                  <img
+                    src={`${baseImageUrl}/storage/${car.image}`}
+                    alt=""
+                    className="w-72"
+                  />
+                  <p className="text-center font-bold">{car.marque}</p>
+                </Link>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      <div className="bg-sky-400 flex justify-between items-center p-5 mb-5 w-4/5 rounded-md mx-auto mr-10 ml-10">
+        <div>
+          <h1 className="text-2xl font-bold text-white">Find Local Car</h1>
+        </div>
+        <div className="flex justify-around items-center">
+          <div className="ml-5">
+            <FaPhone className="text-white text-2xl" />
+          </div>
+          <div className="mr-5 ml-5 text-white">
+            <p className="font-bold text-xl">Phone Number</p>
+            <p>+212 6112233445</p>
+          </div>
+          <div>
+            <button className="font-bold p-3 bg-white rounded-md">
+              <Link to="/cars">Browse Cars</Link>
+            </button>
           </div>
         </div>
       </div>

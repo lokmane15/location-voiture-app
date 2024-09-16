@@ -25,17 +25,12 @@ export default function Cars() {
   const [couleurFilter, setCouleurFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage] = useState(10);
-  // const [isLoading, setIsLoading] = useState(true);
-
+  const imageUrl = import.meta.env.VITE_API_URL_IMAGE;
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
 
-  const {
-    data = [],
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data = [], isLoading } = useQuery({
     queryKey: ["cars"],
     queryFn: fetchCars,
   });
@@ -117,8 +112,8 @@ export default function Cars() {
   };
 
   return (
-    <div style={{ minHeight: "70vh" }} className="container mx-auto mt-10 flex">
-      <aside className="w-full md:w-1/4 p-4 bg-gray-100 rounded-md shadow-md">
+    <div style={{ minHeight: "70vh" }} className="mx-auto mt-10 flex">
+      <aside className="hidden lg:block lg:w-1/4 w-full p-4 bg-gray-100 rounded-md shadow-md">
         <div className="mb-4">
           {/* Filter by Brand */}
           <Listbox value={marqueFilter} onChange={setMarqueFilter}>
@@ -450,9 +445,9 @@ export default function Cars() {
         </div>
       </aside>
 
-      <div className="w-3/4 p-4">
+      <div className="lg:w-3/4 w-full p-4">
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 my-2">
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 my-2">
             {renderSkeleton()}
           </div>
         ) : (
@@ -466,7 +461,7 @@ export default function Cars() {
                   <Link to={`/carDetails/${item.id}`}>
                     <div>
                       <img
-                        src={`http://127.0.0.1:8000/storage/${item.image}`}
+                        src={`${imageUrl}/storage/${item.image}`}
                         alt="Car"
                         className="mb-2 transition-transform duration-300 transform hover:scale-110"
                       />
@@ -479,12 +474,9 @@ export default function Cars() {
                 </div>
               ))
             ) : (
-              <p
-                style={{ textAlign: "center" }}
-                className="text-2xl flex justify-center items-center"
-              >
-                No cars match the selected filters.
-              </p>
+              <div className="flex justify-center items-center ">
+                <p className="text-2xl">No cars match the selected filters.</p>
+              </div>
             )}
           </div>
         )}

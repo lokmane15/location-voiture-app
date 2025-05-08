@@ -5,6 +5,8 @@ import { FaCarSide } from "react-icons/fa";
 import { useState } from "react";
 import { useLogout } from "../hooks/useLogout";
 import { RxDropdownMenu } from "react-icons/rx";
+import { CiLogout } from "react-icons/ci";
+import img from "../../public/profile_image.png"
 function Sidebar({ isOpen, onClose }) {
   const { user } = useAuthContext();
   const { logout } = useLogout();
@@ -109,13 +111,13 @@ function Navbar() {
                 <div>
                   <Link
                     to="/login"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-gray-300 hover:text-black hover:bg-cyan-200 px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Login
                   </Link>
                   <Link
                     to="/signup"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-gray-300  hover:bg-cyan-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Signup
                   </Link>
@@ -124,11 +126,17 @@ function Navbar() {
                 <div className="dropdown">
                 <FaRegUserCircle className="profil-icon text-white cursor-pointer text-2xl" onClick={handleClick} />
                 {profil && (
-                  <div className="dropdown-menu bg-white p-3 mt-2">
-                    <div className="dropdown-menu-item ml-3">Username: {user.user.nom}</div>
-                    <button onClick={handleClickLogout} className="dropdown-menu-item">
-                      Logout
-                    </button>
+                  <div className="dropdown-menu bg-white mt-2 w-48 p-2 origin-top-right rounded-md">
+                    <div className="flex items-center mt-2">
+                      <img src={img} alt="image" className="size-6 rounded-full mr-3" />
+                      {user.user.nom}
+                    </div>
+                      <div className="flex items-center mt-2">
+                        <CiLogout />
+                        <button onClick={handleClickLogout} className="m-0 p-1 hover:text-cyan-100">
+                          Logout
+                        </button>
+                      </div>
                   </div>
                 )}
               </div>              
